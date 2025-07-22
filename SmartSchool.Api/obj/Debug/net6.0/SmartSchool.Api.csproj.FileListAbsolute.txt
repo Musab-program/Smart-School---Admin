@@ -82,3 +82,5 @@ D:\Projects\SmartSchool\SmartSchool.Api\obj\Debug\net6.0\refint\SmartSchool.Api.
 D:\Projects\SmartSchool\SmartSchool.Api\obj\Debug\net6.0\SmartSchool.Api.pdb
 D:\Projects\SmartSchool\SmartSchool.Api\obj\Debug\net6.0\SmartSchool.Api.genruntimeconfig.cache
 D:\Projects\SmartSchool\SmartSchool.Api\obj\Debug\net6.0\ref\SmartSchool.Api.dll
+D:\Projects\SmartSchool\SmartSchool.Api\bin\Debug\net6.0\SmartSchool.Core.dll
+D:\Projects\SmartSchool\SmartSchool.Api\bin\Debug\net6.0\SmartSchool.Core.pdb

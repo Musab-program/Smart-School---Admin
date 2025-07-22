@@ -30,7 +30,7 @@ namespace SmartSchool.Core.Models
         [Required, MaxLength(100)]
         public string gender { get; set; }
 
-        //Forign Key 1 to 1 With Role Table
+        //Forign Key 1 to n With Role Table
         public Role Role { get; set; }
         public int RoleId { get; set; }
     }
