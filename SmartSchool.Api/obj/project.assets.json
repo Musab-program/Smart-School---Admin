@@ -943,12 +943,23 @@
           }
         }
       },
+      "SmartSchool.Core/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "compile": {
+          "bin/placeholder/SmartSchool.Core.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/SmartSchool.Core.dll": {}
+        }
+      },
       "SmartSchool.EF/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v6.0",
         "dependencies": {
           "Microsoft.EntityFrameworkCore": "7.0.15",
-          "Microsoft.EntityFrameworkCore.SqlServer": "7.0.15"
+          "Microsoft.EntityFrameworkCore.SqlServer": "7.0.15",
+          "SmartSchool.Core": "1.0.0"
         },
         "compile": {
           "bin/placeholder/SmartSchool.EF.dll": {}
@@ -2885,6 +2896,11 @@
         "system.windows.extensions.nuspec",
         "useSharedDesignerContext.txt"
       ]
+    },
+    "SmartSchool.Core/1.0.0": {
+      "type": "project",
+      "path": "../SmartSchool.Core/SmartSchool.Core.csproj",
+      "msbuildProject": "../SmartSchool.Core/SmartSchool.Core.csproj"
     },
     "SmartSchool.EF/1.0.0": {
       "type": "project",
