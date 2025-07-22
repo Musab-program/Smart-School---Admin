@@ -1,24 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Projects\\SmartSchool\\SmartSchool.Core\\SmartSchool.Core.csproj": {}
+    "E:\\Others\\Main Project\\Codes\\Smart-School---Admin\\SmartSchool.Core\\SmartSchool.Core.csproj": {}
   },
   "projects": {
-    "D:\\Projects\\SmartSchool\\SmartSchool.Core\\SmartSchool.Core.csproj": {
+    "E:\\Others\\Main Project\\Codes\\Smart-School---Admin\\SmartSchool.Core\\SmartSchool.Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Projects\\SmartSchool\\SmartSchool.Core\\SmartSchool.Core.csproj",
+        "projectUniqueName": "E:\\Others\\Main Project\\Codes\\Smart-School---Admin\\SmartSchool.Core\\SmartSchool.Core.csproj",
         "projectName": "SmartSchool.Core",
-        "projectPath": "D:\\Projects\\SmartSchool\\SmartSchool.Core\\SmartSchool.Core.csproj",
-        "packagesPath": "C:\\Users\\Dia\\.nuget\\packages\\",
-        "outputPath": "D:\\Projects\\SmartSchool\\SmartSchool.Core\\obj\\",
+        "projectPath": "E:\\Others\\Main Project\\Codes\\Smart-School---Admin\\SmartSchool.Core\\SmartSchool.Core.csproj",
+        "packagesPath": "C:\\Users\\Musab\\.nuget\\packages\\",
+        "outputPath": "E:\\Others\\Main Project\\Codes\\Smart-School---Admin\\SmartSchool.Core\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Dia\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Users\\Musab\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -26,7 +22,6 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Users\\Dia\\.nuget\\packages": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {

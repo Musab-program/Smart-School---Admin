@@ -1,24 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Projects\\SmartSchool\\SmartSchool.Api\\SmartSchool.Api.csproj": {}
+    "E:\\Others\\Main Project\\Codes\\Smart-School---Admin\\SmartSchool.Api\\SmartSchool.Api.csproj": {}
   },
   "projects": {
-    "D:\\Projects\\SmartSchool\\SmartSchool.Api\\SmartSchool.Api.csproj": {
+    "E:\\Others\\Main Project\\Codes\\Smart-School---Admin\\SmartSchool.Api\\SmartSchool.Api.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Projects\\SmartSchool\\SmartSchool.Api\\SmartSchool.Api.csproj",
+        "projectUniqueName": "E:\\Others\\Main Project\\Codes\\Smart-School---Admin\\SmartSchool.Api\\SmartSchool.Api.csproj",
         "projectName": "SmartSchool.Api",
-        "projectPath": "D:\\Projects\\SmartSchool\\SmartSchool.Api\\SmartSchool.Api.csproj",
-        "packagesPath": "C:\\Users\\Dia\\.nuget\\packages\\",
-        "outputPath": "D:\\Projects\\SmartSchool\\SmartSchool.Api\\obj\\",
+        "projectPath": "E:\\Others\\Main Project\\Codes\\Smart-School---Admin\\SmartSchool.Api\\SmartSchool.Api.csproj",
+        "packagesPath": "C:\\Users\\Musab\\.nuget\\packages\\",
+        "outputPath": "E:\\Others\\Main Project\\Codes\\Smart-School---Admin\\SmartSchool.Api\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Dia\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Users\\Musab\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -26,15 +22,14 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Users\\Dia\\.nuget\\packages": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "D:\\Projects\\SmartSchool\\SmartSchool.EF\\SmartSchool.EF.csproj": {
-                "projectPath": "D:\\Projects\\SmartSchool\\SmartSchool.EF\\SmartSchool.EF.csproj"
+              "E:\\Others\\Main Project\\Codes\\Smart-School---Admin\\SmartSchool.EF\\SmartSchool.EF.csproj": {
+                "projectPath": "E:\\Others\\Main Project\\Codes\\Smart-School---Admin\\SmartSchool.EF\\SmartSchool.EF.csproj"
               }
             }
           }
@@ -82,21 +77,17 @@
         }
       }
     },
-    "D:\\Projects\\SmartSchool\\SmartSchool.EF\\SmartSchool.EF.csproj": {
+    "E:\\Others\\Main Project\\Codes\\Smart-School---Admin\\SmartSchool.Core\\SmartSchool.Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Projects\\SmartSchool\\SmartSchool.EF\\SmartSchool.EF.csproj",
-        "projectName": "SmartSchool.EF",
-        "projectPath": "D:\\Projects\\SmartSchool\\SmartSchool.EF\\SmartSchool.EF.csproj",
-        "packagesPath": "C:\\Users\\Dia\\.nuget\\packages\\",
-        "outputPath": "D:\\Projects\\SmartSchool\\SmartSchool.EF\\obj\\",
+        "projectUniqueName": "E:\\Others\\Main Project\\Codes\\Smart-School---Admin\\SmartSchool.Core\\SmartSchool.Core.csproj",
+        "projectName": "SmartSchool.Core",
+        "projectPath": "E:\\Others\\Main Project\\Codes\\Smart-School---Admin\\SmartSchool.Core\\SmartSchool.Core.csproj",
+        "packagesPath": "C:\\Users\\Musab\\.nuget\\packages\\",
+        "outputPath": "E:\\Others\\Main Project\\Codes\\Smart-School---Admin\\SmartSchool.Core\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Dia\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Users\\Musab\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -104,13 +95,70 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Users\\Dia\\.nuget\\packages": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.302\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "E:\\Others\\Main Project\\Codes\\Smart-School---Admin\\SmartSchool.EF\\SmartSchool.EF.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "E:\\Others\\Main Project\\Codes\\Smart-School---Admin\\SmartSchool.EF\\SmartSchool.EF.csproj",
+        "projectName": "SmartSchool.EF",
+        "projectPath": "E:\\Others\\Main Project\\Codes\\Smart-School---Admin\\SmartSchool.EF\\SmartSchool.EF.csproj",
+        "packagesPath": "C:\\Users\\Musab\\.nuget\\packages\\",
+        "outputPath": "E:\\Others\\Main Project\\Codes\\Smart-School---Admin\\SmartSchool.EF\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\Musab\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {
+              "E:\\Others\\Main Project\\Codes\\Smart-School---Admin\\SmartSchool.Core\\SmartSchool.Core.csproj": {
+                "projectPath": "E:\\Others\\Main Project\\Codes\\Smart-School---Admin\\SmartSchool.Core\\SmartSchool.Core.csproj"
+              }
+            }
           }
         },
         "warningProperties": {
