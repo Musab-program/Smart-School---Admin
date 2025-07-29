@@ -1,0 +1,33 @@
+# ignore excutable files
+*.exe
+*.dll
+*.bin
+*.pdb
+*.cache
+*.dgspec.json
+*.AssemblyReference.cache
+*.CoreCompileInputs.cache
+*.assets.cache
+*.nuget.dgspec.json
+*.pack.sentinel
+*.dtbcache.v2
+*.futdcache.v1
+*.suO
+project.assets.json
+project.nuget.cache
+
+# ignore bulding files
+/build/
+/dist/
+/out/
+bin/
+obj/
+Debug/
+vs/
+.vs/
+*.user 
+*.suo
+
+
+
+
