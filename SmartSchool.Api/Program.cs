@@ -12,7 +12,9 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
-{
+{   
+    /////////
+    ///This code to identify the Description for API
     options.SwaggerDoc("v1", new OpenApiInfo
     {
         Version = "v1",
@@ -25,6 +27,8 @@ builder.Services.AddSwaggerGen(options =>
 
     });
 
+    //////
+    ///JWT =>json word token. it allow just for authrized users to access to the api 
     options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
         Name = "Authorization",
