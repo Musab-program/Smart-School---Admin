@@ -1,0 +1,23 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace SmartSchool.Core.Models
+{
+    public class TimeTable
+    {
+        //These Attributes Are The Culomns for User TimeTable In Database
+        public int Id { get; set; }
+        public Group Group { get; set; }
+        public int GroupId { get; set; }//Forign Key 1 to n With Group Table
+        public SubjectDetails SubjectDetails { get; set; }
+        public int SubjectDetailsId { get; set; }//Forign Key 1 to n With SujectDetails Table
+        public Teacher Teacher { get; set; }
+        public int TeacherId { get; set; }//Forign Key n to 1 With Role Table
+        public string DayOfWeek { get; set; }
+        public DateTime StartTime { get; set; }
+        public DateTime EndTime { get; set; }
+    }
+}

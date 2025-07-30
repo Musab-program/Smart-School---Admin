@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using SmartSchool.Core.Models;
 
 namespace SmartSchool.EF
 {
@@ -12,8 +13,8 @@ namespace SmartSchool.EF
         //This Constarcter is important for connecting to the Database
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
-
         }
+<<<<<<< HEAD
 <<<<<<< Updated upstream
 =======
 
@@ -29,12 +30,22 @@ namespace SmartSchool.EF
             base.OnModelCreating(modelBuilder);
 
             //make the relationship and the foreignKey
+=======
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+>>>>>>> 398bc1e9a0a0bd15c61b89ab05abfde1880aae0f
             modelBuilder.Entity<User>()
                 .HasOne(u => u.Role)
                 .WithMany(r => r.Users)
                 .HasForeignKey(u => u.RoleId);
         }
 
+<<<<<<< HEAD
 >>>>>>> Stashed changes
+=======
+>>>>>>> 398bc1e9a0a0bd15c61b89ab05abfde1880aae0f
     }
 }
