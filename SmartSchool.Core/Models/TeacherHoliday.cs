@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace SmartSchool.Core.Models
 {
-    public class TeacherHolidays
+    public class TeacherHoliday
     {
         //These Attributes Are The Culomns for TeacherHolidays Table In Database
         public int Id { get; set; }
-        public Teacher Teacher { get; set; }
+        public Teacher Teacher { get; set; } //Navigation Properity From Teacher(1) To TeacherHoliday(n)
         public int TeacherId { get; set; }//Forign Key n to 1 With Teacher Table
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
