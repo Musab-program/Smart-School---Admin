@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SmartSchool.Core.Models
 {
-    public class Guardians
+    public class Guardian
     {
         //These Attributes Are The Culomns for Guardians Table In Database
         public int Id { get; set; }

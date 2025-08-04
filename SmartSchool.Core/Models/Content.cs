@@ -14,5 +14,7 @@ namespace SmartSchool.Core.Models
         public string Descripion { get; set; }
         public byte[] AttachmentFile { get; set; }
         public string VedioUrl { get; set; }
+        public SubjectDetail SubjectDetail { get; set; }//Navigation proprity from SubjectDetail(1) to Content(n) 
+        public int SubjectDetailId { get; set; }
     }
 }

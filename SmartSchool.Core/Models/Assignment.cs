@@ -10,8 +10,10 @@ namespace SmartSchool.Core.Models
     {
         //These Attributes Are The Culomns for Assignment Table In Database
         public int Id { get; set; }
-        public SubjectDetails SubjectDetails { get; set; }
-        public int SubjectDetailsId { get; set; }//Forign Key n to 1 With SubjectDetails Table
+        public SubjectDetail SubjectDetail { get; set; }//Navigation proprity from SubjectDetail(1) to Assignment(n) 
+        public int SubjectDetailId { get; set; }//Forign Key n to 1 With SubjectDetails Table
+        public Student Student { get; set; }//Navigation proprity from Student(1) to Assignment(n) 
+        public int StudentId { get; set; }//Forign Key n to 1 With Student Table
         public string Title { get; set; }
         public DateTime LastDate { get; set; }
         public DateTime SubmitedDate { get; set; }

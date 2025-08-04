@@ -13,5 +13,6 @@ namespace SmartSchool.Core.Models
         public string Name { get; set; }
         public string Stage { get; set; }
         public int Capacity { get; set; }
+        public ICollection<SubjectDetail> SubjectDetails { get; set; }//Navigation proprity from SubjectDetail(n) to Grade(1) 
     }
 }

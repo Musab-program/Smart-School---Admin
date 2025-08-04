@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SmartSchool.Core.Models
 {
-    public class TeacherHolidays
+    public class TeacherHoliday
     {
         //These Attributes Are The Culomns for TeacherHolidays Table In Database
         public int Id { get; set; }

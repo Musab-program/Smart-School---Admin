@@ -12,5 +12,6 @@ namespace SmartSchool.Core.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public DateTime Year { get; set; }
+        public ICollection<Exam> Exams { get; set; } //Navigation proprity from Exam(n) to ExamType(1) 
     }
 }
