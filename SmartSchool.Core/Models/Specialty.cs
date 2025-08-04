@@ -12,5 +12,6 @@ namespace SmartSchool.Core.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public string Qualification { get; set; }
+        public Teacher Teacher { get; set; } //Navigation Properity From Specialty(1) To Teacher(1)
     }
 }

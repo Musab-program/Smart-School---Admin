@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SmartSchool.Core.Models
 {
-    public class SubjectDetails
+    public class SubjectDetail
     {
         //These Attributes Are The Culomns for SubjectDetails Table In Database
         public int Id { get; set; }
@@ -15,5 +15,6 @@ namespace SmartSchool.Core.Models
         public Grade Grade { get; set; }
         public int GradeId { get; set; }//Forign Key n to 1 With Grade Table
         public bool IsActive { get; set; }
+        public ICollection<TimeTable> TimeTables { get; set; }
     }
 }
