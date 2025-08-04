@@ -30,8 +30,12 @@ namespace SmartSchool.Core.Models
         [Required, MaxLength(100)]
         public string gender { get; set; }
 
-        //Forign Key 1 to 1 With Role Table
-        public Role Role { get; set; }
+        //Forign Key 1 to n With Role Table
+        public Role Role { get; set; } //Navigation Properity From User (1) To Role(n)
         public int RoleId { get; set; }
+        public Adminstration Adminstration { get; set; } //Navigation Properity From User (1) To Adminstration(1)
+        public Guardian Guardian { get; set; } //Navigation Properity From User (1) To Guardian(1)
+        public Student Student { get; set; } //Navigation Properity From User (1) To Student(1)
+        public Teacher Teacher { get; set; } //Navigation Properity From User (1) To Teacher(1)
     }
 }
