@@ -21,6 +21,5 @@ namespace SmartSchool.Core.Models
         public ICollection<Content> Contents { get; set; }//Navigation proprity from Contents(n) to SubjectDetail(1) 
         public ICollection<TeachingSubject> TeachingSubjects { get; set; }//Navigation proprity from TeachingSubjects(n) to SubjectDetail(1) 
         public ICollection<TimeTable> TimeTables { get; set; }//Navigation proprity from TimeTables(n) to SubjectDetail(1) 
-
     }
 }

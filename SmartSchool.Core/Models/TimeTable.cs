@@ -16,6 +16,7 @@ namespace SmartSchool.Core.Models
         public int SubjectDetailId { get; set; }//Forign Key 1 to n With SujectDetails Table
         public Teacher Teacher { get; set; }
         public int SubjectDetailsId { get; set; }//Forign Key 1 to n With SujectDetails Table
+        public Teacher Teacher { get; set; } //Navigation Properity From Teacher(1) To TimeTable(n)
         public int TeacherId { get; set; }//Forign Key n to 1 With Role Table
         public string DayOfWeek { get; set; }
         public DateTime StartTime { get; set; }
