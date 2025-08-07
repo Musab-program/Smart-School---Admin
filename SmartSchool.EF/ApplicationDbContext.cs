@@ -190,6 +190,7 @@ namespace SmartSchool.EF
             modelBuilder.Entity<Student>()
                 .HasOne(u => u.Guardian)
                 .WithMany(r => r.Students)
+                .HasForeignKey(u => u.GuardianId);
                 .HasForeignKey(u => u.GuardianId)
                 .OnDelete(DeleteBehavior.NoAction);
 
@@ -197,7 +198,8 @@ namespace SmartSchool.EF
             modelBuilder.Entity<Student>()
                 .HasOne(u => u.Group)
                 .WithMany(r => r.Students)
-                .HasForeignKey(u => u.GroupId);
+                .HasForeignKey(u => u.GroupId)
+                .OnDelete(DeleteBehavior.Restrict); 
 
             //Relation Between Grade(1) and Group(n)
             modelBuilder.Entity<Group>()

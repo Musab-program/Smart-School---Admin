@@ -19,6 +19,7 @@ namespace SmartSchool.Core.Models
         public Guardian Guardian { get; set; } //Navigation Properity From Guardian (1) To Student(n)
         public int GuardianId { get; set; } //Forign Key n to 1 With Guardians Table
         public Group Group { get; set; } //Navigation Properity From Group (1) To Student(n)
+
         public ICollection<StudentAttendance> StudentAttendances { get; set; } //Navigation Properity From StudentAttendance(n) To Student(1)
     }
 }
