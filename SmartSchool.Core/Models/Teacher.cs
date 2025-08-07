@@ -16,6 +16,7 @@ namespace SmartSchool.Core.Models
         public Specialty Specialty { get; set; } //Navigation Properity From Specialty(1) To Teacher(1)
         public int SpecialtyId { get; set; } //Forign Key 1 to 1 With Specialty Table
         public double Salary { get; set; }
+        public ICollection<TeachingSubject> TeachingSubjects { get; set; }//Navigation proprity from TeachingSubjects(n) to Teacher(1) 
         public ICollection<StudentAttendance> StudentAttendances { get; set; } //Navigation Properity From StudentAttendance(n) To Teacher(1)
         public ICollection<TeacherHoliday> TeacherHolidays { get; set; } //Navigation Properity From TeacherHoliday(n) To Teacher(1)
         public ICollection<TimeTable> TimeTables { get; set; } //Navigation Properity From TimeTablen1) To Teacher(1)

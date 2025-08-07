@@ -10,9 +10,14 @@ namespace SmartSchool.Core.Models
     {
         //These Attributes Are The Culomns for TeachingSubject Table In Database
         public int Id { get; set; }
-        public Subject Subject { get; set; }
-        public int SubjectId { get; set; }//Forign Key n to 1 With Subject Table
         public DateTime AcademicYear { get; set; }
         public int Semster { get; set; }
+        public SubjectDetail SubjectDetail { get; set; } //Navigation proprity from SubjectDetail(1) to TeachingSubject(n) 
+        public int SubjectDetailId { get; set; }//Forign Key n to 1 With SubjectDetail Table
+        public Teacher Teacher { get; set; } //Navigation proprity from Teacher(1) to TeachingSubject(n) 
+        public int TeacherId { get; set; }//Forign Key n to 1 With Teacher Table
+
+
+
     }
 }

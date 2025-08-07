@@ -11,5 +11,7 @@ namespace SmartSchool.Core.Models
         //These Attributes Are The Culomns for Subject Table In Database
         public int Id { get; set; }
         public string Name { get; set; }
+
+        public ICollection<SubjectDetail> SubjectDetails { get; set; }
     }
 }

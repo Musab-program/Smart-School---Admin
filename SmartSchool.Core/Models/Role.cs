@@ -12,6 +12,8 @@ namespace SmartSchool.Core.Models
         //These Attributes Are The Culomns for Role Table In Database
         public int Id { get; set; }
         [Required, MaxLength(50)]
+        public string Name { get; set; }    
+        public ICollection<User> Users { get; set; }
         public string Name { get; set; }
         public ICollection<User> Users { get; set; } //Navigation Properity From Role(n) To User (1)
     }
