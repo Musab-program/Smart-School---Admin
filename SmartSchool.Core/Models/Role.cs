@@ -14,7 +14,6 @@ namespace SmartSchool.Core.Models
         [Required, MaxLength(50)]
         public string Name { get; set; }    
         public ICollection<User> Users { get; set; }
-        public string Name { get; set; }
-        public ICollection<User> Users { get; set; } //Navigation Properity From Role(n) To User (1)
+        
     }
 }

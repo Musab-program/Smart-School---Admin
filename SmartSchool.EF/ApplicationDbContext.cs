@@ -29,8 +29,6 @@ namespace SmartSchool.EF
 
 
         // Here Know what classes are tables in DB
-        public DbSet<User> Users { get; set; }  
-        public DbSet<Role> Roles { get; set; }
         public DbSet<Adminstration> Adminstrations { get; set; }
         public DbSet<Student> Students { get; set; }
         public DbSet<Guardian> Guardians { get; set; }
