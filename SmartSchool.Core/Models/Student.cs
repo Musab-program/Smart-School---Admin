@@ -12,7 +12,6 @@ namespace SmartSchool.Core.Models
         public int Id { get; set; }
         public User User { get; set; } //Navigation Properity From User (1) To Student(1)
         public int UserId { get; set; }
-        public Guardian Guardians { get; set; }
         public int GroupId { get; set; }//Forign Key n to 1 With Group Table
         public DateTime RegisterDate { get; set; }
         public ICollection<Assignment> Assignment { get; set; }//Navigation proprity from Assignment(n) to Student(1) 
