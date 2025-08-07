@@ -29,8 +29,6 @@ namespace SmartSchool.EF
 
 
         // Here Know what classes are tables in DB
-        public DbSet<User> Users { get; set; }  
-        public DbSet<Role> Roles { get; set; }
         public DbSet<Adminstration> Adminstrations { get; set; }
         public DbSet<Student> Students { get; set; }
         public DbSet<Guardian> Guardians { get; set; }
@@ -160,14 +158,15 @@ namespace SmartSchool.EF
             //Relation Between Student(1) and Guardian(n)
             modelBuilder.Entity<Student>()
                 .HasOne(u => u.Guardian)
-                .WithMany(r => Students)
+                .WithMany(r => r.Students)
                 .HasForeignKey(u => u.GuardianId);
 
             //Relation Between Group(1) and Student(n)
             modelBuilder.Entity<Student>()
                 .HasOne(u => u.Group)
                 .WithMany(r => r.Students)
-                .HasForeignKey(u => u.GroupId);
+                .HasForeignKey(u => u.GroupId)
+                .OnDelete(DeleteBehavior.Restrict); 
 
             //Relation Between Grade(1) and Group(n)
             modelBuilder.Entity<Group>()
@@ -219,7 +218,7 @@ namespace SmartSchool.EF
 
             //Relation Between SubjectDetails(1) and TimeTables(n)
             modelBuilder.Entity<TimeTable>()
-                .HasOne(u => u.SubjectDetails)
+                .HasOne(u => u.SubjectDetail)
                 .WithMany(r => r.TimeTables)
                 .HasForeignKey(u => u.SubjectDetailsId);
         }

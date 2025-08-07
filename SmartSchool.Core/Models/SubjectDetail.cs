@@ -22,14 +22,5 @@ namespace SmartSchool.Core.Models
         public ICollection<TeachingSubject> TeachingSubjects { get; set; }//Navigation proprity from TeachingSubjects(n) to SubjectDetail(1) 
         public ICollection<TimeTable> TimeTables { get; set; }//Navigation proprity from TimeTables(n) to SubjectDetail(1) 
 
-
-
-
-        public Subject Subject { get; set; }
-        public int SubjectId { get; set; }//Forign Key 1 to n With Subject Table
-        public Grade Grade { get; set; }
-        public int GradeId { get; set; }//Forign Key n to 1 With Grade Table
-        public bool IsActive { get; set; }
-        public ICollection<TimeTable> TimeTables { get; set; }
     }
 }
