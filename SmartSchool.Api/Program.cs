@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using RepositoryPatternWithUOW.EF;
+using SmartSchool.Core;
 using SmartSchool.Core.Interfaces;
 using SmartSchool.EF;
 using SmartSchool.EF.ImplementedClasses;
@@ -80,7 +82,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 ///It will Create an object from type of BaseReporstert<> temporary
 ///That means everytime you request this service it'll create a new copy of it
 /////////
-builder.Services.AddTransient(typeof(IBaseReporstery<>), typeof(BaseReporstery<>));
+builder.Services.AddTransient(typeof(IBaseRepository<>), typeof(BaseRepository<>));
+builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
 
 var app = builder.Build();
 
