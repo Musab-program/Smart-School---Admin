@@ -3,7 +3,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SmartSchool.Core;
+using SmartSchool.Core.Interfaces;
+using SmartSchool.Core.Models;
 using SmartSchool.EF;
+using SmartSchool.EF.ImplementedClasses;
 
 namespace RepositoryPatternWithUOW.EF
 {
@@ -11,11 +14,79 @@ namespace RepositoryPatternWithUOW.EF
     {
         private readonly ApplicationDbContext _context;
 
+        
         public UnitOfWork(ApplicationDbContext context)
         {
             _context = context;
 
+            Adminstrations = new BaseRepository<Adminstration>(_context);
+            Assignments = new BaseRepository<Assignment>(_context);
+            Contents = new BaseRepository<Content>(_context);
+            Exams = new BaseRepository<Exam>(_context);
+            ExamTypes = new BaseRepository<ExamType>(_context);
+            Grades = new BaseRepository<Grade>(_context);
+            Groups = new BaseRepository<Group>(_context);
+            Guardians = new BaseRepository<Guardian>(_context);
+            Notifiactions = new BaseRepository<Notifiaction>(_context);
+            RelationTypes = new BaseRepository<RelationType>(_context);
+            Resultes = new BaseRepository<Resulte>(_context);
+            Roles = new BaseRepository<Role>(_context);
+            Specialtys = new BaseRepository<Specialty>(_context);
+            Students = new BaseRepository<Student>(_context);
+            StudentAttendances = new BaseRepository<StudentAttendance>(_context);
+            Subjects = new BaseRepository<Subject>(_context);
+            SubjectDetails = new BaseRepository<SubjectDetail>(_context);
+            Teachers = new BaseRepository<Teacher>(_context);
+            TeacherHolidays = new BaseRepository<TeacherHoliday>(_context);
+            TeachingSubjects = new BaseRepository<TeachingSubject>(_context);
+            TimeTables = new BaseRepository<TimeTable>(_context);
+            Users = new BaseRepository<User>(_context);
+
         }
+
+        public IBaseRepository<Adminstration> Adminstrations { get; private set; }
+
+        public IBaseRepository<Assignment> Assignments { get; private set; }
+
+        public IBaseRepository<Content> Contents { get; private set; }
+
+        public IBaseRepository<Exam> Exams { get; private set; }
+
+        public IBaseRepository<ExamType> ExamTypes { get; private set; }
+
+        public IBaseRepository<Grade> Grades { get; private set; }
+
+        public IBaseRepository<Group> Groups { get; private set; }
+
+        public IBaseRepository<Guardian> Guardians { get; private set; }
+
+        public IBaseRepository<Notifiaction> Notifiactions { get; private set; }
+
+        public IBaseRepository<RelationType> RelationTypes { get; private set; }
+
+        public IBaseRepository<Resulte> Resultes { get; private set; }
+
+        public IBaseRepository<Role> Roles { get; private set; }
+
+        public IBaseRepository<Specialty> Specialtys { get; private set; }
+
+        public IBaseRepository<Student> Students { get; private set; }
+
+        public IBaseRepository<StudentAttendance> StudentAttendances { get; private set; }
+
+        public IBaseRepository<Subject> Subjects { get; private set; }
+
+        public IBaseRepository<SubjectDetail> SubjectDetails { get; private set; }
+
+        public IBaseRepository<Teacher> Teachers { get; private set; }
+
+        public IBaseRepository<TeacherHoliday> TeacherHolidays { get; private set; }
+
+        public IBaseRepository<TeachingSubject> TeachingSubjects { get; private set; }
+
+        public IBaseRepository<TimeTable> TimeTables { get; private set; }
+
+        public IBaseRepository<User> Users { get; private set; }
 
         public int Complete()
         {
