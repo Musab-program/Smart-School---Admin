@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace SmartSchool.Core.Consts
 {
+    /// <summary>
+    /// This class identifinng the constant variable for ordering
+    /// </summary>
     public static class OrderBy
     {
         public const string Ascending = "ASC";
