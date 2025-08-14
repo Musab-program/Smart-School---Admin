@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SmartSchool.EF;
 
@@ -11,9 +12,11 @@ using SmartSchool.EF;
 namespace SmartSchool.EF.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250813174052_modifyWhichPropertiesRequired")]
+    partial class modifyWhichPropertiesRequired
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -31,7 +34,7 @@ namespace SmartSchool.EF.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("EnrollmentDate")
-                        .HasColumnType("DateTime2");
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
@@ -57,10 +60,13 @@ namespace SmartSchool.EF.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("LastDate")
-                        .HasColumnType("DateTime2");
+                        .HasColumnType("datetime2");
 
                     b.Property<double>("Mark")
                         .HasColumnType("float");
+
+                    b.Property<int>("StudentId")
+                        .HasColumnType("int");
 
                     b.Property<int>("SubjectDetailId")
                         .HasColumnType("int");
@@ -69,13 +75,15 @@ namespace SmartSchool.EF.Migrations
                         .HasColumnType("int");
 
                     b.Property<DateTime>("SubmitedDate")
-                        .HasColumnType("DateTime2");
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("StudentId");
 
                     b.HasIndex("SubjectDetailId");
 
@@ -127,7 +135,7 @@ namespace SmartSchool.EF.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("ExamDate")
-                        .HasColumnType("DateTime2");
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("ExamTypeId")
                         .HasColumnType("int");
@@ -170,7 +178,7 @@ namespace SmartSchool.EF.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("Year")
-                        .HasColumnType("DateTime2");
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
@@ -210,7 +218,7 @@ namespace SmartSchool.EF.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("AcademicYear")
-                        .HasColumnType("DateTime2");
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("GradeId")
                         .HasColumnType("int");
@@ -361,7 +369,7 @@ namespace SmartSchool.EF.Migrations
                         .HasColumnType("int");
 
                     b.Property<DateTime>("RegisterDate")
-                        .HasColumnType("DateTime2");
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
@@ -387,7 +395,7 @@ namespace SmartSchool.EF.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("AttendanceDate")
-                        .HasColumnType("DateTime2");
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Status")
                         .IsRequired()
@@ -451,40 +459,6 @@ namespace SmartSchool.EF.Migrations
                     b.ToTable("SubjectDetails");
                 });
 
-            modelBuilder.Entity("SmartSchool.Core.Models.SubmittedAssignment", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("AssignmentId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("FilePath")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<double>("Mark")
-                        .HasColumnType("float");
-
-                    b.Property<string>("Notes")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("StudentId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AssignmentId");
-
-                    b.HasIndex("StudentId");
-
-                    b.ToTable("SubmittedAssignments");
-                });
-
             modelBuilder.Entity("SmartSchool.Core.Models.Teacher", b =>
                 {
                     b.Property<int>("Id")
@@ -494,7 +468,7 @@ namespace SmartSchool.EF.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("HireDate")
-                        .HasColumnType("DateTime2");
+                        .HasColumnType("datetime2");
 
                     b.Property<double>("Salary")
                         .HasColumnType("float");
@@ -525,7 +499,7 @@ namespace SmartSchool.EF.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("EndDate")
-                        .HasColumnType("DateTime2");
+                        .HasColumnType("datetime2");
 
                     b.Property<bool>("IsAgreeded")
                         .HasColumnType("bit");
@@ -535,7 +509,7 @@ namespace SmartSchool.EF.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("StartDate")
-                        .HasColumnType("DateTime2");
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("TeacherId")
                         .HasColumnType("int");
@@ -556,7 +530,7 @@ namespace SmartSchool.EF.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("AcademicYear")
-                        .HasColumnType("DateTime2");
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("Semster")
                         .HasColumnType("int");
@@ -589,13 +563,13 @@ namespace SmartSchool.EF.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("EndTime")
-                        .HasColumnType("DateTime2");
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("GroupId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("StartTime")
-                        .HasColumnType("DateTime2");
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("SubjectDetailId")
                         .HasColumnType("int");
@@ -631,10 +605,10 @@ namespace SmartSchool.EF.Migrations
                         .HasColumnType("nvarchar(150)");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("DateTime2");
+                        .HasColumnType("datetime2");
 
                     b.Property<DateTime>("DateOfBirth")
-                        .HasColumnType("DateTime2");
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -673,8 +647,25 @@ namespace SmartSchool.EF.Migrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("SmartSchool.Core.Models.Adminstration", b =>
+                {
+                    b.HasOne("SmartSchool.Core.Models.User", "User")
+                        .WithOne("Adminstration")
+                        .HasForeignKey("SmartSchool.Core.Models.Adminstration", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("SmartSchool.Core.Models.Assignment", b =>
                 {
+                    b.HasOne("SmartSchool.Core.Models.Student", "Student")
+                        .WithMany("Assignment")
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
                     b.HasOne("SmartSchool.Core.Models.SubjectDetail", "SubjectDetail")
                         .WithMany("Assignments")
                         .HasForeignKey("SubjectDetailId")
@@ -686,6 +677,8 @@ namespace SmartSchool.EF.Migrations
                         .HasForeignKey("SubjectDetailsId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
+
+                    b.Navigation("Student");
 
                     b.Navigation("SubjectDetail");
 
@@ -860,25 +853,6 @@ namespace SmartSchool.EF.Migrations
                     b.Navigation("Subject");
                 });
 
-            modelBuilder.Entity("SmartSchool.Core.Models.SubmittedAssignment", b =>
-                {
-                    b.HasOne("SmartSchool.Core.Models.Assignment", "Assignment")
-                        .WithMany("SubmittedAssignments")
-                        .HasForeignKey("AssignmentId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("SmartSchool.Core.Models.Student", "Student")
-                        .WithMany("SubmittedAssignments")
-                        .HasForeignKey("StudentId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("Assignment");
-
-                    b.Navigation("Student");
-                });
-
             modelBuilder.Entity("SmartSchool.Core.Models.Teacher", b =>
                 {
                     b.HasOne("SmartSchool.Core.Models.Specialty", "Specialty")
@@ -966,11 +940,6 @@ namespace SmartSchool.EF.Migrations
                     b.Navigation("Role");
                 });
 
-            modelBuilder.Entity("SmartSchool.Core.Models.Assignment", b =>
-                {
-                    b.Navigation("SubmittedAssignments");
-                });
-
             modelBuilder.Entity("SmartSchool.Core.Models.ExamType", b =>
                 {
                     b.Navigation("Exams");
@@ -1014,11 +983,11 @@ namespace SmartSchool.EF.Migrations
 
             modelBuilder.Entity("SmartSchool.Core.Models.Student", b =>
                 {
+                    b.Navigation("Assignment");
+
                     b.Navigation("Resultes");
 
                     b.Navigation("StudentAttendances");
-
-                    b.Navigation("SubmittedAssignments");
                 });
 
             modelBuilder.Entity("SmartSchool.Core.Models.Subject", b =>
@@ -1054,6 +1023,9 @@ namespace SmartSchool.EF.Migrations
 
             modelBuilder.Entity("SmartSchool.Core.Models.User", b =>
                 {
+                    b.Navigation("Adminstration")
+                        .IsRequired();
+
                     b.Navigation("Guardian")
                         .IsRequired();
 

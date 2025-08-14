@@ -30,7 +30,6 @@ namespace SmartSchool.EF
 
 
         // Here Know what classes are tables in DB
-        public DbSet<Adminstration> Adminstrations { get; set; }
         public DbSet<Student> Students { get; set; }
         public DbSet<Guardian> Guardians { get; set; }
         public DbSet<RelationType> RelationTypes { get; set; }
@@ -150,12 +149,7 @@ namespace SmartSchool.EF
                 .HasForeignKey(u => u.TeacherId)
                 .OnDelete(DeleteBehavior.NoAction); // <-- تعديل جديد هنا
 
-            //Relation Student(1) between Assignment(n) tables 
-            modelBuilder.Entity<Student>()
-                .HasMany(u => u.Assignment)
-                .WithOne(m => m.Student)
-                .HasForeignKey(u => u.StudentId)
-                .OnDelete(DeleteBehavior.NoAction);
+            
 
             //Relation Student(1) between Resaults(n) tables
             modelBuilder.Entity<Student>()
@@ -165,11 +159,7 @@ namespace SmartSchool.EF
                 .OnDelete(DeleteBehavior.NoAction);
 
 
-            //Relation Between User(1) and Adminstration(1)
-            modelBuilder.Entity<Adminstration>()
-                .HasOne(u => u.User)
-                .WithOne(r => r.Adminstration)
-                .HasForeignKey<Adminstration>(u => u.UserId);
+            
 
             //Relation Between User(1) and Guardian(1)
             modelBuilder.Entity<Guardian>()

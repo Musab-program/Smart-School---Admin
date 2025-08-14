@@ -11,5 +11,9 @@ namespace SmartSchool.Core.Shared
         public object? Data { get ; set; } 
         public long? Code { get; set; }
         public string Message { get; set; }
+        public object? Data { get; set; }
+        public long? Code { get; set; }
+        public string Message { get; set; }
+
     }
 }

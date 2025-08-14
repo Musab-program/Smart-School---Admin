@@ -24,10 +24,11 @@ namespace SmartSchool.Core.Models
         
         public DateTime CreatedAt { get; set; }
         
+        public DateTime CreatedAt { get; set; }
         public bool IsActive { get; set; }
-        [Required, MaxLength(100)]
+        [Required, MaxLength(150)]
         public string Address { get; set; }
-        [Required, MaxLength(100)]
+        [Required, MaxLength(20)]
         public string gender { get; set; }
 
         //Forign Key 1 to n With Role Table

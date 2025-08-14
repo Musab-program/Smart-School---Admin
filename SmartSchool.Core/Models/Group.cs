@@ -12,6 +12,7 @@ namespace SmartSchool.Core.Models
         //These Attributes Are The Culomns for Group Table In Database
         public int Id { get; set; }
         [Required] 
+        [Required]
         public string Name { get; set; }
         public Grade Grade { get; set; } //Navigation Properity From Grade(1) To Group(n)
         public int GradeId { get; set; } //Forign Key n to 1 With Grade Table
