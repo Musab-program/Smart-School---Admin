@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SmartSchool.EF;
 
@@ -11,9 +12,11 @@ using SmartSchool.EF;
 namespace SmartSchool.EF.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250814144317_AddNewTableSubmittedAssignmentAndItsRelationshipInAppDbCont")]
+    partial class AddNewTableSubmittedAssignmentAndItsRelationshipInAppDbCont
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -40,6 +43,9 @@ namespace SmartSchool.EF.Migrations
                     b.Property<double>("Mark")
                         .HasColumnType("float");
 
+                    b.Property<int>("StudentId")
+                        .HasColumnType("int");
+
                     b.Property<int>("SubjectDetailId")
                         .HasColumnType("int");
 
@@ -54,6 +60,8 @@ namespace SmartSchool.EF.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("StudentId");
 
                     b.HasIndex("SubjectDetailId");
 
@@ -653,6 +661,12 @@ namespace SmartSchool.EF.Migrations
 
             modelBuilder.Entity("SmartSchool.Core.Models.Assignment", b =>
                 {
+                    b.HasOne("SmartSchool.Core.Models.Student", "Student")
+                        .WithMany("Assignment")
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
                     b.HasOne("SmartSchool.Core.Models.SubjectDetail", "SubjectDetail")
                         .WithMany("Assignments")
                         .HasForeignKey("SubjectDetailId")
@@ -664,6 +678,8 @@ namespace SmartSchool.EF.Migrations
                         .HasForeignKey("SubjectDetailsId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
+
+                    b.Navigation("Student");
 
                     b.Navigation("SubjectDetail");
 
@@ -992,6 +1008,8 @@ namespace SmartSchool.EF.Migrations
 
             modelBuilder.Entity("SmartSchool.Core.Models.Student", b =>
                 {
+                    b.Navigation("Assignment");
+
                     b.Navigation("Resultes");
 
                     b.Navigation("StudentAttendances");

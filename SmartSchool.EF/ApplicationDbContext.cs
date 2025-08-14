@@ -29,7 +29,6 @@ namespace SmartSchool.EF
 
 
         // Here Know what classes are tables in DB
-        public DbSet<Adminstration> Adminstrations { get; set; }
         public DbSet<Student> Students { get; set; }
         public DbSet<Guardian> Guardians { get; set; }
         public DbSet<RelationType> RelationTypes { get; set; }
@@ -40,6 +39,7 @@ namespace SmartSchool.EF
         public DbSet<Specialty> Specialties { get; set;} 
         public DbSet<TeacherHoliday> TeacherHolidays { get; set;} 
         public DbSet<TimeTable> TimeTables { get; set;}
+        public DbSet<SubmittedAssignment> SubmittedAssignments { get; set;}
 
 
         //Here write settings of special relationships
@@ -147,26 +147,12 @@ namespace SmartSchool.EF
                 .HasForeignKey(u => u.TeacherId)
                 .OnDelete(DeleteBehavior.NoAction); // <-- تعديل جديد هنا
 
-            //Relation Student(1) between Assignment(n) tables 
-            modelBuilder.Entity<Student>()
-                .HasMany(u => u.Assignment)
-                .WithOne(m => m.Student)
-                .HasForeignKey(u => u.StudentId)
-                .OnDelete(DeleteBehavior.NoAction);
-
             //Relation Student(1) between Resaults(n) tables
             modelBuilder.Entity<Student>()
                 .HasMany(u => u.Resultes)
                 .WithOne(m => m.Student)
                 .HasForeignKey(u => u.StudentId)
                 .OnDelete(DeleteBehavior.NoAction);
-
-
-            //Relation Between User(1) and Adminstration(1)
-            modelBuilder.Entity<Adminstration>()
-                .HasOne(u => u.User)
-                .WithOne(r => r.Adminstration)
-                .HasForeignKey<Adminstration>(u => u.UserId);
 
             //Relation Between User(1) and Guardian(1)
             modelBuilder.Entity<Guardian>()
@@ -263,6 +249,37 @@ namespace SmartSchool.EF
                 .WithMany(r => r.TimeTables)
                 .HasForeignKey(u => u.SubjectDetailId)
                 .OnDelete(DeleteBehavior.NoAction);
+            
+            // Relation Between SubjectDetails(1) and TimeTables(n) - CORRECTED
+            modelBuilder.Entity<TimeTable>()
+                .HasOne(u => u.SubjectDetail)
+                .WithMany(r => r.TimeTables)
+                .HasForeignKey(u => u.SubjectDetailId)
+                .OnDelete(DeleteBehavior.NoAction);
+            
+            // Relation Between SubjectDetails(1) and TimeTables(n) - CORRECTED
+            modelBuilder.Entity<TimeTable>()
+                .HasOne(u => u.SubjectDetail)
+                .WithMany(r => r.TimeTables)
+                .HasForeignKey(u => u.SubjectDetailId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            // Relation Between Student(1) and SubmittedAssignment(n)
+            modelBuilder.Entity<SubmittedAssignment>()
+                .HasOne(sa => sa.Student) // SubmittedAssignment has one Student
+                .WithMany(s => s.SubmittedAssignments) // Student has many SubmittedAssignments
+                .HasForeignKey(sa => sa.StudentId) // The foreign key in SubmittedAssignment table is StudentId
+                .OnDelete(DeleteBehavior.NoAction); // Prevents cascading deletes.
+
+            // Relation Between Assignment(1) and SubmittedAssignment(n)
+            modelBuilder.Entity<SubmittedAssignment>()
+                .HasOne(sa => sa.Assignment) // SubmittedAssignment has one Assignment
+                .WithMany(a => a.SubmittedAssignments) // Assignment has many SubmittedAssignments
+                .HasForeignKey(sa => sa.AssignmentId) // The foreign key in SubmittedAssignment table is AssignmentId
+                .OnDelete(DeleteBehavior.NoAction); // Prevents cascading deletes.
+
+
+            
         }
 
 
