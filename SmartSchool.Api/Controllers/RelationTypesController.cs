@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 using SmartSchool.Core;
 using SmartSchool.Core.Models;
-using SmartSchool.Main.Dto;
+using SmartSchool.Main.Dtos;
 using SmartSchool.Main.InterFaces;
 
 namespace SmartSchool.Api.Controllers

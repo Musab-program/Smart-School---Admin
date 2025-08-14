@@ -1,7 +1,7 @@
 ﻿
 using SmartSchool.Core;
 using SmartSchool.Core.Shared;
-using SmartSchool.Main.Dto;
+using SmartSchool.Main.Dtos;
 
 namespace SmartSchool.Main.InterFaces
 {
