@@ -23,8 +23,7 @@ namespace SmartSchool.Core.Models
         public DateTime DateOfBirth { get; set; }
         
         public DateTime CreatedAt { get; set; }
-        
-        public DateTime CreatedAt { get; set; }
+
         public bool IsActive { get; set; }
         [Required, MaxLength(150)]
         public string Address { get; set; }

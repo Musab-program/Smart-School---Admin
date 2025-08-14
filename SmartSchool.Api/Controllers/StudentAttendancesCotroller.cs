@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using SmartSchool.Main.Dto;
+using SmartSchool.Main.Dtos;
 using SmartSchool.Core;
 using SmartSchool.Main.InterFaces;
 

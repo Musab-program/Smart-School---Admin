@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SmartSchool.Main.Dto
+namespace SmartSchool.Main.Dtos
 {
     public class RelationTypeDto
     {
