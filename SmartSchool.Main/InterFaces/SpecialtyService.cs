@@ -1,8 +1,7 @@
-﻿using SmartSchool.Api.Dtos;
+﻿using SmartSchool.Main.Dtos;
 using SmartSchool.Core;
 using SmartSchool.Core.Models;
 using SmartSchool.Core.Shared;
-using SmartSchool.Main.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
