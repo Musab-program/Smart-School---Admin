@@ -15,7 +15,6 @@ namespace RepositoryPatternWithUOW.EF
         private readonly ApplicationDbContext _context;
 
 
-        public IBaseRepository<Adminstration> Adminstrations { get; private set; }
 
         public IBaseRepository<Assignment> Assignments { get; private set; }
 
@@ -63,7 +62,6 @@ namespace RepositoryPatternWithUOW.EF
         {
             _context = context;
 
-            Adminstrations = new BaseRepository<Adminstration>(_context);
             Assignments = new BaseRepository<Assignment>(_context);
             Contents = new BaseRepository<Content>(_context);
             Exams = new BaseRepository<Exam>(_context);
