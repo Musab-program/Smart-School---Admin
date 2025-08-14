@@ -15,36 +15,6 @@ namespace RepositoryPatternWithUOW.EF
         private readonly ApplicationDbContext _context;
 
         
-        public UnitOfWork(ApplicationDbContext context)
-        {
-            _context = context;
-
-            Adminstrations = new BaseRepository<Adminstration>(_context);
-            Assignments = new BaseRepository<Assignment>(_context);
-            Contents = new BaseRepository<Content>(_context);
-            Exams = new BaseRepository<Exam>(_context);
-            ExamTypes = new BaseRepository<ExamType>(_context);
-            Grades = new BaseRepository<Grade>(_context);
-            Groups = new BaseRepository<Group>(_context);
-            Guardians = new BaseRepository<Guardian>(_context);
-            Notifiactions = new BaseRepository<Notifiaction>(_context);
-            RelationTypes = new BaseRepository<RelationType>(_context);
-            Resultes = new BaseRepository<Resulte>(_context);
-            Roles = new BaseRepository<Role>(_context);
-            Specialtys = new BaseRepository<Specialty>(_context);
-            Students = new BaseRepository<Student>(_context);
-            StudentAttendances = new BaseRepository<StudentAttendance>(_context);
-            Subjects = new BaseRepository<Subject>(_context);
-            SubjectDetails = new BaseRepository<SubjectDetail>(_context);
-            Teachers = new BaseRepository<Teacher>(_context);
-            TeacherHolidays = new BaseRepository<TeacherHoliday>(_context);
-            TeachingSubjects = new BaseRepository<TeachingSubject>(_context);
-            TimeTables = new BaseRepository<TimeTable>(_context);
-            Users = new BaseRepository<User>(_context);
-
-        }
-
-        public IBaseRepository<Adminstration> Adminstrations { get; private set; }
 
         public IBaseRepository<Assignment> Assignments { get; private set; }
 
@@ -88,7 +58,35 @@ namespace RepositoryPatternWithUOW.EF
 
         public IBaseRepository<User> Users { get; private set; }
 
-        public int Complete()
+        public UnitOfWork(ApplicationDbContext context)
+        {
+            _context = context;
+
+            Assignments = new BaseRepository<Assignment>(_context);
+            Contents = new BaseRepository<Content>(_context);
+            Exams = new BaseRepository<Exam>(_context);
+            ExamTypes = new BaseRepository<ExamType>(_context);
+            Grades = new BaseRepository<Grade>(_context);
+            Groups = new BaseRepository<Group>(_context);
+            Guardians = new BaseRepository<Guardian>(_context);
+            Notifiactions = new BaseRepository<Notifiaction>(_context);
+            RelationTypes = new BaseRepository<RelationType>(_context);
+            Resultes = new BaseRepository<Resulte>(_context);
+            Roles = new BaseRepository<Role>(_context);
+            Specialtys = new BaseRepository<Specialty>(_context);
+            Students = new BaseRepository<Student>(_context);
+            StudentAttendances = new BaseRepository<StudentAttendance>(_context);
+            Subjects = new BaseRepository<Subject>(_context);
+            SubjectDetails = new BaseRepository<SubjectDetail>(_context);
+            Teachers = new BaseRepository<Teacher>(_context);
+            TeacherHolidays = new BaseRepository<TeacherHoliday>(_context);
+            TeachingSubjects = new BaseRepository<TeachingSubject>(_context);
+            TimeTables = new BaseRepository<TimeTable>(_context);
+            Users = new BaseRepository<User>(_context);
+
+        }
+
+        public int Save()
         {
             return _context.SaveChanges();
         }

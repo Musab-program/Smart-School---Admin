@@ -16,7 +16,6 @@ namespace SmartSchool.Core
         /// <summary>
         /// References for all the repositories 
         /// </summary>
-        IBaseRepository<Adminstration> Adminstrations { get; }
         IBaseRepository<Assignment> Assignments { get; }
         IBaseRepository<Content> Contents { get; }
         IBaseRepository<Exam> Exams { get; }
@@ -41,6 +40,6 @@ namespace SmartSchool.Core
 
 
 
-        int Complete();
+        int Save();
     }
 }

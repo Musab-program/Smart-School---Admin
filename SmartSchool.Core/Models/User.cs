@@ -21,19 +21,16 @@ namespace SmartSchool.Core.Models
         public string Phone { get; set; }
         [Required]
         public DateTime DateOfBirth { get; set; }
-        [Required]
         public DateTime CreatedAt { get; set; }
-        [Required]
         public bool IsActive { get; set; }
-        [Required, MaxLength(100)]
+        [Required, MaxLength(150)]
         public string Address { get; set; }
-        [Required, MaxLength(100)]
+        [Required, MaxLength(20)]
         public string gender { get; set; }
 
         //Forign Key 1 to n With Role Table
         public Role Role { get; set; } //Navigation Properity From User (1) To Role(n)
         public int RoleId { get; set; }
-        public Adminstration Adminstration { get; set; } //Navigation Properity From User (1) To Adminstration(1)
         public Guardian Guardian { get; set; } //Navigation Properity From User (1) To Guardian(1)
         public Student Student { get; set; } //Navigation Properity From User (1) To Student(1)
         public Teacher Teacher { get; set; } //Navigation Properity From User (1) To Teacher(1)

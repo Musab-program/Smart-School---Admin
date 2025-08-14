@@ -5,6 +5,8 @@ using SmartSchool.Core;
 using SmartSchool.Core.Interfaces;
 using SmartSchool.EF;
 using SmartSchool.EF.ImplementedClasses;
+using SmartSchool.Main.InterFaces;
+using static SmartSchool.Main.InterFaces.ContentService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -84,6 +86,9 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 /////////
 builder.Services.AddTransient(typeof(IBaseRepository<>), typeof(BaseRepository<>));
 builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
+builder.Services.AddTransient<IRoleService, RoleService>();
+builder.Services.AddTransient<IAssignmentService, AssignmentService>();
+builder.Services.AddTransient<IContentService, ContentService>();
 
 var app = builder.Build();
 
