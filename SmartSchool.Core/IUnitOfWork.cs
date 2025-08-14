@@ -41,6 +41,6 @@ namespace SmartSchool.Core
 
 
 
-        int Complete();
+        int Save();
     }
 }

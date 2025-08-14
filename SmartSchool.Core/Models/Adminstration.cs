@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace SmartSchool.Core.Models
 {
+
     public class Adminstration
     {
         //These Attributes Are The Culomns for Adminstration Table In Database

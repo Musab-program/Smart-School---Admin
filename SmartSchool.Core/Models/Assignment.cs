@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,6 +17,7 @@ namespace SmartSchool.Core.Models
         public int StudentId { get; set; }//Forign Key n to 1 With Student Table
         public SubjectDetail SubjectDetails { get; set; }
         public int SubjectDetailsId { get; set; }//Forign Key n to 1 With SubjectDetails Table
+        [Required]
         public string Title { get; set; }
         public DateTime LastDate { get; set; }
         public DateTime SubmitedDate { get; set; }

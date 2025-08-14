@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SmartSchool.Core.Models;
 
 namespace SmartSchool.EF
@@ -45,6 +46,8 @@ namespace SmartSchool.EF
         //Here write settings of special relationships
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
+
             //Make default sitting of EF before we edit on it
             base.OnModelCreating(modelBuilder);
 

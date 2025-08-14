@@ -21,9 +21,9 @@ namespace SmartSchool.Core.Models
         public string Phone { get; set; }
         [Required]
         public DateTime DateOfBirth { get; set; }
-        [Required]
+        
         public DateTime CreatedAt { get; set; }
-        [Required]
+        
         public bool IsActive { get; set; }
         [Required, MaxLength(100)]
         public string Address { get; set; }

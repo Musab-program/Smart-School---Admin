@@ -16,10 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SmartSchool.EF\SmartSchool.EF.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Dtos\" />
+    <ProjectReference Include="..\SmartSchool.Main\SmartSchool.Main.csproj" />
   </ItemGroup>
 
 </Project>

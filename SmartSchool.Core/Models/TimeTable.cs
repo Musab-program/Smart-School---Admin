@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,8 +18,11 @@ namespace SmartSchool.Core.Models
         public int SubjectDetailsId { get; set; }//Forign Key 1 to n With SujectDetails Table
         public Teacher Teacher { get; set; } //Navigation Properity From Teacher(1) To TimeTable(n)
         public int TeacherId { get; set; }//Forign Key n to 1 With Role Table
+        [Required]
         public string DayOfWeek { get; set; }
+        [Required]
         public DateTime StartTime { get; set; }
+        [Required]
         public DateTime EndTime { get; set; }
     }
 }
