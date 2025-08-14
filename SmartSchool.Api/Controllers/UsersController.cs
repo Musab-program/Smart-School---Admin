@@ -9,6 +9,7 @@ namespace SmartSchool.Main.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+
     public class UsersController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;

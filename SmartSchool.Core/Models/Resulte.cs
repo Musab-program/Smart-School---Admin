@@ -19,6 +19,7 @@ namespace SmartSchool.Core.Models
         public int StudentId { get; set; } //Forign Key n to 1 With Student Table
         [Required]
         public double Mark { get; set; }
+
         public string Rate { get; set; }
     }
 }

@@ -14,7 +14,7 @@ namespace RepositoryPatternWithUOW.EF
     {
         private readonly ApplicationDbContext _context;
 
-        
+
 
         public IBaseRepository<Assignment> Assignments { get; private set; }
 
@@ -85,6 +85,7 @@ namespace RepositoryPatternWithUOW.EF
             Users = new BaseRepository<User>(_context);
 
         }
+
 
         public int Save()
         {

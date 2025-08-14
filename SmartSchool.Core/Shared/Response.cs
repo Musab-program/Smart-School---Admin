@@ -8,6 +8,9 @@ namespace SmartSchool.Core.Shared
 {
     public class Response<T>
     {
+        public object? Data { get ; set; } 
+        public long? Code { get; set; }
+        public string Message { get; set; }
         public object? Data { get; set; }
         public long? Code { get; set; }
         public string Message { get; set; }

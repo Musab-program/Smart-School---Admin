@@ -8,6 +8,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SmartSchool.Core\SmartSchool.Core.csproj" />
+    <ProjectReference Include="..\SmartSchool.EF\SmartSchool.EF.csproj" />
+
   </ItemGroup>
 
 </Project>
