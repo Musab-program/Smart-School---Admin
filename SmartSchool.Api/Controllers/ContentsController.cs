@@ -23,16 +23,16 @@ namespace SmartSchool.Api.Controllers
             }
 
             // End Point For Get All Elements In This Domin Class
-            [HttpGet("GetAllRoles")]
-            public async Task<IActionResult> GetAllRoles()
+            [HttpGet("GetAllContents")]
+            public async Task<IActionResult> GetAllContents()
             {
                 var result = await _contentService.GetAllContents();
                 return Ok(result);
             }
 
             // End Point For Get Element By Id In This Domin Class
-            [HttpGet("GetByIdRole/{id}")]
-            public async Task<IActionResult> GetByIdRole(int id)
+            [HttpGet("GetContentById/{id}")]
+            public async Task<IActionResult> GetContentById(int id)
             {
                 var result = await _contentService.GetContentById(id);
                 return Ok(result);
@@ -40,24 +40,24 @@ namespace SmartSchool.Api.Controllers
 
 
             // End Point To Add Element In This Domin Class
-            [HttpPost("AddRole")]
-            public async Task<IActionResult> AddRole([FromBody] ContentDto dto)
+            [HttpPost("AddContent")]
+            public async Task<IActionResult> AddContent([FromBody] ContentDto dto)
             {
                 var result = await _contentService.AddContent(dto);
                 return Ok(result);
             }
 
             // End Point To Update Element In This Domin Class
-            [HttpPut("UpdateRole")]
-            public async Task<IActionResult> UpdateRole([FromBody] ContentDto dto)
+            [HttpPut("UpdateContent")]
+            public async Task<IActionResult> UpdateContent([FromBody] ContentDto dto)
             {
                 var result = await _contentService.UpdateContent(dto);
                 return Ok(result);
             }
 
             // End Point To Delete Element In This Domin Class
-            [HttpDelete("DeleteRole")]
-            public async Task<IActionResult> DeleteRole(int id)
+            [HttpDelete("DeleteContent")]
+            public async Task<IActionResult> DeleteContent(int id)
             {
                 var result = await _contentService.DeleteContent(id);
                 return Ok(result);

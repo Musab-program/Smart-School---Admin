@@ -80,11 +80,9 @@ namespace SmartSchool.Main.InterFaces
             {
                 Id = s.Id,
                 Title = s.Title,
-                Mark = s.Mark,
-                ChekeState = s.ChekeState,
                 LastDate = s.LastDate,
                 SubjectDetailId = s.SubjectDetailId,
-                SubmitedDate = s.SubmitedDate,
+                UploadDate = s.UploadDate,
             });
             return new Response<AssignmentDto>
             {
@@ -105,14 +103,13 @@ namespace SmartSchool.Main.InterFaces
                     Code = 400,
                 };
             return new Response<AssignmentDto>
-            {
+            {   
                 Data = new AssignmentDto {
                     Id = assignment.Id,
                     Title = assignment.Title,
-                    ChekeState = assignment.ChekeState,
                     LastDate = assignment.LastDate,
                     SubjectDetailId = assignment.SubjectDetailId,
-                    SubmitedDate = assignment.SubmitedDate,
+                    UploadDate = assignment.UploadDate,
                 },
                 Code = 200,
                 Message = "تم استدعاء النوع برقم التعريف",
