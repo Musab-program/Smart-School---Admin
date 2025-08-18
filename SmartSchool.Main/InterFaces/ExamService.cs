@@ -42,8 +42,8 @@ namespace SmartSchool.Main.InterFaces
                     Code = 400,
                 };
             
-            var student = await _unitOfWork.Students.FindAsync(a => a.Id == dto.Id);
-            if (student == null)
+            var group = await _unitOfWork.Groups.FindAsync(a => a.Id == dto.Id);
+            if (group == null)
                 return new Response<ExamDto>
                 {
                     Message = "الطالب غير موجود",
@@ -63,7 +63,7 @@ namespace SmartSchool.Main.InterFaces
             {
                 ExamDate = dto.ExamDate,
                 LimitTime = dto.LimitTime,
-                StudentId = dto.StudentId,
+                GroupId = dto.GroupId,
                 SubjectDetailId = dto.SubjectDetailId,
                 ExamTypeId = dto.ExamTypeId,         
             };
@@ -108,7 +108,7 @@ namespace SmartSchool.Main.InterFaces
                 SubjectDetailId = s.SubjectDetailId,
                 ExamDate = s.ExamDate,
                 LimitTime = s.LimitTime,
-                StudentId = s.StudentId,
+                GroupId = s.GroupId,
                 ExamTypeId = s.ExamTypeId,
             });
             return new Response<ExamDto>
@@ -137,7 +137,7 @@ namespace SmartSchool.Main.InterFaces
                     SubjectDetailId = exam.SubjectDetailId,
                     ExamDate = exam.ExamDate,
                     LimitTime = exam.LimitTime,
-                    StudentId = exam.StudentId,
+                    GroupId = exam.GroupId,
                     ExamTypeId = exam.ExamTypeId,
                 },
                 Code = 200,
@@ -160,7 +160,7 @@ namespace SmartSchool.Main.InterFaces
             exam.SubjectDetailId = dto.SubjectDetailId;
             exam.ExamDate = dto.ExamDate;
             exam.LimitTime = dto.LimitTime;
-            exam.StudentId = dto.StudentId;
+            exam.GroupId = dto.GroupId;
             exam.ExamTypeId = dto.ExamTypeId;
 
             var examNew = _unitOfWork.Exams.Update(exam);

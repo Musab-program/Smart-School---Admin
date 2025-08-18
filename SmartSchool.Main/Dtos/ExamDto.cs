@@ -10,10 +10,10 @@ namespace SmartSchool.Main.Dtos
     {
         public int Id { get; set; }
         public int SubjectDetailId { get; set; }//Forign Key n to 1 With SubjectDetails Table
-        public int StudentId { get; set; }//Forign Key n to 1 With strudent Table
         public DateTime ExamDate { get; set; }
-        public int SubjectDetailsId { get; set; }//Forign Key n to 1 With SubjectDetails Table
         public int ExamTypeId { get; set; }//Forign Key 1 to n With ExamType Table
         public int LimitTime { get; set; }
+        public int GroupId { get; set; }
+
     }
 }

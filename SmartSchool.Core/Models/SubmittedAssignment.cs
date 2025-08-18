@@ -15,6 +15,7 @@ namespace SmartSchool.Core.Models
         public int AssignmentId { get; set; }
         public string FilePath { get; set; } //Show file Path in DB or Any To (don't need to stored in db)
         public double Mark { get; set; }
+        public DateTime SubmittedDate { get; set; }
         public string ChekeState { get; set; }
         public string Notes { get; set; }
     }
