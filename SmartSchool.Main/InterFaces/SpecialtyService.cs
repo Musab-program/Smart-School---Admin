@@ -68,7 +68,7 @@ namespace SmartSchool.Main.InterFaces
         }
 
 
-        public async Task<Response<SpecialtyDto>> GetAllSpecialty()
+        public async Task<Response<SpecialtyDto>> GetAllSpecialties()
         {
             var specialties = await _unitOfWork.Specialtys.GetAllAsync();
 
@@ -147,7 +147,7 @@ namespace SmartSchool.Main.InterFaces
     public interface ISpecialtyService
     {
         Task<Response<SpecialtyDto>> AddSpecialty(SpecialtyDto dto);
-        Task<Response<SpecialtyDto>> GetAllSpecialty();
+        Task<Response<SpecialtyDto>> GetAllSpecialties();
         Task<Response<SpecialtyDto>> GetByIdSpecialty(int id);
         Task<Response<SpecialtyDto>> UpdateSpecialty(SpecialtyDto dto);
         Task<Response<SpecialtyDto>> DeleteSpecialty(int id);
