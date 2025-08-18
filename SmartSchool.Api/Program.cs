@@ -106,6 +106,13 @@ builder.Services.AddTransient<ITimeTableService, TimeTableService>();
 builder.Services.AddTransient<IRoleService, RoleService>();
 builder.Services.AddTransient<IAssignmentService, AssignmentService>();
 builder.Services.AddTransient<IContentService, ContentService>();
+builder.Services.AddTransient<IExamService, ExamService>();
+builder.Services.AddTransient<IExamTypeService, ExamTypeService>();
+builder.Services.AddTransient<IGradeService, GradeService>();
+builder.Services.AddTransient<IGroupService, GroupService>();
+builder.Services.AddTransient<IGuardianService, GuardianService>();
+builder.Services.AddTransient<IResulteService, ResulteService>();
+builder.Services.AddTransient<ITeacherHolidayService, TeacherHolidayService>();
 
 
 var app = builder.Build();

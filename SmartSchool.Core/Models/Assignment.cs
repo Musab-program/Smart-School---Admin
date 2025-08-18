@@ -13,14 +13,10 @@ namespace SmartSchool.Core.Models
         public int Id { get; set; }
         public SubjectDetail SubjectDetail { get; set; }//Navigation proprity from SubjectDetail(1) to Assignment(n) 
         public int SubjectDetailId { get; set; }//Forign Key n to 1 With SubjectDetails Table
-        public SubjectDetail SubjectDetails { get; set; }
-        public int SubjectDetailsId { get; set; }//Forign Key n to 1 With SubjectDetails Table
         [Required]
         public string Title { get; set; }
         public DateTime LastDate { get; set; }
-        public DateTime SubmitedDate { get; set; }
-        public string ChekeState { get; set; }
-        public double Mark { get; set; }
+        public DateTime UploadDate { get; set; } // When Teatcher submited The Assignment
         public ICollection<SubmittedAssignment> SubmittedAssignments { get; set; }//Navigation proprity from SubmittedAssignment(n) to Assignment(1) 
     }
 }

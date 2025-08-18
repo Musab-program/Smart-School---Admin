@@ -8,7 +8,7 @@
         public int SubjectDetailsId { get; set; }//Forign Key n to 1 With SubjectDetails Table
         public string Title { get; set; }
         public DateTime LastDate { get; set; }
-        public DateTime SubmitedDate { get; set; }
+        public DateTime UploadDate { get; set; }
         public string ChekeState { get; set; }
         public double Mark { get; set; }
     }

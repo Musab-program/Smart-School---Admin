@@ -81,9 +81,9 @@ namespace SmartSchool.EF
 
             // NEW: Configuring the second foreign key to SubjectDetails and disabling cascade delete
             modelBuilder.Entity<Assignment>()
-                .HasOne(a => a.SubjectDetails)
+                .HasOne(a => a.SubjectDetail)
                 .WithMany()
-                .HasForeignKey(a => a.SubjectDetailsId)
+                .HasForeignKey(a => a.SubjectDetailId)
                 .OnDelete(DeleteBehavior.NoAction);
 
             //Relation SubjectDetail(1) between Resaults(n) tables 
