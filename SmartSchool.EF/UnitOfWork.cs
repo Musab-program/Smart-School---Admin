@@ -14,7 +14,7 @@ namespace RepositoryPatternWithUOW.EF
     {
         private readonly ApplicationDbContext _context;
 
-        
+
 
         public IBaseRepository<Assignment> Assignments { get; private set; }
 
@@ -58,6 +58,9 @@ namespace RepositoryPatternWithUOW.EF
 
         public IBaseRepository<User> Users { get; private set; }
 
+        //to make sure there is property or not
+        public IBaseRepository<SubmittedAssignment> SubmittedAssignments {get; private set; }
+
         public UnitOfWork(ApplicationDbContext context)
         {
             _context = context;
@@ -83,8 +86,11 @@ namespace RepositoryPatternWithUOW.EF
             TeachingSubjects = new BaseRepository<TeachingSubject>(_context);
             TimeTables = new BaseRepository<TimeTable>(_context);
             Users = new BaseRepository<User>(_context);
+            // to make sure there is property or not
+            SubmittedAssignments = new BaseRepository<SubmittedAssignment>(_context);
 
         }
+
 
         public int Save()
         {

@@ -37,6 +37,9 @@ namespace SmartSchool.Core
         IBaseRepository<TeachingSubject> TeachingSubjects { get; }
         IBaseRepository<TimeTable> TimeTables { get; }
         IBaseRepository<User> Users { get; }
+        
+        //to make sure there is property or not
+        IBaseRepository<SubmittedAssignment> SubmittedAssignments { get; }
 
 
 

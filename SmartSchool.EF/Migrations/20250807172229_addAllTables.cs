@@ -18,7 +18,7 @@ namespace SmartSchool.EF.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Year = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    Year = table.Column<DateTime>(type: "DateTime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -101,7 +101,7 @@ namespace SmartSchool.EF.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     GradeId = table.Column<int>(type: "int", nullable: false),
-                    AcademicYear = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    AcademicYear = table.Column<DateTime>(type: "DateTime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -124,8 +124,8 @@ namespace SmartSchool.EF.Migrations
                     Password = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Phone = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    DateOfBirth = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DateOfBirth = table.Column<DateTime>(type: "DateTime2", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "DateTime2", nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
                     Address = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     gender = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
@@ -176,7 +176,7 @@ namespace SmartSchool.EF.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<int>(type: "int", nullable: false),
-                    EnrollmentDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    EnrollmentDate = table.Column<DateTime>(type: "DateTime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -223,7 +223,7 @@ namespace SmartSchool.EF.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<int>(type: "int", nullable: false),
-                    HireDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    HireDate = table.Column<DateTime>(type: "DateTime2", nullable: false),
                     SpecialtyId = table.Column<int>(type: "int", nullable: false),
                     Salary = table.Column<double>(type: "float", nullable: false)
                 },
@@ -274,7 +274,7 @@ namespace SmartSchool.EF.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<int>(type: "int", nullable: false),
                     GroupId = table.Column<int>(type: "int", nullable: false),
-                    RegisterDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    RegisterDate = table.Column<DateTime>(type: "DateTime2", nullable: false),
                     GuardianId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -306,8 +306,8 @@ namespace SmartSchool.EF.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     TeacherId = table.Column<int>(type: "int", nullable: false),
-                    StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    EndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    StartDate = table.Column<DateTime>(type: "DateTime2", nullable: false),
+                    EndDate = table.Column<DateTime>(type: "DateTime2", nullable: false),
                     Reason = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     IsAgreeded = table.Column<bool>(type: "bit", nullable: false)
                 },
@@ -328,7 +328,7 @@ namespace SmartSchool.EF.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    AcademicYear = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    AcademicYear = table.Column<DateTime>(type: "DateTime2", nullable: false),
                     Semster = table.Column<int>(type: "int", nullable: false),
                     SubjectDetailId = table.Column<int>(type: "int", nullable: false),
                     TeacherId = table.Column<int>(type: "int", nullable: false)
@@ -358,8 +358,8 @@ namespace SmartSchool.EF.Migrations
                     SubjectDetailId = table.Column<int>(type: "int", nullable: false),
                     TeacherId = table.Column<int>(type: "int", nullable: false),
                     DayOfWeek = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    StartTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    EndTime = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    StartTime = table.Column<DateTime>(type: "DateTime2", nullable: false),
+                    EndTime = table.Column<DateTime>(type: "DateTime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -391,8 +391,8 @@ namespace SmartSchool.EF.Migrations
                     StudentId = table.Column<int>(type: "int", nullable: false),
                     SubjectDetailsId = table.Column<int>(type: "int", nullable: false),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LastDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    SubmitedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    LastDate = table.Column<DateTime>(type: "DateTime2", nullable: false),
+                    SubmitedDate = table.Column<DateTime>(type: "DateTime2", nullable: false),
                     ChekeState = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Mark = table.Column<double>(type: "float", nullable: false)
                 },
@@ -424,7 +424,7 @@ namespace SmartSchool.EF.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     SubjectDetailId = table.Column<int>(type: "int", nullable: false),
                     StudentId = table.Column<int>(type: "int", nullable: false),
-                    ExamDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ExamDate = table.Column<DateTime>(type: "DateTime2", nullable: false),
                     SubjectDetailsId = table.Column<int>(type: "int", nullable: false),
                     ExamTypeId = table.Column<int>(type: "int", nullable: false),
                     LimitTime = table.Column<int>(type: "int", nullable: false)
@@ -494,7 +494,7 @@ namespace SmartSchool.EF.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     StudentId = table.Column<int>(type: "int", nullable: false),
-                    AttendanceDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    AttendanceDate = table.Column<DateTime>(type: "DateTime2", nullable: false),
                     Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     TeacherId = table.Column<int>(type: "int", nullable: false)
                 },

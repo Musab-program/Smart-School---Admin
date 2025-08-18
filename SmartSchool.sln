@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SmartSchool.Core", "SmartSc
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SmartSchool.EF", "SmartSchool.EF\SmartSchool.EF.csproj", "{99589D68-C3B7-4C91-B8A9-03FD01B7E6F3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartSchool.Main", "SmartSchool.Main\SmartSchool.Main.csproj", "{DEAA4151-84BA-4BAD-80C9-8861896829B4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SmartSchool.Main", "SmartSchool.Main\SmartSchool.Main.csproj", "{8162FA9D-47F8-498D-B5F4-6E88A9795F39}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,10 +29,10 @@ Global
 		{99589D68-C3B7-4C91-B8A9-03FD01B7E6F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{99589D68-C3B7-4C91-B8A9-03FD01B7E6F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{99589D68-C3B7-4C91-B8A9-03FD01B7E6F3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DEAA4151-84BA-4BAD-80C9-8861896829B4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DEAA4151-84BA-4BAD-80C9-8861896829B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DEAA4151-84BA-4BAD-80C9-8861896829B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DEAA4151-84BA-4BAD-80C9-8861896829B4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8162FA9D-47F8-498D-B5F4-6E88A9795F39}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8162FA9D-47F8-498D-B5F4-6E88A9795F39}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8162FA9D-47F8-498D-B5F4-6E88A9795F39}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8162FA9D-47F8-498D-B5F4-6E88A9795F39}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

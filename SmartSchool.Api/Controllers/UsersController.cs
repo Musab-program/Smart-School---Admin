@@ -1,73 +1,70 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using SmartSchool.Main.Dtos;
 using Microsoft.AspNetCore.Mvc;
-using SmartSchool.Main.Dtos;
 using SmartSchool.Core;
-using SmartSchool.Core.Interfaces;
 using SmartSchool.Core.Models;
+using Microsoft.AspNetCore.Http;
+using SmartSchool.Core.Interfaces;
+using SmartSchool.Main.InterFaces;
 
 namespace SmartSchool.Main.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+
     public class UsersController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IUserService _userService;
 
-        public UsersController(IUnitOfWork unitOfWork)
+        // The constructor for the controller
+        public UsersController(IUnitOfWork unitOfWork, IUserService usersService)
         {
             _unitOfWork = unitOfWork;
+            _userService = usersService;
         }
 
+        // End Point For add Element In This Domin Class
+        [HttpPost("AddUser")]
+        public async Task<IActionResult> AddUsers([FromBody] UserDto dto)
+        {
+            var result = await _userService.AddUser(dto);
+            return Ok(result);
+        }
+
+
+        // End Point For Get All Elements In This Domin Class
         [HttpGet("GetAllUsers")]
         public async Task<IActionResult> GetAllUsers()
         {
-            var user = await _unitOfWork.Users.GetAllAsync();
-            return Ok(user);
+            var result = await _userService.GetAllUsers();
+            return Ok(result);
         }
 
-        [HttpPost("AddUser")]
-        public async Task<IActionResult> AddUser([FromBody] UserDto dto)
+
+        // End Point For Get  Element by id In This Domin Class
+        [HttpGet("GetUserById")]
+        public async Task<IActionResult> GetUserById(int id)
         {
-
-            var user = await _unitOfWork.Users.FindAsync(a => a.Name == dto.UserName);
-            if (user != null)
-                return BadRequest("المستخدم موجود مسبقا");
-
-            var role = await _unitOfWork.Roles.FindAsync(a => a.Name == dto.RoleName);
-            if (role == null)
-                return BadRequest("النوع المدخل للمستخدم غير صحيح");
-
-            User addUser = new();
-            addUser.RoleId = role.Id;
-
-            var usernew = await _unitOfWork.Users.AddAsync(addUser);
-            
-            _unitOfWork.Save();
-            return Ok(user);
+            var result = await _userService.GetByIdUser(id);
+            return Ok(result);
         }
 
 
+        // End Point For update Elements In This Domin Class
         [HttpPut("UpdateUser")]
-        public async Task<IActionResult> UpdateUser([FromBody] UserDto dto)
+        public async Task<IActionResult> UpdateUserss([FromBody] UserDto dto)
         {
-
-            var user = await _unitOfWork.Users.FindAsync(a => a.Id == dto.Id);
-            if (user == null)
-                return BadRequest("المستخدم غير موجود مسبقا");
-
-            var role = await _unitOfWork.Roles.FindAsync(a => a.Name == dto.RoleName);
-            if (role == null)
-                return BadRequest("النوع المدخل للمستخدم غير صحيح");
-
-            user.Name = dto.UserName;
-
-
-            var usernew =  _unitOfWork.Users.Update(user);
-
-            _unitOfWork.Save();
-
-            return Ok(user);
+            var result = await _userService.UpdateUser(dto);
+            return Ok(result);
         }
 
+
+        // End Point For delete Element In This Domin Class
+        [HttpDelete("DeleteUser")]
+        public async Task<IActionResult> DeleteUseru(int id)
+        {
+            var result = await _userService.DeleteUser(id);
+            return Ok(result);
+        }
     }
 }
