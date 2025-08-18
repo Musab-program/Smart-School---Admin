@@ -32,9 +32,9 @@ namespace SmartSchool.Api.Controllers
 
         // End Point For Get All Elements In This Domin Class
         [HttpGet("GetAllSpecialty")]
-        public async Task<IActionResult> GetAllSpecialty()
+        public async Task<IActionResult> GetAllSpecialties()
         {
-            var result = await _specialtyService.GetAllSpecialty();
+            var result = await _specialtyService.GetAllSpecialties();
             return Ok(result);
         }
 

@@ -94,6 +94,13 @@ builder.Services.AddTransient<IRelationTypeService, RelationTypeService>();
 builder.Services.AddTransient<ISpecialtyService, SpecialtyService>();
 builder.Services.AddTransient<IStudentService, StudentService>();
 builder.Services.AddTransient<IStudentAttendanceService, StudentAttendanceService>();
+builder.Services.AddTransient<IUserService, UserService>();
+builder.Services.AddTransient<ITeacherService, TeacherService>();
+builder.Services.AddTransient<ISubjectService, SubjectService>();
+builder.Services.AddTransient<ISubjectDetailService, SubjectDetailService>();
+builder.Services.AddTransient<ISubmittedAssignmentService, SubmittedAssignmentService>();
+builder.Services.AddTransient<ITeachingSubjectService, TeachingSubjectService>();
+builder.Services.AddTransient<ITimeTableService, TimeTableService>();
 
 
 builder.Services.AddTransient<IRoleService, RoleService>();
