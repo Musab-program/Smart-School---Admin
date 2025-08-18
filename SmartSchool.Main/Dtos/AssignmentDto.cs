@@ -7,7 +7,6 @@
         public int StudentId { get; set; }//Forign Key n to 1 With Student Table
         public string Title { get; set; }
         public DateTime LastDate { get; set; }
-        public DateTime UploadDate { get; set; }
         public string ChekeState { get; set; }
         public double Mark { get; set; }
     }

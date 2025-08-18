@@ -23,7 +23,6 @@ namespace SmartSchool.Main.InterFaces
             {
                 Id = s.Id,
                 StudentId = s.StudentId,
-                AttendanceDate = s.AttendanceDate,
                 Status = s.Status,
                 TeacherId = s.TeacherId,
             });
@@ -60,7 +59,6 @@ namespace SmartSchool.Main.InterFaces
                     TeacherId=studentAttendance.TeacherId,
                     StudentId = studentAttendance.StudentId,
                     Status = studentAttendance.Status,
-                    AttendanceDate = studentAttendance.AttendanceDate,
                 }
             };
         }

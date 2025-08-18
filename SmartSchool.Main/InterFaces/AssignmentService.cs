@@ -82,7 +82,6 @@ namespace SmartSchool.Main.InterFaces
                 Title = s.Title,
                 LastDate = s.LastDate,
                 SubjectDetailId = s.SubjectDetailId,
-                UploadDate = s.UploadDate,
             });
             return new Response<AssignmentDto>
             {
@@ -109,7 +108,6 @@ namespace SmartSchool.Main.InterFaces
                     Title = assignment.Title,
                     LastDate = assignment.LastDate,
                     SubjectDetailId = assignment.SubjectDetailId,
-                    UploadDate = assignment.UploadDate,
                 },
                 Code = 200,
                 Message = "تم استدعاء النوع برقم التعريف",
