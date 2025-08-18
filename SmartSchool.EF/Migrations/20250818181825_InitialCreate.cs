@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace SmartSchool.EF.Migrations
 {
     /// <inheritdoc />
-    public partial class addAllTables : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -18,7 +18,7 @@ namespace SmartSchool.EF.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Year = table.Column<DateTime>(type: "DateTime2", nullable: false)
+                    Year = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -101,7 +101,7 @@ namespace SmartSchool.EF.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     GradeId = table.Column<int>(type: "int", nullable: false),
-                    AcademicYear = table.Column<DateTime>(type: "DateTime2", nullable: false)
+                    AcademicYear = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -124,11 +124,11 @@ namespace SmartSchool.EF.Migrations
                     Password = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Phone = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    DateOfBirth = table.Column<DateTime>(type: "DateTime2", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "DateTime2", nullable: false),
+                    DateOfBirth = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETDATE()"),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
-                    Address = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    gender = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Address = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
+                    gender = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     RoleId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -170,26 +170,6 @@ namespace SmartSchool.EF.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Adminstrations",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<int>(type: "int", nullable: false),
-                    EnrollmentDate = table.Column<DateTime>(type: "DateTime2", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Adminstrations", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Adminstrations_Users_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Guardians",
                 columns: table => new
                 {
@@ -223,7 +203,7 @@ namespace SmartSchool.EF.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<int>(type: "int", nullable: false),
-                    HireDate = table.Column<DateTime>(type: "DateTime2", nullable: false),
+                    HireDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     SpecialtyId = table.Column<int>(type: "int", nullable: false),
                     Salary = table.Column<double>(type: "float", nullable: false)
                 },
@@ -242,6 +222,27 @@ namespace SmartSchool.EF.Migrations
                         principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Assignments",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    SubjectDetailId = table.Column<int>(type: "int", nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    LastDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UploadDate = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETDATE()")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Assignments", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Assignments_SubjectDetails_SubjectDetailId",
+                        column: x => x.SubjectDetailId,
+                        principalTable: "SubjectDetails",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -267,6 +268,38 @@ namespace SmartSchool.EF.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Exams",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    SubjectDetailId = table.Column<int>(type: "int", nullable: false),
+                    GroupId = table.Column<int>(type: "int", nullable: false),
+                    ExamDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ExamTypeId = table.Column<int>(type: "int", nullable: false),
+                    LimitTime = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Exams", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Exams_ExamTypes_ExamTypeId",
+                        column: x => x.ExamTypeId,
+                        principalTable: "ExamTypes",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Exams_Groups_GroupId",
+                        column: x => x.GroupId,
+                        principalTable: "Groups",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Exams_SubjectDetails_SubjectDetailId",
+                        column: x => x.SubjectDetailId,
+                        principalTable: "SubjectDetails",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Students",
                 columns: table => new
                 {
@@ -274,7 +307,7 @@ namespace SmartSchool.EF.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<int>(type: "int", nullable: false),
                     GroupId = table.Column<int>(type: "int", nullable: false),
-                    RegisterDate = table.Column<DateTime>(type: "DateTime2", nullable: false),
+                    RegisterDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     GuardianId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -285,7 +318,7 @@ namespace SmartSchool.EF.Migrations
                         column: x => x.GroupId,
                         principalTable: "Groups",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Students_Guardians_GuardianId",
                         column: x => x.GuardianId,
@@ -306,8 +339,8 @@ namespace SmartSchool.EF.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     TeacherId = table.Column<int>(type: "int", nullable: false),
-                    StartDate = table.Column<DateTime>(type: "DateTime2", nullable: false),
-                    EndDate = table.Column<DateTime>(type: "DateTime2", nullable: false),
+                    StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    EndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Reason = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     IsAgreeded = table.Column<bool>(type: "bit", nullable: false)
                 },
@@ -328,7 +361,7 @@ namespace SmartSchool.EF.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    AcademicYear = table.Column<DateTime>(type: "DateTime2", nullable: false),
+                    AcademicYear = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Semster = table.Column<int>(type: "int", nullable: false),
                     SubjectDetailId = table.Column<int>(type: "int", nullable: false),
                     TeacherId = table.Column<int>(type: "int", nullable: false)
@@ -358,8 +391,8 @@ namespace SmartSchool.EF.Migrations
                     SubjectDetailId = table.Column<int>(type: "int", nullable: false),
                     TeacherId = table.Column<int>(type: "int", nullable: false),
                     DayOfWeek = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    StartTime = table.Column<DateTime>(type: "DateTime2", nullable: false),
-                    EndTime = table.Column<DateTime>(type: "DateTime2", nullable: false)
+                    StartTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    EndTime = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -382,87 +415,12 @@ namespace SmartSchool.EF.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Assignments",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    SubjectDetailId = table.Column<int>(type: "int", nullable: false),
-                    StudentId = table.Column<int>(type: "int", nullable: false),
-                    SubjectDetailsId = table.Column<int>(type: "int", nullable: false),
-                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LastDate = table.Column<DateTime>(type: "DateTime2", nullable: false),
-                    SubmitedDate = table.Column<DateTime>(type: "DateTime2", nullable: false),
-                    ChekeState = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Mark = table.Column<double>(type: "float", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Assignments", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Assignments_Students_StudentId",
-                        column: x => x.StudentId,
-                        principalTable: "Students",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Assignments_SubjectDetails_SubjectDetailId",
-                        column: x => x.SubjectDetailId,
-                        principalTable: "SubjectDetails",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Assignments_SubjectDetails_SubjectDetailsId",
-                        column: x => x.SubjectDetailsId,
-                        principalTable: "SubjectDetails",
-                        principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Exams",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    SubjectDetailId = table.Column<int>(type: "int", nullable: false),
-                    StudentId = table.Column<int>(type: "int", nullable: false),
-                    ExamDate = table.Column<DateTime>(type: "DateTime2", nullable: false),
-                    SubjectDetailsId = table.Column<int>(type: "int", nullable: false),
-                    ExamTypeId = table.Column<int>(type: "int", nullable: false),
-                    LimitTime = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Exams", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Exams_ExamTypes_ExamTypeId",
-                        column: x => x.ExamTypeId,
-                        principalTable: "ExamTypes",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Exams_Students_StudentId",
-                        column: x => x.StudentId,
-                        principalTable: "Students",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Exams_SubjectDetails_SubjectDetailId",
-                        column: x => x.SubjectDetailId,
-                        principalTable: "SubjectDetails",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Exams_SubjectDetails_SubjectDetailsId",
-                        column: x => x.SubjectDetailsId,
-                        principalTable: "SubjectDetails",
-                        principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Resultes",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     SubjectDetailId = table.Column<int>(type: "int", nullable: false),
-                    SubjectDetailsId = table.Column<int>(type: "int", nullable: false),
                     StudentId = table.Column<int>(type: "int", nullable: false),
                     Mark = table.Column<double>(type: "float", nullable: false),
                     Rate = table.Column<string>(type: "nvarchar(max)", nullable: false)
@@ -480,11 +438,6 @@ namespace SmartSchool.EF.Migrations
                         column: x => x.SubjectDetailId,
                         principalTable: "SubjectDetails",
                         principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Resultes_SubjectDetails_SubjectDetailsId",
-                        column: x => x.SubjectDetailsId,
-                        principalTable: "SubjectDetails",
-                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -494,7 +447,7 @@ namespace SmartSchool.EF.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     StudentId = table.Column<int>(type: "int", nullable: false),
-                    AttendanceDate = table.Column<DateTime>(type: "DateTime2", nullable: false),
+                    AttendanceDate = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETDATE()"),
                     Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     TeacherId = table.Column<int>(type: "int", nullable: false)
                 },
@@ -514,26 +467,41 @@ namespace SmartSchool.EF.Migrations
                         principalColumn: "Id");
                 });
 
-            migrationBuilder.CreateIndex(
-                name: "IX_Adminstrations_UserId",
-                table: "Adminstrations",
-                column: "UserId",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Assignments_StudentId",
-                table: "Assignments",
-                column: "StudentId");
+            migrationBuilder.CreateTable(
+                name: "SubmittedAssignment",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    StudentId = table.Column<int>(type: "int", nullable: false),
+                    AssignmentId = table.Column<int>(type: "int", nullable: false),
+                    FilePath = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Mark = table.Column<double>(type: "float", nullable: false),
+                    SubmittedDate = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETDATE()"),
+                    ChekeState = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Notes = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SubmittedAssignment", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_SubmittedAssignment_Assignments_AssignmentId",
+                        column: x => x.AssignmentId,
+                        principalTable: "Assignments",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_SubmittedAssignment_Students_StudentId",
+                        column: x => x.StudentId,
+                        principalTable: "Students",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Assignments_SubjectDetailId",
                 table: "Assignments",
                 column: "SubjectDetailId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Assignments_SubjectDetailsId",
-                table: "Assignments",
-                column: "SubjectDetailsId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Contents_SubjectDetailId",
@@ -546,19 +514,14 @@ namespace SmartSchool.EF.Migrations
                 column: "ExamTypeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Exams_StudentId",
+                name: "IX_Exams_GroupId",
                 table: "Exams",
-                column: "StudentId");
+                column: "GroupId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Exams_SubjectDetailId",
                 table: "Exams",
                 column: "SubjectDetailId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Exams_SubjectDetailsId",
-                table: "Exams",
-                column: "SubjectDetailsId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Groups_GradeId",
@@ -586,11 +549,6 @@ namespace SmartSchool.EF.Migrations
                 name: "IX_Resultes_SubjectDetailId",
                 table: "Resultes",
                 column: "SubjectDetailId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Resultes_SubjectDetailsId",
-                table: "Resultes",
-                column: "SubjectDetailsId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_StudentAttendances_StudentId",
@@ -627,6 +585,16 @@ namespace SmartSchool.EF.Migrations
                 name: "IX_SubjectDetails_SubjectId",
                 table: "SubjectDetails",
                 column: "SubjectId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SubmittedAssignment_AssignmentId",
+                table: "SubmittedAssignment",
+                column: "AssignmentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SubmittedAssignment_StudentId",
+                table: "SubmittedAssignment",
+                column: "StudentId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_TeacherHolidays_TeacherId",
@@ -680,12 +648,6 @@ namespace SmartSchool.EF.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Adminstrations");
-
-            migrationBuilder.DropTable(
-                name: "Assignments");
-
-            migrationBuilder.DropTable(
                 name: "Contents");
 
             migrationBuilder.DropTable(
@@ -696,6 +658,9 @@ namespace SmartSchool.EF.Migrations
 
             migrationBuilder.DropTable(
                 name: "StudentAttendances");
+
+            migrationBuilder.DropTable(
+                name: "SubmittedAssignment");
 
             migrationBuilder.DropTable(
                 name: "TeacherHolidays");
@@ -710,13 +675,16 @@ namespace SmartSchool.EF.Migrations
                 name: "ExamTypes");
 
             migrationBuilder.DropTable(
+                name: "Assignments");
+
+            migrationBuilder.DropTable(
                 name: "Students");
 
             migrationBuilder.DropTable(
-                name: "SubjectDetails");
+                name: "Teachers");
 
             migrationBuilder.DropTable(
-                name: "Teachers");
+                name: "SubjectDetails");
 
             migrationBuilder.DropTable(
                 name: "Groups");
@@ -725,10 +693,10 @@ namespace SmartSchool.EF.Migrations
                 name: "Guardians");
 
             migrationBuilder.DropTable(
-                name: "Subjects");
+                name: "Specialties");
 
             migrationBuilder.DropTable(
-                name: "Specialties");
+                name: "Subjects");
 
             migrationBuilder.DropTable(
                 name: "Grades");

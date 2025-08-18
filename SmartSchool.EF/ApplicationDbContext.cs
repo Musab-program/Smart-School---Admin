@@ -28,18 +28,17 @@ namespace SmartSchool.EF
         public DbSet<ExamType> ExamTypes { get; set; }
 
 
-
         // Here Know what classes are tables in DB
         public DbSet<Student> Students { get; set; }
         public DbSet<Guardian> Guardians { get; set; }
         public DbSet<RelationType> RelationTypes { get; set; }
         public DbSet<Group> Groups { get; set; }
         public DbSet<Grade> Grades { get; set; }
-        public DbSet<StudentAttendance> StudentAttendances { get; set;} 
-        public DbSet<Teacher> Teachers { get; set;} 
-        public DbSet<Specialty> Specialties { get; set;} 
-        public DbSet<TeacherHoliday> TeacherHolidays { get; set;} 
-        public DbSet<TimeTable> TimeTables { get; set;}
+        public DbSet<StudentAttendance> StudentAttendances { get; set; }
+        public DbSet<Teacher> Teachers { get; set; }
+        public DbSet<Specialty> Specialties { get; set; }
+        public DbSet<TeacherHoliday> TeacherHolidays { get; set; }
+        public DbSet<TimeTable> TimeTables { get; set; }
 
 
         //Here write settings of special relationships
@@ -72,46 +71,36 @@ namespace SmartSchool.EF
                 .WithMany(m => m.SubjectDetails)
                 .HasForeignKey(u => u.GradeId);
 
-            //Relation SubjectDetail(1) between Assignments(n) tables 
+            // This is the correct way to define the relationship for Assignments.
+            // No need for the other fluent API call from the Assignment side.
             modelBuilder.Entity<SubjectDetail>()
                 .HasMany(a => a.Assignments)
                 .WithOne(m => m.SubjectDetail)
                 .HasForeignKey(m => m.SubjectDetailId)
                 .OnDelete(DeleteBehavior.NoAction);
 
-            // NEW: Configuring the second foreign key to SubjectDetails and disabling cascade delete
-            modelBuilder.Entity<Assignment>()
-                .HasOne(a => a.SubjectDetail)
-                .WithMany()
-                .HasForeignKey(a => a.SubjectDetailId)
-                .OnDelete(DeleteBehavior.NoAction);
-
-            //Relation SubjectDetail(1) between Resaults(n) tables 
+            // This is the correct way to define the relationship for Results.
+            // No need for the other fluent API call from the Resulte side.
             modelBuilder.Entity<SubjectDetail>()
                 .HasMany(a => a.Resultes)
                 .WithOne(m => m.SubjectDetail)
                 .HasForeignKey(m => m.SubjectDetailId)
                 .OnDelete(DeleteBehavior.NoAction);
 
-            // NEW: Configuring the second foreign key to SubjectDetails and disabling cascade delete
-            modelBuilder.Entity<Resulte>()
-                .HasOne(r => r.SubjectDetails)
-                .WithMany()
-                .HasForeignKey(r => r.SubjectDetailsId)
-                .OnDelete(DeleteBehavior.NoAction);
 
-            //Relation SubjectDetail(1) between Exams(n) tables 
+            // This is the correct way to define the relationship for Exams.
+            // No need for the other fluent API call from the Exam side.
             modelBuilder.Entity<SubjectDetail>()
                 .HasMany(a => a.Exams)
                 .WithOne(m => m.SubjectDetail)
                 .HasForeignKey(m => m.SubjectDetailId)
                 .OnDelete(DeleteBehavior.NoAction);
 
-            // NEW: Configuring the second foreign key to SubjectDetails and disabling cascade delete
+            // NEW: Configuring the foreign key to Groups for Exams
             modelBuilder.Entity<Exam>()
-                .HasOne(e => e.SubjectDetails)
-                .WithMany()
-                .HasForeignKey(e => e.SubjectDetailsId)
+                .HasOne(e => e.Group)
+                .WithMany(g => g.Exams)
+                .HasForeignKey(e => e.GroupId)
                 .OnDelete(DeleteBehavior.NoAction);
 
             //Relation SubjectDetail(1) between TeachingSubjects(n) tables 
@@ -128,7 +117,7 @@ namespace SmartSchool.EF
                 .HasForeignKey(m => m.SubjectDetailId)
                 .OnDelete(DeleteBehavior.NoAction);
 
-            //Relation StudSubjectDetailent(1) between TimeTables(n) tables 
+            //Relation SubjectDetail(1) between TimeTables(n) tables 
             modelBuilder.Entity<SubjectDetail>()
                 .HasMany(a => a.TimeTables)
                 .WithOne(m => m.SubjectDetail)
@@ -147,9 +136,7 @@ namespace SmartSchool.EF
                 .HasMany(u => u.TeachingSubjects)
                 .WithOne(m => m.Teacher)
                 .HasForeignKey(u => u.TeacherId)
-                .OnDelete(DeleteBehavior.NoAction); // <-- تعديل جديد هنا
-
-            
+                .OnDelete(DeleteBehavior.NoAction);
 
             //Relation Student(1) between Resaults(n) tables
             modelBuilder.Entity<Student>()
@@ -157,9 +144,6 @@ namespace SmartSchool.EF
                 .WithOne(m => m.Student)
                 .HasForeignKey(u => u.StudentId)
                 .OnDelete(DeleteBehavior.NoAction);
-
-
-            
 
             //Relation Between User(1) and Guardian(1)
             modelBuilder.Entity<Guardian>()
@@ -191,7 +175,7 @@ namespace SmartSchool.EF
                 .HasOne(u => u.Group)
                 .WithMany(r => r.Students)
                 .HasForeignKey(u => u.GroupId)
-                .OnDelete(DeleteBehavior.Restrict); 
+                .OnDelete(DeleteBehavior.Restrict);
 
             //Relation Between Grade(1) and Group(n)
             modelBuilder.Entity<Group>()
@@ -210,19 +194,13 @@ namespace SmartSchool.EF
                 .HasOne(u => u.Teacher)
                 .WithMany(r => r.StudentAttendances)
                 .HasForeignKey(u => u.TeacherId)
-                .OnDelete(DeleteBehavior.NoAction); // <-- تعديل جديد هنا
+                .OnDelete(DeleteBehavior.NoAction);
 
             //Relation Between Teacher(1) and User(1)
             modelBuilder.Entity<Teacher>()
                 .HasOne(u => u.User)
                 .WithOne(r => r.Teacher)
                 .HasForeignKey<Teacher>(u => u.UserId);
-
-            //Relation Between Teacher(1) and StudentAttendances(n)
-            modelBuilder.Entity<StudentAttendance>()
-                .HasOne(u => u.Teacher)
-                .WithMany(r => r.StudentAttendances)
-                .HasForeignKey(u => u.TeacherId);
 
             //Relation Between Teacher(1) and Specialty(1)
             modelBuilder.Entity<Teacher>()
@@ -256,15 +234,28 @@ namespace SmartSchool.EF
                 .WithMany(r => r.TimeTables)
                 .HasForeignKey(u => u.SubjectDetailId)
                 .OnDelete(DeleteBehavior.NoAction);
+
+            //Modify all created_at property to make dynamic
+            //For users when thier record add to our database
+            modelBuilder.Entity<User>()
+            .Property(s => s.CreatedAt)
+            .HasDefaultValueSql("GETDATE()");
+
+            //For users when thier record add to our database
+            modelBuilder.Entity<StudentAttendance>()
+            .Property(s => s.AttendanceDate)
+            .HasDefaultValueSql("GETDATE()");
+
+            //For users when thier record add to our database
+            modelBuilder.Entity<Assignment>()
+            .Property(s => s.UploadDate)
+            .HasDefaultValueSql("GETDATE()");
+
+            //For users when thier record add to our database
+            modelBuilder.Entity<SubmittedAssignment>()
+            .Property(s => s.SubmittedDate)
+            .HasDefaultValueSql("GETDATE()");
         }
-
-
-
-
-
-
-
-
-
     }
 }
+

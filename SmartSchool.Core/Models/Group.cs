@@ -18,6 +18,7 @@ namespace SmartSchool.Core.Models
         public int GradeId { get; set; } //Forign Key n to 1 With Grade Table
         [Required]
         public DateTime AcademicYear { get; set; }
+        public ICollection<Exam> Exams { get; set; }
         public ICollection<Student> Students { get; set; } //Navigation Properity From Student(n) To Group(1)
         public ICollection<TimeTable> TimeTables { get; set; } //Navigation Properity From TimeTable(n) To Group(1)
     }
