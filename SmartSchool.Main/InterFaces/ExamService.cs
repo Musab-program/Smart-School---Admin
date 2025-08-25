@@ -88,13 +88,20 @@ namespace SmartSchool.Main.InterFaces
                     Message = "الاختبار الذي تريد حذفه غير موجود",
                     Code = 400,
                 };
-            _unitOfWork.Exams.Delete(exam);
-            _unitOfWork.Save();
-            return new Response<ExamDto>
+            try
             {
-                Message = "تم الحذف بنجاح",
-                Code = 200,
-            };
+                _unitOfWork.Exams.Delete(exam);
+                _unitOfWork.Save();
+                return new Response<ExamDto>
+                {
+                    Message = "تم الحذف بنجاح",
+                    Code = 200,
+                }; 
+            }
+            catch
+            {
+                throw new Exception("السجل مرتبط بجدول آخر");
+            }
         }
 
         // End Point For Get All Elements In This Domin Class
@@ -156,7 +163,30 @@ namespace SmartSchool.Main.InterFaces
                     Code = 400,
                 };
 
-            exam.Id = dto.Id;
+            var examType = await _unitOfWork.ExamTypes.FindAsync(a => a.Id == dto.Id);
+            if (examType == null)
+                return new Response<ExamDto>
+                {
+                    Message = "نوع الاختبار غير موجود",
+                    Code = 400,
+                };
+
+            var group = await _unitOfWork.Groups.FindAsync(a => a.Id == dto.Id);
+            if (group == null)
+                return new Response<ExamDto>
+                {
+                    Message = "الطالب غير موجود",
+                    Code = 400,
+                };
+
+            var subjectDetail = await _unitOfWork.SubjectDetails.FindAsync(a => a.Id == dto.Id);
+            if (subjectDetail == null)
+                return new Response<ExamDto>
+                {
+                    Message = "تفاصيل المادة غير موجودة",
+                    Code = 400,
+                };
+
             exam.SubjectDetailId = dto.SubjectDetailId;
             exam.ExamDate = dto.ExamDate;
             exam.LimitTime = dto.LimitTime;

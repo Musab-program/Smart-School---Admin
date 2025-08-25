@@ -36,8 +36,7 @@ namespace SmartSchool.Main.InterFaces
         }
 
         ExamType addExamType = new ExamType
-        {
-            Id = dto.Id, 
+        { 
             Name = dto.Name,
             Year = dto.Year,
         };
@@ -62,13 +61,20 @@ namespace SmartSchool.Main.InterFaces
                 Message = "الاختبار الذي تريد حذفه غير موجود",
                 Code = 400,
             };
-        _unitOfWork.ExamTypes.Delete(examType);
-        _unitOfWork.Save();
-        return new Response<ExamTypeDto>
+        try
+        { 
+            _unitOfWork.ExamTypes.Delete(examType);
+            _unitOfWork.Save();
+            return new Response<ExamTypeDto>
+            {
+                Message = "تم الحذف بنجاح",
+                Code = 200,
+            };
+        }
+        catch
         {
-            Message = "تم الحذف بنجاح",
-            Code = 200,
-        };
+                throw new Exception("السجل مرتبط بجدول آخر");
+            }
     }
 
     // End Point For Get All Elements In This Domin Class
@@ -124,7 +130,6 @@ namespace SmartSchool.Main.InterFaces
                 Code = 400,
             };
 
-        examType.Id = dto.Id;
         examType.Name = dto.Name;
         examType.Year = dto.Year;
 

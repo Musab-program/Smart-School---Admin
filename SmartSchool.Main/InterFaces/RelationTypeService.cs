@@ -95,14 +95,21 @@ namespace SmartSchool.Main.InterFaces
                     Code = 400,
                 };
 
-            _unitOfWork.RelationTypes.Delete(relationType);
-            _unitOfWork.Save();
-            return new Response<RelationTypeDto>
+            try
             {
-                Code = 200,
-                Message = "تم الحذف",
-                Data = relationType
-            };
+                _unitOfWork.RelationTypes.Delete(relationType);
+                _unitOfWork.Save();
+                return new Response<RelationTypeDto>
+                {
+                    Code = 200,
+                    Message = "تم الحذف",
+                    Data = relationType
+                };
+            }
+            catch
+            {
+                throw new Exception("السجل مرتبط بجدول آخر");
+            }
         }
 
 
@@ -119,6 +126,7 @@ namespace SmartSchool.Main.InterFaces
 
 
             relationType.Name = dto.Name;
+
             var relationTypeNew = _unitOfWork.RelationTypes.Update(relationType);
             _unitOfWork.Save();
             return new Response<RelationTypeDto>

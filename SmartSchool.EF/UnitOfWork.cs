@@ -102,12 +102,15 @@ namespace RepositoryPatternWithUOW.EF
             _context.Dispose();
         }
 
-        public async Task<T> ExecuteInTransactionAsync<T>(Func<Task<T>> action)
+
+        public async Task<T> ExcuteInTransactionAsync<T>(Func<Task<T>> action)
+
         {
             var transaction = await _context.Database.BeginTransactionAsync();
 
             try
             {
+
                 var result= await action();
                 await transaction.CommitAsync();
                 return result;
@@ -116,7 +119,7 @@ namespace RepositoryPatternWithUOW.EF
             catch
             {
                 await transaction.RollbackAsync();
-                throw new Exception("حدث خطأ ما");
+                throw new Exception("حدث خطأ ما!");
             }
         }
     }
