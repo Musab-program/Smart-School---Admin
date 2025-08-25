@@ -2,7 +2,7 @@
 {
     public class AssignmentDto
     {
-        public int Id { get; set; }
+        public int? Id { get; set; }
         public int SubjectDetailId { get; set; }//Forign Key n to 1 With SubjectDetails Table
         public int StudentId { get; set; }//Forign Key n to 1 With Student Table
         public string Title { get; set; }

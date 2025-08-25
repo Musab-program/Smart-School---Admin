@@ -8,7 +8,7 @@ namespace SmartSchool.Main.Dtos
 {
     public class ContentDto
     {
-        public int Id { get; set; }
+        public int? Id { get; set; }
         public string Name { get; set; }
         public string Descripion { get; set; }
         public byte[] AttachmentFile { get; set; }
