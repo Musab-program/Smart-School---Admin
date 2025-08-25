@@ -20,7 +20,7 @@ namespace SmartSchool.Main.InterFaces
         // End Point To Add Element In This Domin Class
         public async Task<Response<GuardianDto>> AddGuardian(GuardianDto dto)
         {
-            return await _unitOfWork.ExcuteInTransactionAsync<Response<GuardianDto>>(async () =>
+            return await _unitOfWork.ExecuteInTransactionAsync<Response<GuardianDto>>(async () =>
             {
                 var user = await _unitOfWork.Users.FindAsync(a => a.Id == dto.UserId);
 
@@ -127,7 +127,7 @@ namespace SmartSchool.Main.InterFaces
         // End Point To Delete Element In This Domin Class
         public async Task<Response<GuardianDto>> DeleteGuardian(int id)
         {
-            return await _unitOfWork.ExcuteInTransactionAsync<Response<GuardianDto>>(async () =>
+            return await _unitOfWork.ExecuteInTransactionAsync<Response<GuardianDto>>(async () =>
             {
                 var guardian = await _unitOfWork.Guardians.GetByIdAsync(id);
                 if (guardian == null)
@@ -233,7 +233,7 @@ namespace SmartSchool.Main.InterFaces
         // End Point To Update Element In This Domin Class
         public async Task<Response<GuardianDto>> UpdateGuardian(GuardianDto dto)
         {
-            return await _unitOfWork.ExcuteInTransactionAsync<Response<GuardianDto>>(async () =>
+            return await _unitOfWork.ExecuteInTransactionAsync<Response<GuardianDto>>(async () =>
             {
                 var guardian = await _unitOfWork.Guardians.FindAsync(r => r.Id == dto.Id);
                 if (guardian == null)

@@ -103,7 +103,7 @@ namespace RepositoryPatternWithUOW.EF
         }
 
 
-        public async Task<T> ExcuteInTransactionAsync<T>(Func<Task<T>> action)
+        public async Task<T> ExecuteInTransactionAsync<T>(Func<Task<T>> action)
 
         {
             var transaction = await _context.Database.BeginTransactionAsync();
