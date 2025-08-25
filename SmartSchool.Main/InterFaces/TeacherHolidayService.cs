@@ -45,7 +45,7 @@ namespace SmartSchool.Main.InterFaces
 
             TeacherHoliday addTeacherHoliday = new TeacherHoliday
             {
-                TeacherId= dto.TeacherId,
+                TeacherId = dto.TeacherId,
                 StartDate = dto.StartDate,
                 EndDate = dto.EndDate,
                 Reason = dto.Reason,
@@ -72,14 +72,23 @@ namespace SmartSchool.Main.InterFaces
                     Message = "العطلة التي تريد حذفها غير موجودة",
                     Code = 400,
                 };
-            _unitOfWork.TeacherHolidays.Delete(teacherHoliday);
-            _unitOfWork.Save();
-            return new Response<TeacherHolidayDto>
+
+            try
             {
-                Message = "تم الحذف بنجاح",
-                Code = 200,
-            };
+                _unitOfWork.TeacherHolidays.Delete(teacherHoliday);
+                _unitOfWork.Save();
+                return new Response<TeacherHolidayDto>
+                {
+                    Message = "تم الحذف بنجاح",
+                    Code = 200,
+                };
+            }
+            catch
+            {
+                throw new Exception("هذا السجل مرتبط بجدول آخر");
+            }
         }
+
 
         // End Point For Get All Elements In This Domin Class
         public async Task<Response<TeacherHolidayDto>> GetAllTeacherHolidays()
@@ -138,6 +147,14 @@ namespace SmartSchool.Main.InterFaces
                 return new Response<TeacherHolidayDto>
                 {
                     Message = "العطلة الذي تبحث عنها غير موجودة",
+                    Code = 400,
+                };
+
+            var teacher = await _unitOfWork.Teachers.FindAsync(a => a.Id == dto.TeacherId);
+            if (teacher == null)
+                return new Response<TeacherHolidayDto>
+                {
+                    Message = "المعلم غير موجود",
                     Code = 400,
                 };
 

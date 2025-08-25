@@ -61,8 +61,8 @@ namespace SmartSchool.Main.InterFaces
                 TeacherId = dto.TeacherId,
                 GroupId = dto.GroupId,
                 DayOfWeek = dto.DayOfWeek,
-                StartTime= dto.StartTime,
-                EndTime= dto.EndTime,
+                StartTime = dto.StartTime,
+                EndTime = dto.EndTime,
             };
             var timeTableNew = await _unitOfWork.TimeTables.AddAsync(addTimeTable);
             _unitOfWork.Save();
@@ -85,14 +85,22 @@ namespace SmartSchool.Main.InterFaces
                     Code = 400,
                 };
 
-            _unitOfWork.TimeTables.Delete(timeTable);
-            _unitOfWork.Save();
-            return new Response<TimeTableDto>
+
+            try
             {
-                Code = 200,
-                Message = "تم الحذف",
-                Data = timeTable
-            };
+                _unitOfWork.TimeTables.Delete(timeTable);
+                _unitOfWork.Save();
+                return new Response<TimeTableDto>
+                {
+                    Code = 200,
+                    Message = "تم الحذف",
+                    Data = timeTable
+                };
+            }
+            catch
+            {
+                throw new Exception("هذا السجل مرتبط بجدول آخر");
+            }
 
         }
 
@@ -164,6 +172,30 @@ namespace SmartSchool.Main.InterFaces
                     Message = "المعلم غير موجود ",
                     Code = 400,
 
+                };
+
+            var group = await _unitOfWork.Groups.FindAsync(b => b.Id == dto.GroupId);
+            if (group == null)
+                return new Response<TimeTableDto>
+                {
+                    Message = "المستخدم غير موجود ",
+                    Code = 400
+                };
+
+            var subjectDetail = await _unitOfWork.SubjectDetails.FindAsync(b => b.Id == dto.SubjectDetailId);
+            if (subjectDetail == null)
+                return new Response<TimeTableDto>
+                {
+                    Message = "المستخدم غير موجود ",
+                    Code = 400
+                };
+
+            var teacher = await _unitOfWork.Teachers.FindAsync(b => b.Id == dto.TeacherId);
+            if (teacher == null)
+                return new Response<TimeTableDto>
+                {
+                    Message = "المستخدم غير موجود ",
+                    Code = 400
                 };
 
             timeTable.SubjectDetailId = dto.SubjectDetailId;

@@ -107,6 +107,7 @@ namespace SmartSchool.Main.InterFaces
                             UserId = dto.UserId,
                         };
 
+
                         var guardianNew = await _unitOfWork.Guardians.AddAsync(addGuardian);
                         _unitOfWork.Save();
                         return new Response<GuardianDto>
@@ -119,6 +120,7 @@ namespace SmartSchool.Main.InterFaces
                 }
 
             });
+
 
         }
 
@@ -264,7 +266,6 @@ namespace SmartSchool.Main.InterFaces
                         guardian.SecondryPhone = dto.SecondryPhone;
                         guardian.UserId = dto.UserId;
                         guardian.RelationTypeId = dto.RelationTypeId;
-
                         // Update User Property
                         user.Name = dto.UserName;
                         user.Email = dto.Email;
@@ -310,25 +311,7 @@ namespace SmartSchool.Main.InterFaces
                 
             });
 
-                //var guardian = await _unitOfWork.Guardians.FindAsync(r => r.Id == dto.Id);
-                //if (guardian == null)
-                //    return new Response<GuardianDto>
-                //    {
-                //        Message = "ولي الأمر الذي تبحث عنه غير موجود",
-                //        Code = 400,
-                //    };
-
-                //guardian.SecondryPhone = dto.SecondryPhone;
-                //guardian.UserId = dto.UserId;
-                //guardian.RelationTypeId = dto.RelationTypeId;
-
-                //var guardianNew = _unitOfWork.Guardians.Update(guardian);
-                //_unitOfWork.Save();
-                //return new Response<GuardianDto>
-                //{
-                //    Message = "تم التعديل بنجاح",
-                //    Code = 200,
-                //};
+                
             }
     }
 

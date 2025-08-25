@@ -41,7 +41,8 @@ namespace SmartSchool.Core
         //to make sure there is property or not
         IBaseRepository<SubmittedAssignment> SubmittedAssignments { get; }
 
-
+        //Task ExecuteInTransactionAsync(Func<Task> action);
+        Task<T> ExecuteInTransactionAsync<T>(Func<Task<T>> action);
 
         int Save();
 

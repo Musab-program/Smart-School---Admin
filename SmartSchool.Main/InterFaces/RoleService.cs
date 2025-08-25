@@ -57,13 +57,21 @@ namespace SmartSchool.Main.InterFaces
                     Message = "النوع غير موجود",
                     Code = 400,
                 };
-            _unitOfWork.Roles.Delete(role);
-            _unitOfWork.Save();
-            return new Response<RoleDto>
+            try
+            {
+                _unitOfWork.Roles.Delete(role);
+                _unitOfWork.Save();
+                return new Response<RoleDto>
                 {
                     Message = "تم المسح بنجاح",
-                    Code=200,
+                    Code = 200,
                 };
+            }
+            catch
+            {
+                throw new Exception("هذا السجل مرتبط بجدول آخر");
+            }
+
         }
 
         // End Point For Get All Elements In This Domin Class
@@ -91,13 +99,13 @@ namespace SmartSchool.Main.InterFaces
             if (role == null)
                 return new Response<RoleDto>
                 {
-                    Message= "النوع غير موجود",
-                    Code=400,
+                    Message = "النوع غير موجود",
+                    Code = 400,
                 };
             return new Response<RoleDto>
             {
-                Data = new RoleDto { Id = role.Id,Name= role.Name},
-                Code=200,
+                Data = new RoleDto { Id = role.Id, Name = role.Name },
+                Code = 200,
                 Message = "تم استدعاء النوع برقم التعريف",
             };
         }
@@ -121,6 +129,7 @@ namespace SmartSchool.Main.InterFaces
             {
                 Message = "تم التعديل بنجاح",
                 Code = 200,
+
             };
         }
     }
@@ -131,6 +140,6 @@ namespace SmartSchool.Main.InterFaces
         Task<Response<RoleDto>> GetByIdRole(int id);
         Task<Response<RoleDto>> AddRole(RoleDto dto);
         Task<Response<RoleDto>> UpdateRole(RoleDto dto);
-        Task<Response<RoleDto>>DeleteRole(int id);
+        Task<Response<RoleDto>> DeleteRole(int id);
     }
 }
