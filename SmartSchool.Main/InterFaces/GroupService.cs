@@ -44,7 +44,6 @@ namespace SmartSchool.Main.InterFaces
 
             Group addGroup = new Group
             {
-                Id = dto.Id,
                 Name = dto.Name,
                 AcademicYear = dto.AcademicYear,
                 GradeId = dto.GradeId,
@@ -70,13 +69,20 @@ namespace SmartSchool.Main.InterFaces
                     Message = "الشعبة الدراسية الذي تريد حذفها غير موجوده",
                     Code = 400,
                 };
-            _unitOfWork.Groups.Delete(group);
-            _unitOfWork.Save();
-            return new Response<GroupDto>
+            try
             {
-                Message = "تم الحذف بنجاح",
-                Code = 200,
-            };
+                _unitOfWork.Groups.Delete(group);
+                _unitOfWork.Save();
+                return new Response<GroupDto>
+                {
+                    Message = "تم الحذف بنجاح",
+                    Code = 200,
+                };
+            }
+            catch
+            {
+                throw new Exception("السجل مرتبط بجدول آخر");
+            }
         }
 
         // End Point For Get All Elements In This Domin Class
@@ -134,7 +140,14 @@ namespace SmartSchool.Main.InterFaces
                     Code = 400,
                 };
 
-            group.Id = dto.Id;
+            var grade = await _unitOfWork.Grades.FindAsync(a => a.Id == dto.Id);
+            if (grade == null)
+                return new Response<GroupDto>
+                {
+                    Message = "الفصل الدراسي غير موجود",
+                    Code = 400,
+                };
+
             group.Name = dto.Name;
             group.AcademicYear = dto.AcademicYear;
             group.GradeId = dto.GradeId;

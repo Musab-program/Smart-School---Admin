@@ -8,7 +8,7 @@ namespace SmartSchool.Main.Dtos
 {
     public class GroupDto
     {
-        public int Id { get; set; }
+        public int? Id { get; set; }
         public string Name { get; set; }
         public int GradeId { get; set; } //Forign Key n to 1 With Grade Table
         public DateTime AcademicYear { get; set; }

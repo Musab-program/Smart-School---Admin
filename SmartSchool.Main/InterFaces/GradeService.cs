@@ -36,7 +36,6 @@ namespace SmartSchool.Main.InterFaces
 
             Grade addGrade = new Grade
             {
-                Id = dto.Id,
                 Name = dto.Name,
                 Capacity = dto.Capacity,
                 Stage = dto.Stage,
@@ -62,13 +61,20 @@ namespace SmartSchool.Main.InterFaces
                     Message = "الفصل الدراسي الذي تريد حذفه غير موجود",
                     Code = 400,
                 };
-            _unitOfWork.Grades.Delete(grade);
-            _unitOfWork.Save();
-            return new Response<GradeDto>
+            try
             {
-                Message = "تم الحذف بنجاح",
-                Code = 200,
-            };
+                _unitOfWork.Grades.Delete(grade);
+                _unitOfWork.Save();
+                return new Response<GradeDto>
+                {
+                    Message = "تم الحذف بنجاح",
+                    Code = 200,
+                };
+            }
+            catch
+            {
+                throw new Exception("السجل مرتبط بجدول آخر");
+            }
         }
 
         // End Point For Get All Elements In This Domin Class
@@ -126,7 +132,6 @@ namespace SmartSchool.Main.InterFaces
                     Code = 400,
                 };
 
-            grade.Id = dto.Id;
             grade.Name = dto.Name;
             grade.Stage = dto.Stage;
             grade.Capacity = dto.Capacity;

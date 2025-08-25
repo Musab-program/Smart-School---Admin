@@ -74,7 +74,7 @@ namespace SmartSchool.Main.InterFaces
         // End Point For Get All Elements In This Domin Class
         public async Task<Response<AssignmentDto>> GetAllAssignments()
         {
-            var assignment = await _unitOfWork.Assignments.GetAllAsync();
+            var assignment = await _unitOfWork.Assignments.FindAllAsync(s => s.Id > 1, ["SubjectDetail"]);
             // Select What Data Will Shows In Respons
             var dataDisplay = assignment.Select(s => new AssignmentDto
             {
@@ -82,6 +82,7 @@ namespace SmartSchool.Main.InterFaces
                 Title = s.Title,
                 LastDate = s.LastDate,
                 SubjectDetailId = s.SubjectDetailId,
+                
             });
             return new Response<AssignmentDto>
             {

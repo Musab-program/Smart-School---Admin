@@ -70,13 +70,20 @@ namespace SmartSchool.Main.InterFaces
                     Message = "محتوى المادة الذي تريد حذفه غير موجود",
                     Code = 400,
                 };
-            _unitOfWork.Contents.Delete(content);
-            _unitOfWork.Save();
-            return new Response<ContentDto>
+            try
             {
-                Message = "تم الحذف بنجاح",
-                Code = 200,
-            };
+                _unitOfWork.Contents.Delete(content);
+                _unitOfWork.Save();
+                return new Response<ContentDto>
+                {
+                    Message = "تم الحذف بنجاح",
+                    Code = 200,
+                };
+            }
+            catch
+            {
+                throw new Exception("السجل مرتبط بجدول آخر");
+            }
         }
 
         // End Point For Get All Elements In This Domin Class
@@ -135,6 +142,14 @@ namespace SmartSchool.Main.InterFaces
                 return new Response<ContentDto>
                 {
                     Message = "المحتوى الذي تبحث عنه غير موجود مسبقا",
+                    Code = 400,
+                };
+
+            var subjectDetail = await _unitOfWork.SubjectDetails.FindAsync(a => a.Id == dto.Id);
+            if (subjectDetail == null)
+                return new Response<ContentDto>
+                {
+                    Message = "تفاصيل المادة غير موجودة",
                     Code = 400,
                 };
 

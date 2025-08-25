@@ -52,7 +52,6 @@ namespace SmartSchool.Main.InterFaces
 
             Resulte addResulte = new Resulte
             {
-                Id = dto.Id,
                 Rate = dto.Rate,
                 Mark = dto.Mark,
                 StudentId = dto.StudentId,
@@ -79,13 +78,20 @@ namespace SmartSchool.Main.InterFaces
                     Message = "النتيجة التي تريد حذفها غير موجودة",
                     Code = 400,
                 };
-            _unitOfWork.Resultes.Delete(resulte);
-            _unitOfWork.Save();
-            return new Response<ResulteDto>
+            try
             {
-                Message = "تم الحذف بنجاح",
-                Code = 200,
-            };
+                _unitOfWork.Resultes.Delete(resulte);
+                _unitOfWork.Save();
+                return new Response<ResulteDto>
+                {
+                    Message = "تم الحذف بنجاح",
+                    Code = 200,
+                };
+            }
+            catch
+            {
+                throw new Exception("السجل مرتبط بجدول آخر");
+            }
         }
 
         // End Point For Get All Elements In This Domin Class
@@ -145,7 +151,22 @@ namespace SmartSchool.Main.InterFaces
                     Code = 400,
                 };
 
-            resulte.Id = dto.Id;
+            var subjectDetail = await _unitOfWork.SubjectDetails.FindAsync(a => a.Id == dto.Id);
+            if (subjectDetail == null)
+                return new Response<ResulteDto>
+                {
+                    Message = "تفاصيل المادة غير موجودة",
+                    Code = 400,
+                };
+
+            var student = await _unitOfWork.Students.FindAsync(a => a.Id == dto.Id);
+            if (student == null)
+                return new Response<ResulteDto>
+                {
+                    Message = "الطالب غير موجود",
+                    Code = 400,
+                };
+
             resulte.SubjectDetailId = dto.SubjectDetailId;
             resulte.StudentId = dto.StudentId;
             resulte.Mark = dto.Mark;
