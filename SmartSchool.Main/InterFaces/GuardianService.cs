@@ -52,7 +52,6 @@ namespace SmartSchool.Main.InterFaces
 
             Guardian addGuardian = new Guardian
             {
-                Id = dto.Id,
                 RelationTypeId = dto.RelationTypeId,
                 SecondryPhone = dto.SecondryPhone,
                 UserId = dto.UserId,
@@ -142,7 +141,6 @@ namespace SmartSchool.Main.InterFaces
                     Code = 400,
                 };
 
-            guardian.Id = dto.Id;
             guardian.SecondryPhone = dto.SecondryPhone;
             guardian.UserId = dto.UserId;
             guardian.RelationTypeId = dto.RelationTypeId;

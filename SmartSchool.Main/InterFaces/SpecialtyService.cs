@@ -55,15 +55,22 @@ namespace SmartSchool.Main.InterFaces
                     Message = " التخصص غير موجود ",
                     Code = 400,
                 };
-
-            _unitOfWork.Specialtys.Delete(specialty);
-            _unitOfWork.Save();
-            return new Response<SpecialtyDto>
+            try
             {
-                Code = 200,
-                Message = "تم الحذف",
-                Data = specialty
-            };
+                _unitOfWork.Specialtys.Delete(specialty);
+                _unitOfWork.Save();
+                return new Response<SpecialtyDto>
+                {
+                    Code = 200,
+                    Message = "تم الحذف",
+                    Data = specialty
+                };
+            }
+            catch
+            {
+                throw new Exception("هذا السجل مرتبط بجدول آخر");
+            }
+
 
         }
 
@@ -107,9 +114,12 @@ namespace SmartSchool.Main.InterFaces
             {
                 Message = "تم العثور على التخصص",
                 Code = 200,
-                Data = new SpecialtyDto { Id = specialty.Id,
-                    Name = specialty.Name ,
-                    Qualification = specialty.Qualification }
+                Data = new SpecialtyDto
+                {
+                    Id = specialty.Id,
+                    Name = specialty.Name,
+                    Qualification = specialty.Qualification
+                }
             };
 
         }
@@ -135,7 +145,9 @@ namespace SmartSchool.Main.InterFaces
             {
                 Code = 200,
                 Message = "تم التعديل",
-                Data = new SpecialtyDto { Id = specialty.Id,
+                Data = new SpecialtyDto
+                {
+                    Id = specialty.Id,
                     Name = specialty.Name,
                     Qualification = specialty.Qualification
                 }

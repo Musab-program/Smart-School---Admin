@@ -86,7 +86,7 @@ namespace RepositoryPatternWithUOW.EF
             TeachingSubjects = new BaseRepository<TeachingSubject>(_context);
             TimeTables = new BaseRepository<TimeTable>(_context);
             Users = new BaseRepository<User>(_context);
-            // to make sure there is property or not
+            // to make sure if there is property or not
             SubmittedAssignments = new BaseRepository<SubmittedAssignment>(_context);
 
         }
@@ -100,6 +100,24 @@ namespace RepositoryPatternWithUOW.EF
         public void Dispose()
         {
             _context.Dispose();
+        }
+
+        public async Task<T> ExecuteInTransactionAsync<T>(Func<Task<T>> action)
+        {
+            var transaction = await _context.Database.BeginTransactionAsync();
+
+            try
+            {
+                var result= await action();
+                await transaction.CommitAsync();
+                return result;
+            }
+
+            catch
+            {
+                await transaction.RollbackAsync();
+                throw new Exception("حدث خطأ ما");
+            }
         }
     }
 }

@@ -79,14 +79,22 @@ namespace SmartSchool.Main.InterFaces
                     Code = 400,
                 };
 
-            _unitOfWork.SubmittedAssignments.Delete(submittedAssignment);
-            _unitOfWork.Save();
-            return new Response<SubmittedAssignmentDto>
+            try
             {
-                Code = 200,
-                Message = "تم الحذف",
-                Data = submittedAssignment
-            };
+                _unitOfWork.SubmittedAssignments.Delete(submittedAssignment);
+                _unitOfWork.Save();
+                return new Response<SubmittedAssignmentDto>
+                {
+                    Code = 200,
+                    Message = "تم الحذف",
+                    Data = submittedAssignment
+                };
+            }
+            catch
+            {
+                throw new Exception("هذا السجل مرتبط بجدول آخر");
+            }
+
 
         }
 
@@ -99,11 +107,11 @@ namespace SmartSchool.Main.InterFaces
             var dataDisplay = submittedAssignments.Select(s => new SubmittedAssignmentDto
             {
                 Id = s.Id,
-                StudentId =s.StudentId,
-                AssignmentId =s.AssignmentId,
-                FilePath =s.FilePath,
-                Mark =s.Mark,
-                Notes =s.Notes,
+                StudentId = s.StudentId,
+                AssignmentId = s.AssignmentId,
+                FilePath = s.FilePath,
+                Mark = s.Mark,
+                Notes = s.Notes,
             });
 
             return new Response<SubmittedAssignmentDto>
@@ -136,11 +144,11 @@ namespace SmartSchool.Main.InterFaces
                 Data = new SubmittedAssignmentDto
                 {
                     Id = submittedAssignment.Id,
-                    StudentId =submittedAssignment.StudentId,
-                    AssignmentId =submittedAssignment.AssignmentId,
-                    FilePath =submittedAssignment.FilePath,
-                    Mark =submittedAssignment.Mark,
-                    Notes =submittedAssignment.Notes,
+                    StudentId = submittedAssignment.StudentId,
+                    AssignmentId = submittedAssignment.AssignmentId,
+                    FilePath = submittedAssignment.FilePath,
+                    Mark = submittedAssignment.Mark,
+                    Notes = submittedAssignment.Notes,
                 }
             };
 
@@ -156,6 +164,22 @@ namespace SmartSchool.Main.InterFaces
                     Message = "الواجب غير موجود ",
                     Code = 400,
 
+                };
+
+            var student = await _unitOfWork.Students.FindAsync(b => b.Id == dto.StudentId);
+            if (student == null)
+                return new Response<SubmittedAssignmentDto>
+                {
+                    Message = "الطالب غير موجود ",
+                    Code = 400
+                };
+
+            var assignment = await _unitOfWork.Assignments.FindAsync(b => b.Id == dto.AssignmentId);
+            if (assignment == null)
+                return new Response<SubmittedAssignmentDto>
+                {
+                    Message = "الواجب غير موجود ",
+                    Code = 400
                 };
 
             submittedAssignment.StudentId = dto.StudentId;

@@ -31,7 +31,7 @@ namespace SmartSchool.Main.InterFaces
                     Code = 400
                 };
 
-  
+
             var subject = await _unitOfWork.Subjects.FindAsync(b => b.Id == dto.SubjectId);
             if (subject == null)
                 return new Response<SubjectDetailDto>
@@ -78,14 +78,22 @@ namespace SmartSchool.Main.InterFaces
                     Code = 400,
                 };
 
-            _unitOfWork.SubjectDetails.Delete(subjectDetail);
-            _unitOfWork.Save();
-            return new Response<SubjectDetailDto>
+            try
             {
-                Code = 200,
-                Message = "تم الحذف",
-                Data = subjectDetail
-            };
+                _unitOfWork.SubjectDetails.Delete(subjectDetail);
+                _unitOfWork.Save();
+                return new Response<SubjectDetailDto>
+                {
+                    Code = 200,
+                    Message = "تم الحذف",
+                    Data = subjectDetail
+                };
+            }
+            catch
+            {
+                throw new Exception("هذا السجل مرتبط بجدول آخر");
+            }
+
 
         }
 
@@ -98,9 +106,9 @@ namespace SmartSchool.Main.InterFaces
             var dataDisplay = subjectDetails.Select(s => new SubjectDetailDto
             {
                 Id = s.Id,
-                IsActive =s.IsActive,
-                GradeId =s.GradeId,
-                SubjectId =s.SubjectId,
+                IsActive = s.IsActive,
+                GradeId = s.GradeId,
+                SubjectId = s.SubjectId,
             });
 
             return new Response<SubjectDetailDto>
@@ -152,6 +160,24 @@ namespace SmartSchool.Main.InterFaces
                     Code = 400,
 
                 };
+
+            var grade = await _unitOfWork.Grades.FindAsync(b => b.Id == dto.GradeId);
+            if (grade == null)
+                return new Response<SubjectDetailDto>
+                {
+                    Message = "الفصل غير موجود ",
+                    Code = 400
+                };
+
+
+            var subject = await _unitOfWork.Subjects.FindAsync(b => b.Id == dto.SubjectId);
+            if (subject == null)
+                return new Response<SubjectDetailDto>
+                {
+                    Message = "المادة غير موجود ",
+                    Code = 400
+                };
+
             subjectDetail.IsActive = dto.IsActive;
             subjectDetail.GradeId = dto.GradeId;
             subjectDetail.SubjectId = dto.SubjectId;

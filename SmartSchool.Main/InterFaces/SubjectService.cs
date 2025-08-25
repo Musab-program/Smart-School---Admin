@@ -55,15 +55,23 @@ namespace SmartSchool.Main.InterFaces
                     Message = " المعلم غير موجود ",
                     Code = 400,
                 };
-
-            _unitOfWork.Subjects.Delete(subject);
-            _unitOfWork.Save();
-            return new Response<SubjectDto>
+            try
             {
-                Code = 200,
-                Message = "تم الحذف",
-                Data = subject
-            };
+                _unitOfWork.Subjects.Delete(subject);
+                _unitOfWork.Save();
+                return new Response<SubjectDto>
+                {
+                    Code = 200,
+                    Message = "تم الحذف",
+                    Data = subject
+                };
+
+            }
+            catch
+            {
+                throw new Exception("هذا السجل مرتبط بجدول آخر");
+            }
+
 
         }
 
@@ -75,7 +83,7 @@ namespace SmartSchool.Main.InterFaces
 
             var dataDisplay = subjects.Select(s => new SubjectDto
             {
-                Id = s.Id,  
+                Id = s.Id,
                 Name = s.Name,
             });
 

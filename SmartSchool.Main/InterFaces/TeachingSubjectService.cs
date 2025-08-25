@@ -52,8 +52,8 @@ namespace SmartSchool.Main.InterFaces
                 TeacherId = dto.TeacherId,
                 SubjectDetailId = dto.SubjectDetailId,
                 AcademicYear = dto.AcademicYear,
-                Semster=dto.Semster,
-                
+                Semster = dto.Semster,
+
 
 
             };
@@ -78,14 +78,22 @@ namespace SmartSchool.Main.InterFaces
                     Code = 400,
                 };
 
-            _unitOfWork.TeachingSubjects.Delete(teachingSubject);
-            _unitOfWork.Save();
-            return new Response<TeachingSubjectDto>
+            try
             {
-                Code = 200,
-                Message = "تم الحذف",
-                Data = teachingSubject
-            };
+                _unitOfWork.TeachingSubjects.Delete(teachingSubject);
+                _unitOfWork.Save();
+                return new Response<TeachingSubjectDto>
+                {
+                    Code = 200,
+                    Message = "تم الحذف",
+                    Data = teachingSubject
+                };
+            }
+            catch
+            {
+                throw new Exception("هذا السجل مرتبط بجدول آخر");
+            }
+
 
         }
 
@@ -101,7 +109,7 @@ namespace SmartSchool.Main.InterFaces
                 TeacherId = s.TeacherId,
                 SubjectDetailId = s.SubjectDetailId,
                 AcademicYear = s.AcademicYear,
-                Semster=s.Semster,
+                Semster = s.Semster,
             });
 
             return new Response<TeachingSubjectDto>
@@ -153,6 +161,22 @@ namespace SmartSchool.Main.InterFaces
                     Message = "المعلم غير موجود ",
                     Code = 400,
 
+                };
+
+            var subjectDetail = await _unitOfWork.SubjectDetails.FindAsync(b => b.Id == dto.SubjectDetailId);
+            if (subjectDetail == null)
+                return new Response<TeachingSubjectDto>
+                {
+                    Message = "المادة المخصصة غير موجود ",
+                    Code = 400
+                };
+
+            var teacher = await _unitOfWork.Teachers.FindAsync(b => b.Id == dto.TeacherId);
+            if (teacher == null)
+                return new Response<TeachingSubjectDto>
+                {
+                    Message = "المعلم غير موجود ",
+                    Code = 400
                 };
 
             teachingSubject.TeacherId = dto.TeacherId;
