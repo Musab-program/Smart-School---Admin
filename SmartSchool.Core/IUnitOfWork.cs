@@ -45,8 +45,5 @@ namespace SmartSchool.Core
         Task<T> ExecuteInTransactionAsync<T>(Func<Task<T>> action);
 
         int Save();
-
-
-        Task<T> ExcuteInTransactionAsync<T>(Func<Task<T>> action);
     }
 }

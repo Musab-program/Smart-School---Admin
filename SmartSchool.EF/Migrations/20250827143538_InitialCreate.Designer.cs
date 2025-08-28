@@ -12,7 +12,7 @@ using SmartSchool.EF;
 namespace SmartSchool.EF.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250818181825_InitialCreate")]
+    [Migration("20250827143538_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />

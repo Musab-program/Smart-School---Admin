@@ -1,4 +1,5 @@
-﻿using SmartSchool.Core;
+﻿using System.Text;
+using SmartSchool.Core;
 using SmartSchool.Core.Models;
 using SmartSchool.Core.Shared;
 using SmartSchool.Main.Dtos;
@@ -20,7 +21,7 @@ namespace SmartSchool.Main.InterFaces
         // End Point To Add Element In This Domin Class
         public async Task<Response<GuardianDto>> AddGuardian(GuardianDto dto)
         {
-            return await _unitOfWork.ExcuteInTransactionAsync<Response<GuardianDto>>(async () =>
+            return await _unitOfWork.ExecuteInTransactionAsync<Response<GuardianDto>>(async () =>
             {
                 var user = await _unitOfWork.Users.FindAsync(a => a.Id == dto.UserId);
 
@@ -51,7 +52,7 @@ namespace SmartSchool.Main.InterFaces
                             DateOfBirth = dto.DateOfBirth,
                             gender = dto.gender,
                             Address = dto.Address,
-                            Password = dto.Password,
+                            Password = Encoding.UTF8.GetBytes(dto.Password),
                             Phone = dto.Phone,
                             RoleId = dto.RoleID,
                             IsActive = dto.IsActive
@@ -127,7 +128,7 @@ namespace SmartSchool.Main.InterFaces
         // End Point To Delete Element In This Domin Class
         public async Task<Response<GuardianDto>> DeleteGuardian(int id)
         {
-            return await _unitOfWork.ExcuteInTransactionAsync<Response<GuardianDto>>(async () =>
+            return await _unitOfWork.ExecuteInTransactionAsync<Response<GuardianDto>>(async () =>
             {
                 var guardian = await _unitOfWork.Guardians.GetByIdAsync(id);
                 if (guardian == null)
@@ -233,7 +234,7 @@ namespace SmartSchool.Main.InterFaces
         // End Point To Update Element In This Domin Class
         public async Task<Response<GuardianDto>> UpdateGuardian(GuardianDto dto)
         {
-            return await _unitOfWork.ExcuteInTransactionAsync<Response<GuardianDto>>(async () =>
+            return await _unitOfWork.ExecuteInTransactionAsync<Response<GuardianDto>>(async () =>
             {
                 var guardian = await _unitOfWork.Guardians.FindAsync(r => r.Id == dto.Id);
                 if (guardian == null)
@@ -272,7 +273,7 @@ namespace SmartSchool.Main.InterFaces
                         user.DateOfBirth = dto.DateOfBirth;
                         user.gender = dto.gender;
                         user.Address = dto.Address;
-                        user.Password = dto.Password;
+                        user.Password = Encoding.UTF8.GetBytes(dto.Password);
                         user.Phone = dto.Phone;
                         user.IsActive = dto.IsActive;
 
