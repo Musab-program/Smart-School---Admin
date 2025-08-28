@@ -46,7 +46,8 @@ namespace SmartSchool.Main.InterFaces
                     Code = 400
                 };
 
-            var timeTable = await _unitOfWork.TimeTables.FindAsync(b => b.Id == dto.Id);
+            var timeTable = await _unitOfWork.TimeTables.FindAsync(b => b.GroupId == dto.GroupId
+            && b.TeacherId == dto.TeacherId && b.SubjectDetailId == dto.SubjectDetailId);
             if (timeTable != null)
                 return new Response<TimeTableDto>
                 {

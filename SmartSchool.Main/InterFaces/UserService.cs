@@ -29,14 +29,15 @@ namespace SmartSchool.Main.InterFaces
                     Message = "النوع غير موجود",
                     Code = 400
                 };
-
-            var user = await _unitOfWork.Users.FindAsync(b => b.Id == dto.Id);
-            if (user != null)
-                return new Response<UserDto>
-                {
-                    Message = "المستخدم موجود مسبقا",
-                    Code = 400
-                };
+            
+            // the user is not uniq because we need to add a user as teeacher or guardian
+            //var user = await _unitOfWork.Users.FindAsync(b => b.Id == dto.Id);
+            //if (user != null)
+            //    return new Response<UserDto>
+            //    {
+            //        Message = "المستخدم موجود مسبقا",
+            //        Code = 400
+            //    };
 
 
             User addUser = new User
@@ -87,6 +88,9 @@ namespace SmartSchool.Main.InterFaces
         public async Task<Response<UserDto>> GetAllUsers()
         {
             var users = await _unitOfWork.Users.GetAllAsync();
+
+            //StringBuilder sp = new StringBuilder();
+            //sp.AppendLine("select * from vewUsers ");
 
 
             var dataDisplay = users.Select(s => new UserDto

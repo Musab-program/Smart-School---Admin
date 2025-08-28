@@ -37,22 +37,19 @@ namespace SmartSchool.Main.InterFaces
                     var role = await _unitOfWork.Roles.FindAsync(b => b.Id == dto.RoleID);
                     //check dto.RoleId is not existed in role table
                     if (role == null)
-                    {
                         return new Response<TeacherDto>
                         {
                             Message = "النوع غير موجود",
                             Code = 400
                         };
-                    }
                     //check dto.RoleId exist in role table but its type not teacher  
                     else if (role.Name != "معلم")
-                    {
                         return new Response<TeacherDto>
                         {
                             Message = "يجب أن يكون النوع معلم",
                             Code = 400
                         };
-                    }
+
                     //check dto.RoleId  exist in role table and its type teacher  
                     else
                     {
@@ -246,7 +243,7 @@ namespace SmartSchool.Main.InterFaces
             return new Response<TeacherDto>
             {
                 Code = 200,
-                Message = "تم الحذف",
+                Message = "تم العرض",
                 Data = new TeacherDto
                 {
                     Id = teacher.Id,
@@ -295,7 +292,7 @@ namespace SmartSchool.Main.InterFaces
                 if (role.Name != "معلم" || role == null)
                     return new Response<TeacherDto>
                     {
-                        Message = "النوع غير موجود",
+                        Message = "النوع غير موجود أو نوعه ليس معلما",
                         Code = 400
                     };
 
