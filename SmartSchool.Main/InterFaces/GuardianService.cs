@@ -1,4 +1,5 @@
-﻿using SmartSchool.Core;
+﻿using System.Text;
+using SmartSchool.Core;
 using SmartSchool.Core.Models;
 using SmartSchool.Core.Shared;
 using SmartSchool.Main.Dtos;
@@ -51,7 +52,7 @@ namespace SmartSchool.Main.InterFaces
                             DateOfBirth = dto.DateOfBirth,
                             gender = dto.gender,
                             Address = dto.Address,
-                            Password = dto.Password,
+                            Password = Encoding.UTF8.GetBytes(dto.Password),
                             Phone = dto.Phone,
                             RoleId = dto.RoleID,
                             IsActive = dto.IsActive
@@ -272,7 +273,7 @@ namespace SmartSchool.Main.InterFaces
                         user.DateOfBirth = dto.DateOfBirth;
                         user.gender = dto.gender;
                         user.Address = dto.Address;
-                        user.Password = dto.Password;
+                        user.Password = Encoding.UTF8.GetBytes(dto.Password);
                         user.Phone = dto.Phone;
                         user.IsActive = dto.IsActive;
 

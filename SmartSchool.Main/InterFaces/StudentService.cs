@@ -19,6 +19,7 @@ namespace SmartSchool.Main.InterFaces
             _unitOfWork = unitOfWork;
         }
 
+
         public async Task<Response<StudentDto>> AddStudent(StudentDto dto)
         {
             return await _unitOfWork.ExecuteInTransactionAsync<Response<StudentDto>>(async () =>
@@ -338,10 +339,12 @@ namespace SmartSchool.Main.InterFaces
 
     public interface IStudentService
     {
+
         Task<Response<StudentDto>> AddStudent(StudentDto dto);
         Task<Response<StudentDto>> GetAllStudents();
         Task<Response<StudentDto>> GetByIdStudent(int id);
         Task<Response<StudentDto>> UpdateStudent(StudentDto dto);
         Task<Response<StudentDto>> DeleteStudent(int id);
+
     }
 }
