@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace SmartSchool.Core.Models
@@ -13,6 +14,7 @@ namespace SmartSchool.Core.Models
         public int Id { get; set; }
         [Required, MaxLength(50)]
         public string Name { get; set; }
+        [JsonIgnore]
         public ICollection<User> Users { get; set; } //Navigation Properity From Role(n) To User (1)
 
     }

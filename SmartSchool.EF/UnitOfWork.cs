@@ -116,10 +116,10 @@ namespace RepositoryPatternWithUOW.EF
                 return result;
             }
 
-            catch
+            catch (Exception ex)
             {
                 await transaction.RollbackAsync();
-                throw new Exception("حدث خطأ ما!");
+                throw new Exception($"حدث خطأ ما! | التفاصيل: {ex.Message}", ex);
             }
         }
     }
