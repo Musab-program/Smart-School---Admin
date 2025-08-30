@@ -28,7 +28,7 @@ namespace SmartSchool.Main.InterFaces
     // End Point To Add Element In This Domin Class
     public async Task<Response<ExamTypeDto>> AddExamType(ExamTypeDto dto)
     {
-        var examType = await _unitOfWork.ExamTypes.FindAsync(r => r.Id == dto.Id);
+        var examType = await _unitOfWork.ExamTypes.FindAsync(r => r.Name == dto.Name && r.Year == dto.Year);
         if (examType != null)
         {
             return new Response<ExamTypeDto>

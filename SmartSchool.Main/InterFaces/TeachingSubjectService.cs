@@ -38,7 +38,11 @@ namespace SmartSchool.Main.InterFaces
                     Code = 400
                 };
 
-            var teachingSubject = await _unitOfWork.TeachingSubjects.FindAsync(b => b.Id == dto.Id);
+            var teachingSubject = await _unitOfWork.TeachingSubjects.FindAsync(b => 
+                    b.TeacherId == dto.TeacherId 
+                    && b.SubjectDetailId == dto.SubjectDetailId
+                    && b.AcademicYear == dto.AcademicYear
+                    && b.Semster == dto.Semster);
             if (teachingSubject != null)
                 return new Response<TeachingSubjectDto>
                 {
