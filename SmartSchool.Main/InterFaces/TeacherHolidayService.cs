@@ -24,7 +24,7 @@ namespace SmartSchool.Main.InterFaces
         // End Point To Add Element In This Domin Class
         public async Task<Response<TeacherHolidayDto>> AddTeacherHoliday(TeacherHolidayDto dto)
         {
-            var teacherHoliday = await _unitOfWork.TeacherHolidays.FindAsync(r => r.Id == dto.Id);
+            var teacherHoliday = await _unitOfWork.TeacherHolidays.FindAsync(r => r.TeacherId == dto.TeacherId && r.StartDate == dto.StartDate);
             if (teacherHoliday != null)
             {
                 return new Response<TeacherHolidayDto>

@@ -40,7 +40,7 @@ namespace SmartSchool.Main.InterFaces
                     Code = 400
                 };
 
-            var subjectDetail = await _unitOfWork.SubjectDetails.FindAsync(b => b.Id == dto.Id);
+            var subjectDetail = await _unitOfWork.SubjectDetails.FindAsync(b => b.GradeId == dto.GradeId && b.SubjectId == dto.SubjectId);
             if (subjectDetail != null)
                 return new Response<SubjectDetailDto>
                 {

@@ -21,7 +21,7 @@ namespace SmartSchool.Main.InterFaces
 
         public async Task<Response<SpecialtyDto>> AddSpecialty(SpecialtyDto dto)
         {
-            var specialty = await _unitOfWork.Specialtys.FindAsync(b => b.Name == dto.Name);
+            var specialty = await _unitOfWork.Specialtys.FindAsync(b => b.Name == dto.Name && b.Qualification == dto.Qualification);
             if (specialty != null)
                 return new Response<SpecialtyDto>
                 {

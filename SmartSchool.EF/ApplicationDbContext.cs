@@ -365,17 +365,6 @@ namespace SmartSchool.EF
             modelBuilder.Entity<TimeTable>()
                 .HasIndex(tt => new { tt.GroupId, tt.DayOfWeek, tt.StartTime })
                 .IsUnique();
-
-            // In User Table Name Can't Be Unique ,The Only Things That Will Be is:
-            // Ensure the email address is unique
-            modelBuilder.Entity<User>()
-                .HasIndex(u => u.Email)
-                .IsUnique();
-
-            // Ensure the phone number is unique
-            modelBuilder.Entity<User>()
-                .HasIndex(u => u.Phone)
-                .IsUnique();
         }
     }
 }

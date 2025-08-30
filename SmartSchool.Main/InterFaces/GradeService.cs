@@ -24,7 +24,7 @@ namespace SmartSchool.Main.InterFaces
         // End Point To Add Element In This Domin Class
         public async Task<Response<GradeDto>> AddGrade(GradeDto dto)
         {
-            var grade = await _unitOfWork.Grades.FindAsync(r => r.Id == dto.Id);
+            var grade = await _unitOfWork.Grades.FindAsync(r => r.Name == dto.Name && r.Stage == dto.Stage);
             if (grade != null)
             {
                 return new Response<GradeDto>

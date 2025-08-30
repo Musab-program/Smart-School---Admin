@@ -38,7 +38,7 @@ namespace SmartSchool.Main.InterFaces
                     Code = 400
                 };
 
-            var submittedAssignment = await _unitOfWork.SubmittedAssignments.FindAsync(b => b.Id == dto.Id);
+            var submittedAssignment = await _unitOfWork.SubmittedAssignments.FindAsync(b => b.StudentId == dto.StudentId && b.AssignmentId == dto.AssignmentId);
             if (submittedAssignment != null)
                 return new Response<SubmittedAssignmentDto>
                 {

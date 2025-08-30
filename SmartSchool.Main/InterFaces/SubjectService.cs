@@ -21,11 +21,11 @@ namespace SmartSchool.Main.InterFaces
 
         public async Task<Response<SubjectDto>> AddSubject(SubjectDto dto)
         {
-            var subject = await _unitOfWork.Subjects.FindAsync(b => b.Id == dto.Id);
+            var subject = await _unitOfWork.Subjects.FindAsync(b => b.Name == dto.Name);
             if (subject != null)
                 return new Response<SubjectDto>
                 {
-                    Message = "المعلم موجود مسبقا",
+                    Message = "المادة موجوده مسبقا",
                     Code = 400
                 };
 
@@ -52,7 +52,7 @@ namespace SmartSchool.Main.InterFaces
             if (subject == null)
                 return new Response<SubjectDto>
                 {
-                    Message = " المعلم غير موجود ",
+                    Message = " المادة غير موجود ",
                     Code = 400,
                 };
             try
@@ -89,7 +89,7 @@ namespace SmartSchool.Main.InterFaces
 
             return new Response<SubjectDto>
             {
-                Message = "تم جلب المعلمين بنجاح ",
+                Message = "تم جلب المواد بنجاح ",
                 Data = dataDisplay,
                 Code = 200
             };
@@ -105,14 +105,14 @@ namespace SmartSchool.Main.InterFaces
             {
                 return new Response<SubjectDto>
                 {
-                    Message = "المعلم غير موجود ",
+                    Message = "المادة غير موجوده ",
                     Code = 400,
                 };
             }
 
             return new Response<SubjectDto>
             {
-                Message = "تم العثور على المعلم",
+                Message = "تم العثور على الماده",
                 Code = 200,
                 Data = new SubjectDto
                 {
@@ -130,7 +130,7 @@ namespace SmartSchool.Main.InterFaces
             if (subject == null)
                 return new Response<SubjectDto>
                 {
-                    Message = "المعلم غير موجود ",
+                    Message = "الماده غير موجوده ",
                     Code = 400,
 
                 };
