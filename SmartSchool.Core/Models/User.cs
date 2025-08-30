@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace SmartSchool.Core.Models
@@ -33,6 +34,7 @@ namespace SmartSchool.Core.Models
         //Forign Key 1 to n With Role Table
         public Role Role { get; set; } //Navigation Properity From User (1) To Role(n)
         public int RoleId { get; set; }
+        [JsonIgnore]
         public Guardian Guardian { get; set; } //Navigation Properity From User (1) To Guardian(1)
         public Student Student { get; set; } //Navigation Properity From User (1) To Student(1)
         public Teacher Teacher { get; set; } //Navigation Properity From User (1) To Teacher(1)

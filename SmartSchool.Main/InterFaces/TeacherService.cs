@@ -31,7 +31,8 @@ namespace SmartSchool.Main.InterFaces
             return await _unitOfWork.ExecuteInTransactionAsync<Response<TeacherDto>>(async () =>
             {
 
-                var user = await _unitOfWork.Users.FindAsync(b => b.Id == dto.UserId);
+                var user = await _unitOfWork.Users.FindAsync(b => b.Name == dto.UserName && b.RoleId == dto.RoleID);
+                User UserNew = new();
                 if (user == null)
                 {
                     var role = await _unitOfWork.Roles.FindAsync(b => b.Id == dto.RoleID);
@@ -67,7 +68,7 @@ namespace SmartSchool.Main.InterFaces
 
                         };
 
-                        var UserNew = await _unitOfWork.Users.AddAsync(addUser);
+                        UserNew = await _unitOfWork.Users.AddAsync(addUser);
                         _unitOfWork.Save();
                     }
 
@@ -130,7 +131,7 @@ namespace SmartSchool.Main.InterFaces
                     {
                         Teacher addTeacher = new Teacher
                         {
-                            UserId = dto.UserId,
+                            UserId = UserNew.Id == 0 ? user.Id : UserNew.Id ,
                             SpecialtyId = dto.SpecialtyId,
                             Salary = dto.Salary,
                         };
@@ -191,14 +192,14 @@ namespace SmartSchool.Main.InterFaces
                     }
                 };
             });
-            }
+        }
 
 
         public async Task<Response<TeacherDto>> GetAllTeachers()
         {
 
             //you must ensure it is correct
-            var teachers = await _unitOfWork.Teachers.FindAllAsync(b=>b.Id >= 1, ["User"]);
+            var teachers = await _unitOfWork.Teachers.FindAllAsync(b => b.Id >= 1, ["User"]);
 
             var dataDisplay = teachers.Select(s => new TeacherDto
             {
@@ -206,12 +207,12 @@ namespace SmartSchool.Main.InterFaces
                 UserId = s.UserId,
                 Salary = s.Salary,
                 SpecialtyId = s.SpecialtyId,
-                UserName= s.User.Name,
+                UserName = s.User.Name,
                 Email = s.User.Email,
                 Phone = s.User.Phone,
                 Address = s.User.Address,
-                DateOfBirth= s.User.DateOfBirth,
-                gender= s.User.gender,
+                DateOfBirth = s.User.DateOfBirth,
+                gender = s.User.gender,
                 IsActive = s.User.IsActive,
                 RoleID = s.User.RoleId
             });
@@ -350,13 +351,13 @@ namespace SmartSchool.Main.InterFaces
         }
 
     }
-        public interface ITeacherService
-        {
-            Task<Response<TeacherDto>> AddTeacher(TeacherDto dto);
-            Task<Response<TeacherDto>> GetAllTeachers();
-            Task<Response<TeacherDto>> GetByIdTeacher(int id);
-            Task<Response<TeacherDto>> UpdateTeacher(TeacherDto dto);
-            Task<Response<TeacherDto>> DeleteTeacher(int id);
-        }
-
+    public interface ITeacherService
+    {
+        Task<Response<TeacherDto>> AddTeacher(TeacherDto dto);
+        Task<Response<TeacherDto>> GetAllTeachers();
+        Task<Response<TeacherDto>> GetByIdTeacher(int id);
+        Task<Response<TeacherDto>> UpdateTeacher(TeacherDto dto);
+        Task<Response<TeacherDto>> DeleteTeacher(int id);
     }
+
+}

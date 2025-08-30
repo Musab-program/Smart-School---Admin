@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace SmartSchool.Core.Models
@@ -11,6 +12,7 @@ namespace SmartSchool.Core.Models
     {
         //These Attributes Are The Culomns for Teacher Table In Database
         public int Id { get; set; }
+        [JsonIgnore]
         public User User { get; set; } //Navigation Properity From User (1) To Teacher(1)
         public int UserId { get; set; }
         public DateTime HireDate { get; set; }

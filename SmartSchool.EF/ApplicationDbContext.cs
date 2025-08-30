@@ -49,9 +49,6 @@ namespace SmartSchool.EF
             //Make default sitting of EF before we edit on it
             base.OnModelCreating(modelBuilder);
 
-            //Relation role(1) between user(n) tables 
-
-            //make the relationship and the foreignKey
 
             //Relation Between User(n) and Role(1)
             modelBuilder.Entity<User>()
@@ -160,8 +157,9 @@ namespace SmartSchool.EF
             //Relation Between Guardian(1) and RelationType(1)
             modelBuilder.Entity<Guardian>()
                 .HasOne(u => u.RelationType)
-                .WithOne(r => r.Guardian)
-                .HasForeignKey<Guardian>(u => u.RelationTypeId);
+                .WithMany(r => r.Guardians)
+                .HasForeignKey(u => u.RelationTypeId)
+                .OnDelete(DeleteBehavior.NoAction);
 
             //Relation Between Student(1) and Guardian(n)
             modelBuilder.Entity<Student>()
@@ -205,8 +203,9 @@ namespace SmartSchool.EF
             //Relation Between Teacher(1) and Specialty(1)
             modelBuilder.Entity<Teacher>()
                 .HasOne(u => u.Specialty)
-                .WithOne(r => r.Teacher)
-                .HasForeignKey<Teacher>(u => u.SpecialtyId);
+                .WithMany(r => r.Teachers)
+                .HasForeignKey(u => u.SpecialtyId)
+                .OnDelete(DeleteBehavior.NoAction);
 
             //Relation Between Teacher(1) and TeacherHolidays(n)
             modelBuilder.Entity<TeacherHoliday>()
