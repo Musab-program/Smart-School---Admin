@@ -254,6 +254,128 @@ namespace SmartSchool.EF
             modelBuilder.Entity<SubmittedAssignment>()
             .Property(s => s.SubmittedDate)
             .HasDefaultValueSql("GETDATE()");
+
+            
+
+            // The Unique Propeties
+
+            // Composite unique index on Title and SubjectDetailId
+            modelBuilder.Entity<Assignment>()
+                .HasIndex(a => new { a.Title, a.SubjectDetailId })
+                .IsUnique();
+
+            // Composite unique index on Name and SubjectDetailId
+            modelBuilder.Entity<Content>()
+                .HasIndex(c => new { c.Name, c.SubjectDetailId })
+                .IsUnique();
+
+            // Composite unique index on ExamDate, GroupId, and SubjectDetailId
+            modelBuilder.Entity<Exam>()
+                .HasIndex(e => new { e.ExamDate, e.GroupId, e.SubjectDetailId })
+                .IsUnique();
+
+            // Composite unique index on Name and Year
+            modelBuilder.Entity<ExamType>()
+                .HasIndex(et => new { et.Name, et.Year })
+                .IsUnique();
+
+            // Composite unique index on Name and Stage
+            modelBuilder.Entity<Grade>()
+                .HasIndex(g => new { g.Name, g.Stage })
+                .IsUnique();
+
+            // Composite unique index on Name, AcademicYear, and GradeId
+            modelBuilder.Entity<Group>()
+                .HasIndex(g => new { g.Name, g.AcademicYear, g.GradeId })
+                .IsUnique();
+
+            // Ensure a one-to-one relationship by making UserId unique
+            modelBuilder.Entity<Guardian>()
+                .HasIndex(g => g.UserId)
+                .IsUnique();
+
+            // Ensure that the relationship name is unique
+            modelBuilder.Entity<RelationType>()
+                .HasIndex(rt => rt.Name)
+                .IsUnique();
+
+            // Composite unique index on StudentId and SubjectDetailId
+            // Ensures a student has only one result per subject.
+            modelBuilder.Entity<Resulte>()
+                .HasIndex(r => new { r.StudentId, r.SubjectDetailId })
+                .IsUnique();
+
+            // Ensure that the role name is unique
+            modelBuilder.Entity<Role>()
+                .HasIndex(r => r.Name)
+                .IsUnique();
+
+            // Composite unique index on Name and Qualification
+            modelBuilder.Entity<Specialty>()
+                .HasIndex(s => new { s.Name, s.Qualification })
+                .IsUnique();
+
+            // Ensure a one-to-one relationship by making UserId unique
+            modelBuilder.Entity<Student>()
+                .HasIndex(s => s.UserId)
+                .IsUnique();
+
+            // Composite unique index on StudentId and AttendanceDate
+            // Ensures a student has only one attendance record per day.
+            modelBuilder.Entity<StudentAttendance>()
+                .HasIndex(sa => new { sa.StudentId, sa.AttendanceDate })
+                .IsUnique();
+
+            // Ensure that the subject name is unique
+            modelBuilder.Entity<Subject>()
+                .HasIndex(s => s.Name)
+                .IsUnique();
+
+            // Composite unique index on GradeId and SubjectId
+            // Ensures a subject is associated with a specific grade only once.
+            modelBuilder.Entity<SubjectDetail>()
+                .HasIndex(sd => new { sd.GradeId, sd.SubjectId })
+                .IsUnique();
+
+            // Composite unique index on StudentId and AssignmentId
+            // Ensures a student submits a single copy of a given assignment.
+            modelBuilder.Entity<SubmittedAssignment>()
+                .HasIndex(sa => new { sa.StudentId, sa.AssignmentId })
+                .IsUnique();
+
+            // Ensures a one-to-one relationship by making UserId unique
+            modelBuilder.Entity<Teacher>()
+                .HasIndex(t => t.UserId)
+                .IsUnique();
+
+            // Composite unique index on TeacherId and StartDate
+            // Ensures a teacher has only one holiday request starting on a specific day.
+            modelBuilder.Entity<TeacherHoliday>()
+                .HasIndex(th => new { th.TeacherId, th.StartDate })
+                .IsUnique();
+
+            // Composite unique index on TeacherId, SubjectDetailId, AcademicYear, and Semester
+            // Ensures a teacher is assigned to a specific subject only once per semester.
+            modelBuilder.Entity<TeachingSubject>()
+                .HasIndex(ts => new { ts.TeacherId, ts.SubjectDetailId, ts.AcademicYear, ts.Semster })
+                .IsUnique();
+
+            // Composite unique index on GroupId, DayOfWeek, and StartTime
+            // Ensures a group has only one class at a specific time on a specific day.
+            modelBuilder.Entity<TimeTable>()
+                .HasIndex(tt => new { tt.GroupId, tt.DayOfWeek, tt.StartTime })
+                .IsUnique();
+
+            // In User Table Name Can't Be Unique ,The Only Things That Will Be is:
+            // Ensure the email address is unique
+            modelBuilder.Entity<User>()
+                .HasIndex(u => u.Email)
+                .IsUnique();
+
+            // Ensure the phone number is unique
+            modelBuilder.Entity<User>()
+                .HasIndex(u => u.Phone)
+                .IsUnique();
         }
     }
 }
