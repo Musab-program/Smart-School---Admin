@@ -12,7 +12,7 @@ using SmartSchool.EF;
 namespace SmartSchool.EF.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250827143538_InitialCreate")]
+    [Migration("20250830175434_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -41,7 +41,7 @@ namespace SmartSchool.EF.Migrations
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("UploadDate")
                         .ValueGeneratedOnAdd()
@@ -51,6 +51,9 @@ namespace SmartSchool.EF.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("SubjectDetailId");
+
+                    b.HasIndex("Title", "SubjectDetailId")
+                        .IsUnique();
 
                     b.ToTable("Assignments");
                 });
@@ -73,7 +76,7 @@ namespace SmartSchool.EF.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("SubjectDetailId")
                         .HasColumnType("int");
@@ -85,6 +88,9 @@ namespace SmartSchool.EF.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("SubjectDetailId");
+
+                    b.HasIndex("Name", "SubjectDetailId")
+                        .IsUnique();
 
                     b.ToTable("Contents");
                 });
@@ -120,6 +126,9 @@ namespace SmartSchool.EF.Migrations
 
                     b.HasIndex("SubjectDetailId");
 
+                    b.HasIndex("ExamDate", "GroupId", "SubjectDetailId")
+                        .IsUnique();
+
                     b.ToTable("Exams");
                 });
 
@@ -133,12 +142,15 @@ namespace SmartSchool.EF.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("Year")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Name", "Year")
+                        .IsUnique();
 
                     b.ToTable("ExamTypes");
                 });
@@ -156,13 +168,16 @@ namespace SmartSchool.EF.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Stage")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Name", "Stage")
+                        .IsUnique();
 
                     b.ToTable("Grades");
                 });
@@ -183,11 +198,14 @@ namespace SmartSchool.EF.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("GradeId");
+
+                    b.HasIndex("Name", "AcademicYear", "GradeId")
+                        .IsUnique();
 
                     b.ToTable("Groups");
                 });
@@ -212,8 +230,7 @@ namespace SmartSchool.EF.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("RelationTypeId")
-                        .IsUnique();
+                    b.HasIndex("RelationTypeId");
 
                     b.HasIndex("UserId")
                         .IsUnique();
@@ -231,9 +248,12 @@ namespace SmartSchool.EF.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
 
                     b.ToTable("RelationTypes");
                 });
@@ -261,9 +281,10 @@ namespace SmartSchool.EF.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("StudentId");
-
                     b.HasIndex("SubjectDetailId");
+
+                    b.HasIndex("StudentId", "SubjectDetailId")
+                        .IsUnique();
 
                     b.ToTable("Resultes");
                 });
@@ -283,6 +304,9 @@ namespace SmartSchool.EF.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Name")
+                        .IsUnique();
+
                     b.ToTable("Roles");
                 });
 
@@ -296,13 +320,16 @@ namespace SmartSchool.EF.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Qualification")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Name", "Qualification")
+                        .IsUnique();
 
                     b.ToTable("Specialties");
                 });
@@ -364,9 +391,10 @@ namespace SmartSchool.EF.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("StudentId");
-
                     b.HasIndex("TeacherId");
+
+                    b.HasIndex("StudentId", "AttendanceDate")
+                        .IsUnique();
 
                     b.ToTable("StudentAttendances");
                 });
@@ -381,9 +409,12 @@ namespace SmartSchool.EF.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
 
                     b.ToTable("Subjects");
                 });
@@ -407,9 +438,10 @@ namespace SmartSchool.EF.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("GradeId");
-
                     b.HasIndex("SubjectId");
+
+                    b.HasIndex("GradeId", "SubjectId")
+                        .IsUnique();
 
                     b.ToTable("SubjectDetails");
                 });
@@ -452,7 +484,8 @@ namespace SmartSchool.EF.Migrations
 
                     b.HasIndex("AssignmentId");
 
-                    b.HasIndex("StudentId");
+                    b.HasIndex("StudentId", "AssignmentId")
+                        .IsUnique();
 
                     b.ToTable("SubmittedAssignment");
                 });
@@ -479,8 +512,7 @@ namespace SmartSchool.EF.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("SpecialtyId")
-                        .IsUnique();
+                    b.HasIndex("SpecialtyId");
 
                     b.HasIndex("UserId")
                         .IsUnique();
@@ -514,7 +546,8 @@ namespace SmartSchool.EF.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("TeacherId");
+                    b.HasIndex("TeacherId", "StartDate")
+                        .IsUnique();
 
                     b.ToTable("TeacherHolidays");
                 });
@@ -543,7 +576,8 @@ namespace SmartSchool.EF.Migrations
 
                     b.HasIndex("SubjectDetailId");
 
-                    b.HasIndex("TeacherId");
+                    b.HasIndex("TeacherId", "SubjectDetailId", "AcademicYear", "Semster")
+                        .IsUnique();
 
                     b.ToTable("TeachingSubjects");
                 });
@@ -558,7 +592,7 @@ namespace SmartSchool.EF.Migrations
 
                     b.Property<string>("DayOfWeek")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("EndTime")
                         .HasColumnType("datetime2");
@@ -577,11 +611,12 @@ namespace SmartSchool.EF.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("GroupId");
-
                     b.HasIndex("SubjectDetailId");
 
                     b.HasIndex("TeacherId");
+
+                    b.HasIndex("GroupId", "DayOfWeek", "StartTime")
+                        .IsUnique();
 
                     b.ToTable("TimeTables");
                 });
@@ -638,6 +673,12 @@ namespace SmartSchool.EF.Migrations
                         .HasColumnType("nvarchar(20)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Email")
+                        .IsUnique();
+
+                    b.HasIndex("Phone")
+                        .IsUnique();
 
                     b.HasIndex("RoleId");
 
@@ -707,9 +748,9 @@ namespace SmartSchool.EF.Migrations
             modelBuilder.Entity("SmartSchool.Core.Models.Guardian", b =>
                 {
                     b.HasOne("SmartSchool.Core.Models.RelationType", "RelationType")
-                        .WithOne("Guardian")
-                        .HasForeignKey("SmartSchool.Core.Models.Guardian", "RelationTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .WithMany("Guardians")
+                        .HasForeignKey("RelationTypeId")
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("SmartSchool.Core.Models.User", "User")
@@ -829,9 +870,9 @@ namespace SmartSchool.EF.Migrations
             modelBuilder.Entity("SmartSchool.Core.Models.Teacher", b =>
                 {
                     b.HasOne("SmartSchool.Core.Models.Specialty", "Specialty")
-                        .WithOne("Teacher")
-                        .HasForeignKey("SmartSchool.Core.Models.Teacher", "SpecialtyId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .WithMany("Teachers")
+                        .HasForeignKey("SpecialtyId")
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("SmartSchool.Core.Models.User", "User")
@@ -946,8 +987,7 @@ namespace SmartSchool.EF.Migrations
 
             modelBuilder.Entity("SmartSchool.Core.Models.RelationType", b =>
                 {
-                    b.Navigation("Guardian")
-                        .IsRequired();
+                    b.Navigation("Guardians");
                 });
 
             modelBuilder.Entity("SmartSchool.Core.Models.Role", b =>
@@ -957,8 +997,7 @@ namespace SmartSchool.EF.Migrations
 
             modelBuilder.Entity("SmartSchool.Core.Models.Specialty", b =>
                 {
-                    b.Navigation("Teacher")
-                        .IsRequired();
+                    b.Navigation("Teachers");
                 });
 
             modelBuilder.Entity("SmartSchool.Core.Models.Student", b =>

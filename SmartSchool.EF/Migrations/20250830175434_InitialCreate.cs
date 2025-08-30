@@ -17,7 +17,7 @@ namespace SmartSchool.EF.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Year = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
@@ -31,8 +31,8 @@ namespace SmartSchool.EF.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Stage = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Stage = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Capacity = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -46,7 +46,7 @@ namespace SmartSchool.EF.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -72,8 +72,8 @@ namespace SmartSchool.EF.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Qualification = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Qualification = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -86,7 +86,7 @@ namespace SmartSchool.EF.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -99,7 +99,7 @@ namespace SmartSchool.EF.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     GradeId = table.Column<int>(type: "int", nullable: false),
                     AcademicYear = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
@@ -186,8 +186,7 @@ namespace SmartSchool.EF.Migrations
                         name: "FK_Guardians_RelationTypes_RelationTypeId",
                         column: x => x.RelationTypeId,
                         principalTable: "RelationTypes",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Guardians_Users_UserId",
                         column: x => x.UserId,
@@ -214,8 +213,7 @@ namespace SmartSchool.EF.Migrations
                         name: "FK_Teachers_Specialties_SpecialtyId",
                         column: x => x.SpecialtyId,
                         principalTable: "Specialties",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Teachers_Users_UserId",
                         column: x => x.UserId,
@@ -231,7 +229,7 @@ namespace SmartSchool.EF.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     SubjectDetailId = table.Column<int>(type: "int", nullable: false),
-                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     LastDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UploadDate = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETDATE()")
                 },
@@ -251,7 +249,7 @@ namespace SmartSchool.EF.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Descripion = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     AttachmentFile = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
                     VedioUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -390,7 +388,7 @@ namespace SmartSchool.EF.Migrations
                     GroupId = table.Column<int>(type: "int", nullable: false),
                     SubjectDetailId = table.Column<int>(type: "int", nullable: false),
                     TeacherId = table.Column<int>(type: "int", nullable: false),
-                    DayOfWeek = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DayOfWeek = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     StartTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EndTime = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
@@ -504,9 +502,27 @@ namespace SmartSchool.EF.Migrations
                 column: "SubjectDetailId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Assignments_Title_SubjectDetailId",
+                table: "Assignments",
+                columns: new[] { "Title", "SubjectDetailId" },
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Contents_Name_SubjectDetailId",
+                table: "Contents",
+                columns: new[] { "Name", "SubjectDetailId" },
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Contents_SubjectDetailId",
                 table: "Contents",
                 column: "SubjectDetailId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Exams_ExamDate_GroupId_SubjectDetailId",
+                table: "Exams",
+                columns: new[] { "ExamDate", "GroupId", "SubjectDetailId" },
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Exams_ExamTypeId",
@@ -524,15 +540,32 @@ namespace SmartSchool.EF.Migrations
                 column: "SubjectDetailId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ExamTypes_Name_Year",
+                table: "ExamTypes",
+                columns: new[] { "Name", "Year" },
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Grades_Name_Stage",
+                table: "Grades",
+                columns: new[] { "Name", "Stage" },
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Groups_GradeId",
                 table: "Groups",
                 column: "GradeId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Groups_Name_AcademicYear_GradeId",
+                table: "Groups",
+                columns: new[] { "Name", "AcademicYear", "GradeId" },
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Guardians_RelationTypeId",
                 table: "Guardians",
-                column: "RelationTypeId",
-                unique: true);
+                column: "RelationTypeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Guardians_UserId",
@@ -541,9 +574,16 @@ namespace SmartSchool.EF.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Resultes_StudentId",
+                name: "IX_RelationTypes_Name",
+                table: "RelationTypes",
+                column: "Name",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Resultes_StudentId_SubjectDetailId",
                 table: "Resultes",
-                column: "StudentId");
+                columns: new[] { "StudentId", "SubjectDetailId" },
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Resultes_SubjectDetailId",
@@ -551,9 +591,22 @@ namespace SmartSchool.EF.Migrations
                 column: "SubjectDetailId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_StudentAttendances_StudentId",
+                name: "IX_Roles_Name",
+                table: "Roles",
+                column: "Name",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Specialties_Name_Qualification",
+                table: "Specialties",
+                columns: new[] { "Name", "Qualification" },
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_StudentAttendances_StudentId_AttendanceDate",
                 table: "StudentAttendances",
-                column: "StudentId");
+                columns: new[] { "StudentId", "AttendanceDate" },
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_StudentAttendances_TeacherId",
@@ -577,9 +630,10 @@ namespace SmartSchool.EF.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_SubjectDetails_GradeId",
+                name: "IX_SubjectDetails_GradeId_SubjectId",
                 table: "SubjectDetails",
-                column: "GradeId");
+                columns: new[] { "GradeId", "SubjectId" },
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_SubjectDetails_SubjectId",
@@ -587,25 +641,32 @@ namespace SmartSchool.EF.Migrations
                 column: "SubjectId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Subjects_Name",
+                table: "Subjects",
+                column: "Name",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_SubmittedAssignment_AssignmentId",
                 table: "SubmittedAssignment",
                 column: "AssignmentId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_SubmittedAssignment_StudentId",
+                name: "IX_SubmittedAssignment_StudentId_AssignmentId",
                 table: "SubmittedAssignment",
-                column: "StudentId");
+                columns: new[] { "StudentId", "AssignmentId" },
+                unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_TeacherHolidays_TeacherId",
+                name: "IX_TeacherHolidays_TeacherId_StartDate",
                 table: "TeacherHolidays",
-                column: "TeacherId");
+                columns: new[] { "TeacherId", "StartDate" },
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Teachers_SpecialtyId",
                 table: "Teachers",
-                column: "SpecialtyId",
-                unique: true);
+                column: "SpecialtyId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Teachers_UserId",
@@ -619,14 +680,16 @@ namespace SmartSchool.EF.Migrations
                 column: "SubjectDetailId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TeachingSubjects_TeacherId",
+                name: "IX_TeachingSubjects_TeacherId_SubjectDetailId_AcademicYear_Semster",
                 table: "TeachingSubjects",
-                column: "TeacherId");
+                columns: new[] { "TeacherId", "SubjectDetailId", "AcademicYear", "Semster" },
+                unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_TimeTables_GroupId",
+                name: "IX_TimeTables_GroupId_DayOfWeek_StartTime",
                 table: "TimeTables",
-                column: "GroupId");
+                columns: new[] { "GroupId", "DayOfWeek", "StartTime" },
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_TimeTables_SubjectDetailId",
@@ -637,6 +700,18 @@ namespace SmartSchool.EF.Migrations
                 name: "IX_TimeTables_TeacherId",
                 table: "TimeTables",
                 column: "TeacherId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_Email",
+                table: "Users",
+                column: "Email",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_Phone",
+                table: "Users",
+                column: "Phone",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Users_RoleId",
