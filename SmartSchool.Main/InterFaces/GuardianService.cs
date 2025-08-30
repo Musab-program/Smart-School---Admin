@@ -23,8 +23,8 @@ namespace SmartSchool.Main.InterFaces
         {
             return await _unitOfWork.ExecuteInTransactionAsync<Response<GuardianDto>>(async () =>
             {
-                var user = await _unitOfWork.Users.FindAsync(a => a.Id == dto.UserId);
-
+                var user = await _unitOfWork.Users.FindAsync(b => b.Name == dto.UserName && b.RoleId == dto.RoleID);
+                User UserNew = new();
                 if (user == null)
                 {
                     var role = await _unitOfWork.Roles.FindAsync(b => b.Id == dto.RoleID);
@@ -58,7 +58,7 @@ namespace SmartSchool.Main.InterFaces
                             IsActive = dto.IsActive
 
                         };
-                        var UserNew = await _unitOfWork.Users.AddAsync(addUser);
+                         UserNew = await _unitOfWork.Users.AddAsync(addUser);
                         _unitOfWork.Save();
                     }
                 }
@@ -105,7 +105,8 @@ namespace SmartSchool.Main.InterFaces
                         {
                             RelationTypeId = dto.RelationTypeId,
                             SecondryPhone = dto.SecondryPhone,
-                            UserId = dto.UserId,
+                            UserId = UserNew.Id == 0 ? user.Id : UserNew.Id,
+                            //UserId = UserNew.Id == 0 ? user.Id : UserNew.Id,
                         };
 
 

@@ -10,7 +10,10 @@ using SmartSchool.Main.Dtos;
 
 namespace SmartSchool.Main.InterFaces
 {
-    
+    /////////
+    /// <summary>
+    /// 
+    /// </summary>
     public class ExamTypeService : IExamTypeService
     {
     // An object is declared to handle database operations as a single unit.

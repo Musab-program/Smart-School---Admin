@@ -140,31 +140,6 @@ namespace SmartSchool.EF.ImplementedClasses
             _context.Set<T>().Remove(entity);
         }
 
-        public async Task DeleteAsync(int id)
-        {
-            var entity = await _context.Set<T>().FindAsync(id);
-            if (entity != null)
-            {
-                _context.Set<T>().Remove(entity);
-            }
-        }
-
-        public void DeleteRange(IEnumerable<T> entities)
-        {
-            _context.Set<T>().RemoveRange(entities);
-        }
-
-        public void Attach(T entity)
-        {
-            _context.Set<T>().Attach(entity);
-        }
-
-        public void AttachRange(IEnumerable<T> entities)
-        {
-            _context.Set<T>().AttachRange(entities);
-        }
-
-        // Counting Operations (Counting and Checking)
         public async Task<int> CountAsync()
         {
             return await _context.Set<T>().CountAsync();
@@ -174,32 +149,58 @@ namespace SmartSchool.EF.ImplementedClasses
         {
             return await _context.Set<T>().CountAsync(criteria);
         }
-
-        public async Task<bool> AnyAsync(Expression<Func<T, bool>> criteria)
+        public void DeleteRange(IEnumerable<T> entities)
         {
-            return await _context.Set<T>().AnyAsync(criteria);
+            _context.Set<T>().RemoveRange(entities);
         }
+        //public async Task DeleteAsync(int id)
+        //{
+        //    var entity = await _context.Set<T>().FindAsync(id);
+        //    if (entity != null)
+        //    {
+        //        _context.Set<T>().Remove(entity);
+        //    }
+        //}
 
-        // Sum Operations (Aggregation)
-        public async Task<decimal> SumAsync(Expression<Func<T, decimal>> selector, Expression<Func<T, bool>> criteria = null)
-        {
-            IQueryable<T> query = _context.Set<T>();
-            if (criteria != null)
-            {
-                query = query.Where(criteria);
-            }
-            return await query.SumAsync(selector);
-        }
 
-        public async Task<double> AverageAsync(Expression<Func<T, double>> selector, Expression<Func<T, bool>> criteria = null)
-        {
-            IQueryable<T> query = _context.Set<T>();
-            if (criteria != null)
-            {
-                query = query.Where(criteria);
-            }
-            return await query.AverageAsync(selector);
-        }
+        //public void Attach(T entity)
+        //{
+        //    _context.Set<T>().Attach(entity);
+        //}
+
+        //public void AttachRange(IEnumerable<T> entities)
+        //{
+        //    _context.Set<T>().AttachRange(entities);
+        //}
+
+        // Counting Operations (Counting and Checking)
+        
+
+        //public async Task<bool> AnyAsync(Expression<Func<T, bool>> criteria)
+        //{
+        //    return await _context.Set<T>().AnyAsync(criteria);
+        //}
+
+        //// Sum Operations (Aggregation)
+        //public async Task<decimal> SumAsync(Expression<Func<T, decimal>> selector, Expression<Func<T, bool>> criteria = null)
+        //{
+        //    IQueryable<T> query = _context.Set<T>();
+        //    if (criteria != null)
+        //    {
+        //        query = query.Where(criteria);
+        //    }
+        //    return await query.SumAsync(selector);
+        //}
+
+        //public async Task<double> AverageAsync(Expression<Func<T, double>> selector, Expression<Func<T, bool>> criteria = null)
+        //{
+        //    IQueryable<T> query = _context.Set<T>();
+        //    if (criteria != null)
+        //    {
+        //        query = query.Where(criteria);
+        //    }
+        //    return await query.AverageAsync(selector);
+        //}
 
     }
 }

@@ -25,15 +25,15 @@ namespace SmartSchool.Core.Interfaces
         T Update(T entity);
         void Delete(T entity); 
         void DeleteRange(IEnumerable<T> entities); 
-        void Attach(T entity);
-        void AttachRange(IEnumerable<T> entities);
+        //void Attach(T entity);
+        //void AttachRange(IEnumerable<T> entities);
 
         // Counting Operations (Counting and Checking)
         Task<int> CountAsync();
         Task<int> CountAsync(Expression<Func<T, bool>> criteria);
 
         // Sum Operations (Aggregation)
-        Task<decimal> SumAsync(Expression<Func<T, decimal>> selector, Expression<Func<T, bool>> criteria = null);
-        Task<double> AverageAsync(Expression<Func<T, double>> selector, Expression<Func<T, bool>> criteria = null);
+        //Task<decimal> SumAsync(Expression<Func<T, decimal>> selector, Expression<Func<T, bool>> criteria = null);
+        //Task<double> AverageAsync(Expression<Func<T, double>> selector, Expression<Func<T, bool>> criteria = null);
     }
 }
