@@ -173,6 +173,18 @@ namespace SmartSchool.Main.InterFaces
                 Code = 200,
             };
         }
+
+        public async Task<Response<int>> CountTeacherHolidays()
+        {
+            var TeacherHolidayCount = await _unitOfWork.TeacherHolidays.CountAsync();
+
+            return new Response<int>
+            {
+                Message = "Success",
+                Code = 200,
+                Data = TeacherHolidayCount
+            };
+        }
     }
 
     public interface ITeacherHolidayService
@@ -182,5 +194,6 @@ namespace SmartSchool.Main.InterFaces
         Task<Response<TeacherHolidayDto>> AddTeacherHoliday(TeacherHolidayDto dto);
         Task<Response<TeacherHolidayDto>> UpdateTeacherHoliday(TeacherHolidayDto dto);
         Task<Response<TeacherHolidayDto>> DeleteTeacherHoliday(int id);
+        Task<Response<int>> CountTeacherHolidays();
     }
 }

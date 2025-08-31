@@ -206,6 +206,19 @@ namespace SmartSchool.Main.InterFaces
                 }
             };
         }
+
+
+        public async Task<Response<int>> CountSubmittedAssignmen()
+        {
+            var SubmittedAssignmenCount = await _unitOfWork.SubmittedAssignments.CountAsync();
+
+            return new Response<int>
+            {
+                Message = "Success",
+                Code = 200,
+                Data = SubmittedAssignmenCount
+            };
+        }
     }
 
 
@@ -216,5 +229,6 @@ namespace SmartSchool.Main.InterFaces
         Task<Response<SubmittedAssignmentDto>> GetByIdSubmittedAssignment(int id);
         Task<Response<SubmittedAssignmentDto>> UpdateSubmittedAssignment(SubmittedAssignmentDto dto);
         Task<Response<SubmittedAssignmentDto>> DeleteSubmittedAssignment(int id);
+        Task<Response<int>> CountSubmittedAssignmen();
     }
 }

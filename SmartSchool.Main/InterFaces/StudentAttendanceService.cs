@@ -63,12 +63,25 @@ namespace SmartSchool.Main.InterFaces
             };
         }
 
+        public async Task<Response<int>> CountStudentAttendances()
+        {
+            var StudentAttendanceCount = await _unitOfWork.StudentAttendances.CountAsync();
+
+            return new Response<int>
+            {
+                Message = "Success",
+                Code = 200,
+                Data = StudentAttendanceCount
+            };
         }
+
+    }
 
 
     public interface IStudentAttendanceService
     {
         Task<Response<StudentAttendanceDto>> GetAllStudentAttendance();
         Task<Response<StudentAttendanceDto>> GetByIdStudentAttendance(int id);
+        Task<Response<int>> CountStudentAttendances();
     }
 }

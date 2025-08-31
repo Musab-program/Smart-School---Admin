@@ -150,6 +150,17 @@ namespace SmartSchool.Main.InterFaces
                 }
             };
         }
+        public async Task<Response<int>> CountSubjects()
+        {
+            var SubjectCount = await _unitOfWork.Subjects.CountAsync();
+
+            return new Response<int>
+            {
+                Message = "Success",
+                Code = 200,
+                Data = SubjectCount
+            };
+        }
     }
 
 
@@ -160,5 +171,6 @@ namespace SmartSchool.Main.InterFaces
         Task<Response<SubjectDto>> GetByIdSubject(int id);
         Task<Response<SubjectDto>> UpdateSubject(SubjectDto dto);
         Task<Response<SubjectDto>> DeleteSubject(int id);
+        Task<Response<int>> CountSubjects();
     }
 }
