@@ -144,6 +144,18 @@ namespace SmartSchool.Main.InterFaces
                 Code = 200,
             };
         }
+
+        public async Task<Response<int>> CountGrade()
+        {
+            var gradeCount = await _unitOfWork.Grades.CountAsync();
+
+            return new Response<int>
+            {
+                Message = "Success",
+                Code = 200,
+                Data = gradeCount
+            };
+        }
     }
     public interface IGradeService
     {
@@ -152,5 +164,6 @@ namespace SmartSchool.Main.InterFaces
         Task<Response<GradeDto>> AddGrade(GradeDto dto);
         Task<Response<GradeDto>> UpdateGrade(GradeDto dto);
         Task<Response<GradeDto>> DeleteGrade(int id);
+        Task<Response<int>> CountGrade();
     }
 }

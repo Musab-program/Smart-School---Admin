@@ -181,6 +181,17 @@ namespace SmartSchool.Main.InterFaces
                 Code = 200,
             };
         }
+        public async Task<Response<int>> CountResulte()
+        {
+            var countResulte = await _unitOfWork.Resultes.CountAsync(null);
+
+            return new Response<int>
+            {
+                Message = "Success",
+                Code = 200,
+                Data = countResulte
+            };
+        }
     }
 
     public interface IResulteService
@@ -190,5 +201,6 @@ namespace SmartSchool.Main.InterFaces
         Task<Response<ResulteDto>> AddResulte(ResulteDto dto);
         Task<Response<ResulteDto>> UpdateResulte(ResulteDto dto);
         Task<Response<ResulteDto>> DeleteResulte(int id);
+        Task<Response<int>> CountResulte();
     }
 }

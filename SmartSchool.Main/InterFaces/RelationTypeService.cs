@@ -136,6 +136,17 @@ namespace SmartSchool.Main.InterFaces
                 Data = new RelationTypeDto { Id = relationType.Id, Name = relationType.Name }
             };
         }
+        public async Task<Response<int>> CountRelationType()
+        {
+            var countIRelationType = await _unitOfWork.RelationTypes.CountAsync(null);
+
+            return new Response<int>
+            {
+                Message = "Success",
+                Code = 200,
+                Data = countIRelationType
+            };
+        }
     }
 
 
@@ -146,6 +157,7 @@ namespace SmartSchool.Main.InterFaces
         Task<Response<RelationTypeDto>> GetByIdRelationType(int id);
         Task<Response<RelationTypeDto>> UpdateRelationType(RelationTypeDto dto);
         Task<Response<RelationTypeDto>> DeleteRelationType(int id);
+        Task<Response<int>> CountRelationType();
     }
 
 

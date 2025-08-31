@@ -297,7 +297,19 @@ namespace SmartSchool.Main.InterFaces
             });
 
                 
-            }
+        }
+
+        public async Task<Response<int>> CountGuardian()
+        {
+            var countGuardian = await _unitOfWork.Guardians.CountAsync(null);
+
+            return new Response<int>
+            {
+                Message = "Success",
+                Code = 200,
+                Data = countGuardian
+            };
+        }
     }
 
     public interface IGuardianService
@@ -307,5 +319,6 @@ namespace SmartSchool.Main.InterFaces
         Task<Response<GuardianDto>> AddGuardian(GuardianDto dto);
         Task<Response<GuardianDto>> UpdateGuardian(GuardianDto dto);
         Task<Response<GuardianDto>> DeleteGuardian(int id);
+        Task<Response<int>> CountGuardian();
     }
 }

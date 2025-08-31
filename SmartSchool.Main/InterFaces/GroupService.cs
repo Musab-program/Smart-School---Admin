@@ -166,6 +166,18 @@ namespace SmartSchool.Main.InterFaces
                 Code = 200,
             };
         }
+
+        public async Task<Response<int>> CountGroup()
+        {
+            var countGroup = await _unitOfWork.Groups.CountAsync();
+
+            return new Response<int>
+            {
+                Message = "Success",
+                Code = 200,
+                Data = countGroup
+            };
+        }
     }
 
     public interface IGroupService
@@ -175,5 +187,6 @@ namespace SmartSchool.Main.InterFaces
         Task<Response<GroupDto>> AddGroup(GroupDto dto);
         Task<Response<GroupDto>> UpdateGroup(GroupDto dto);
         Task<Response<GroupDto>> DeleteGroup(int id);
+        Task<Response<int>> CountGroup();
     }
 }

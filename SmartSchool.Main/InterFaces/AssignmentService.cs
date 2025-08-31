@@ -114,13 +114,24 @@ namespace SmartSchool.Main.InterFaces
                 Message = "تم استدعاء النوع برقم التعريف",
             };
         }
+
+        public async Task<Response<int>> CountAssignment()
+        {
+            var assignmentCount = await _unitOfWork.Assignments.CountAsync();
+
+            return new Response<int>
+            {
+                Message = "Success",
+                Code = 200,
+                Data = assignmentCount
+            };
+        }
     }
 
     public interface IAssignmentService
     {
         Task<Response<AssignmentDto>> GetAllAssignments();
         Task<Response<AssignmentDto>> GetAssignmentById(int id);
-
-
+        Task<Response<int>> CountAssignment();
     }
 }
