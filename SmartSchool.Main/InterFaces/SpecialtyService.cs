@@ -10,6 +10,10 @@ using System.Threading.Tasks;
 
 namespace SmartSchool.Main.InterFaces
 {
+    /// <summary>
+    /// This service provides functionalities for managing specialties, including
+    /// adding, updating, deleting, and retrieving specialty information from the database.
+    /// </summary>
     public class SpecialtyService : ISpecialtyService
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -19,6 +23,14 @@ namespace SmartSchool.Main.InterFaces
             _unitOfWork = unitOfWork;
         }
 
+        /// <summary>
+        /// يضيف تخصصاً جديداً إلى قاعدة البيانات.
+        /// </summary>
+        /// <param name="dto">بيانات التخصص الجديد.</param>
+        /// <returns>
+        /// كائن استجابة يحتوي على بيانات التخصص الذي تمت إضافته بنجاح،
+        /// أو رسالة خطأ في حالة فشل العملية.
+        /// </returns>
         public async Task<Response<SpecialtyDto>> AddSpecialty(SpecialtyDto dto)
         {
             var specialty = await _unitOfWork.Specialtys.FindAsync(b => b.Name == dto.Name && b.Qualification == dto.Qualification);
@@ -45,6 +57,17 @@ namespace SmartSchool.Main.InterFaces
             };
         }
 
+        public async Task<Response<int>> CountSpecialties()
+        {
+            var specialtyCount = await _unitOfWork.Specialtys.CountAsync();
+
+            return new Response<int>
+            {
+                Message = "Success",
+                Code = 200,
+                Data = specialtyCount
+            };
+        }
 
         public async Task<Response<SpecialtyDto>> DeleteSpecialty(int id)
         {
@@ -163,6 +186,7 @@ namespace SmartSchool.Main.InterFaces
         Task<Response<SpecialtyDto>> GetByIdSpecialty(int id);
         Task<Response<SpecialtyDto>> UpdateSpecialty(SpecialtyDto dto);
         Task<Response<SpecialtyDto>> DeleteSpecialty(int id);
+        Task<Response<int>> CountSpecialties();
     }
 
 }

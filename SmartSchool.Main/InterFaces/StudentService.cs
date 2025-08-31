@@ -327,6 +327,18 @@ namespace SmartSchool.Main.InterFaces
             });
         }
 
+
+        public async Task<Response<int>> CountStudents()
+        {
+            var StudentCount = await _unitOfWork.Students.CountAsync();
+
+            return new Response<int>
+            {
+                Message = "Success",
+                Code = 200,
+                Data = StudentCount
+            };
+        }
     }
 
 
@@ -338,6 +350,7 @@ namespace SmartSchool.Main.InterFaces
         Task<Response<StudentDto>> GetByIdStudent(int id);
         Task<Response<StudentDto>> UpdateStudent(StudentDto dto);
         Task<Response<StudentDto>> DeleteStudent(int id);
+        Task<Response<int>> CountStudents();
 
     }
 }
