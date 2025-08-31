@@ -23,104 +23,87 @@ namespace SmartSchool.Main.InterFaces
         {
             return await _unitOfWork.ExecuteInTransactionAsync<Response<GuardianDto>>(async () =>
             {
-                var user = await _unitOfWork.Users.FindAsync(b => b.Name == dto.UserName && b.RoleId == dto.RoleID);
-                User UserNew = new();
-                if (user == null)
-                {
-                    var role = await _unitOfWork.Roles.FindAsync(b => b.Id == dto.RoleID);
-                    //check dto.RoleId is not existed in role table
-                    if (role == null)
-                        return new Response<GuardianDto>
-                        {
-                            Message = "النوع غير موجود",
-                            Code = 400
-                        };
-                    //check dto.RoleId exist in role table but its type not Guardian
-                    else if (role.Name != "ولي أمر")
-                        return new Response<GuardianDto>
-                        {
-                            Message = "النوع غير موجود",
-                            Code = 400
-                        };
-                    //check dto.RoleId  exist in role table and its type Gurdian
-                    else
-                    {
-                        User addUser = new User
-                        {
-                            Name = dto.UserName,
-                            Email = dto.Email,
-                            DateOfBirth = dto.DateOfBirth,
-                            gender = dto.gender,
-                            Address = dto.Address,
-                            Password = Encoding.UTF8.GetBytes(dto.Password),
-                            Phone = dto.Phone,
-                            RoleId = dto.RoleID,
-                            IsActive = dto.IsActive
+                // 1. ابحث عن المستخدم سواء كان موجودًا أم لا باستخدام الاسم و RoleId.
+                // هذا يضمن أن المستخدم الذي نبحث عنه له نفس الدور المطلوب.
+                var existingUser = await _unitOfWork.Users.FindAsync(b => b.Name == dto.UserName && b.RoleId == dto.RoleID);
 
+                // 2. إذا كان المستخدم موجودًا، تحقق من أنه ليس ولي أمر بالفعل.
+                if (existingUser != null)
+                {
+                    var existingGuardian = await _unitOfWork.Guardians.FindAsync(g => g.UserId == existingUser.Id);
+                    if (existingGuardian != null)
+                    {
+                        return new Response<GuardianDto>
+                        {
+                            Message = "ولي الأمر موجود مسبقًا.",
+                            Code = 400
                         };
-                         UserNew = await _unitOfWork.Users.AddAsync(addUser);
-                        _unitOfWork.Save();
                     }
+                }
+
+                // 3. إذا لم يكن المستخدم موجودًا، قم بإنشاء واحد جديد.
+                User userToAddOrUpdate;
+                if (existingUser == null)
+                {
+                    // تحقق من الدور قبل إنشاء المستخدم الجديد.
+                    var role = await _unitOfWork.Roles.FindAsync(b => b.Id == dto.RoleID);
+                    if (role == null || role.Name != "ولي أمر")
+                    {
+                        return new Response<GuardianDto>
+                        {
+                            Message = "النوع غير موجود أو يجب أن يكون ولي أمر.",
+                            Code = 400
+                        };
+                    }
+
+                    userToAddOrUpdate = new User
+                    {
+                        Name = dto.UserName,
+                        Email = dto.Email,
+                        DateOfBirth = dto.DateOfBirth,
+                        gender = dto.gender,
+                        Address = dto.Address,
+                        Password = Encoding.UTF8.GetBytes(dto.Password),
+                        Phone = dto.Phone,
+                        RoleId = dto.RoleID,
+                        IsActive = dto.IsActive
+                    };
+                    await _unitOfWork.Users.AddAsync(userToAddOrUpdate);
                 }
                 else
                 {
-                    //if (user.RoleId != _unitOfWork.Roles.FindAsync(b => b.Name == "ولي أمر").Id)
-                    var role = await _unitOfWork.Roles.FindAsync(a => a.Id == user.RoleId);
-                    if (role == null)
-                        return new Response<GuardianDto>
-                        {
-                            Message = "النوع غير موجود",
-                            Code = 400
-                        };
-                    //check dto.RoleId exist in role table but its type not Guardian
-                    else if (role.Name != "ولي أمر")
-                        return new Response<GuardianDto>
-                        {
-                            Message = "النوع غير موجود",
-                            Code = 400
-                        };
+                    userToAddOrUpdate = existingUser;
                 }
 
-                var guardian = await _unitOfWork.Guardians.FindAsync(r => r.UserId == dto.UserId);
-                if (guardian != null)
+                // 4. تحقق من وجود الروابط الأخرى (RelationType).
+                var relationType = await _unitOfWork.RelationTypes.FindAsync(a => a.Id == dto.RelationTypeId);
+                if (relationType == null)
                 {
                     return new Response<GuardianDto>
                     {
-                        Message = "ولي الأمر موجود مسبقا",
-                        Code = 400,
+                        Message = "العلاقة غير موجودة.",
+                        Code = 400
                     };
                 }
-                else
+
+                // 5. أضف ولي الأمر وقم بربطه بالمستخدم.
+                Guardian addGuardian = new Guardian
                 {
-                    var relationType = await _unitOfWork.RelationTypes.FindAsync(a => a.Id == dto.RelationTypeId);
-                    if (relationType == null)
-                        return new Response<GuardianDto>
-                        {
-                            Message = "العلاقة غير موجودة",
-                            Code = 400,
-                        };
-                    else
-                    {
-                        Guardian addGuardian = new Guardian
-                        {
-                            RelationTypeId = dto.RelationTypeId,
-                            SecondryPhone = dto.SecondryPhone,
-                            UserId = UserNew.Id == 0 ? user.Id : UserNew.Id,
-                            //UserId = UserNew.Id == 0 ? user.Id : UserNew.Id,
-                        };
+                    User = userToAddOrUpdate,
+                    RelationTypeId = dto.RelationTypeId,
+                    SecondryPhone = dto.SecondryPhone,
+                };
+                Guardian guardianNew = await _unitOfWork.Guardians.AddAsync(addGuardian);
 
+                // 6. احفظ جميع التغييرات مرة واحدة.
+                _unitOfWork.Save();
 
-                        var guardianNew = await _unitOfWork.Guardians.AddAsync(addGuardian);
-                        _unitOfWork.Save();
-                        return new Response<GuardianDto>
-                        {
-                            Message = "تمت الإضافة بنجاح",
-                            Code = 200,
-                            Data = guardianNew,
-                        };
-                    }
-                }
-
+                return new Response<GuardianDto>
+                {
+                    Message = "تمت الإضافة بنجاح",
+                    Code = 200,
+                    Data = guardianNew,
+                };
             });
 
 

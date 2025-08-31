@@ -24,7 +24,7 @@ namespace SmartSchool.Main.InterFaces
         // End Point To Add Element In This Domin Class
         public async Task<Response<GroupDto>> AddGroup(GroupDto dto)
         {
-            var group = await _unitOfWork.Groups.FindAsync(r => r.Id == dto.Id);
+            var group = await _unitOfWork.Groups.FindAsync(r => r.Name == dto.Name && r.AcademicYear == dto.AcademicYear && r.GradeId == dto.GradeId);
             if (group != null)
             {
                 return new Response<GroupDto>
@@ -34,7 +34,7 @@ namespace SmartSchool.Main.InterFaces
                 };
             }
 
-            var grade = await _unitOfWork.Grades.FindAsync(a => a.Id == dto.Id);
+            var grade = await _unitOfWork.Grades.FindAsync(a => a.Id == dto.GradeId);
             if (grade == null)
                 return new Response<GroupDto>
                 {
