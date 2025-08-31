@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace SmartSchool.Core.Models
@@ -15,6 +16,7 @@ namespace SmartSchool.Core.Models
         public string Name { get; set; }
         [Required]
         public string Qualification { get; set; }
+        [JsonIgnore]
         public ICollection<Teacher> Teachers { get; set; } //Navigation Properity From Specialty(1) To Teacher(1)
     }
 }

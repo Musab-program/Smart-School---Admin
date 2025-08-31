@@ -30,126 +30,89 @@ namespace SmartSchool.Main.InterFaces
             //Response<TeacherDto> response;
             return await _unitOfWork.ExecuteInTransactionAsync<Response<TeacherDto>>(async () =>
             {
+                // 1. ابحث عن المستخدم الحالي باستخدام اسمه والدور المطلوب.
+                // هذا يضمن أنك تتعامل مع المستخدم الصحيح لكل دور.
+                var existingUser = await _unitOfWork.Users.FindAsync(b => b.Name == dto.UserName && b.RoleId == dto.RoleID);
 
-                var user = await _unitOfWork.Users.FindAsync(b => b.Name == dto.UserName && b.RoleId == dto.RoleID);
-                User UserNew = new();
-                if (user == null)
+                // 2. إذا كان المستخدم موجوداً، تأكد من أنه لم يُضاف كمعلم من قبل.
+                if (existingUser != null)
                 {
-                    var role = await _unitOfWork.Roles.FindAsync(b => b.Id == dto.RoleID);
-                    //check dto.RoleId is not existed in role table
-                    if (role == null)
-                        return new Response<TeacherDto>
-                        {
-                            Message = "النوع غير موجود",
-                            Code = 400
-                        };
-                    //check dto.RoleId exist in role table but its type not teacher  
-                    else if (role.Name != "معلم")
-                        return new Response<TeacherDto>
-                        {
-                            Message = "يجب أن يكون النوع معلم",
-                            Code = 400
-                        };
-
-                    //check dto.RoleId  exist in role table and its type teacher  
-                    else
-                    {
-                        User addUser = new User
-                        {
-                            Name = dto.UserName,
-                            Email = dto.Email,
-                            DateOfBirth = dto.DateOfBirth,
-                            gender = dto.gender,
-                            Address = dto.Address,
-                            Password = Encoding.UTF8.GetBytes(dto.Password),
-                            Phone = dto.Phone,
-                            RoleId = dto.RoleID,
-                            IsActive = dto.IsActive
-
-                        };
-
-                        UserNew = await _unitOfWork.Users.AddAsync(addUser);
-                        _unitOfWork.Save();
-                    }
-
-
-
-                }
-
-
-                else
-                {
-
-                    //user exist but we check if he teacher
-
-                    var role = await _unitOfWork.Roles.FindAsync(b => b.Id == user.RoleId);
-                    //check dto.RoleId is not existed in role table
-                    if (role == null)
+                    var existingTeacher = await _unitOfWork.Teachers.FindAsync(b => b.UserId == existingUser.Id);
+                    if (existingTeacher != null)
                     {
                         return new Response<TeacherDto>
                         {
-                            Message = "النوع غير موجود",
-                            Code = 400
-                        };
-                    }
-                    //check dto.RoleId exist in role table but its type not teacher  
-                    else if (role.Name != "معلم")
-                    {
-                        return new Response<TeacherDto>
-                        {
-                            Message = "يجب أن يكون النوع معلم",
+                            Message = "المعلم موجود بالفعل.",
                             Code = 400
                         };
                     }
                 }
 
-
-
-                var teacher = await _unitOfWork.Teachers.FindAsync(b => b.UserId == dto.UserId);
-                //if the userId is exist in teacher table that means the teacher alrady existed
-                if (teacher != null)
+                // 3. تأكد أن الدور المرسل موجود ونوعه "معلم".
+                var role = await _unitOfWork.Roles.FindAsync(b => b.Id == dto.RoleID);
+                if (role == null || role.Name != "معلم")
                 {
                     return new Response<TeacherDto>
                     {
-                        Message = "المعلم موجود ",
+                        Message = "النوع غير موجود أو يجب أن يكون معلم.",
                         Code = 400
                     };
                 }
+
+                // 4. إذا لم يكن المستخدم موجودًا، قم بإنشاء واحد جديد.
+                User userToAddOrUpdate;
+                if (existingUser == null)
+                {
+                    userToAddOrUpdate = new User
+                    {
+                        Name = dto.UserName,
+                        Email = dto.Email,
+                        DateOfBirth = dto.DateOfBirth,
+                        gender = dto.gender,
+                        Address = dto.Address,
+                        Password = Encoding.UTF8.GetBytes(dto.Password),
+                        Phone = dto.Phone,
+                        RoleId = dto.RoleID,
+                        IsActive = dto.IsActive
+                    };
+                    // لا نحفظ هنا، بل نترك Entity Framework يقوم بتتبع الكائن.
+                    await _unitOfWork.Users.AddAsync(userToAddOrUpdate);
+                }
                 else
                 {
-                    var specialty = await _unitOfWork.Specialtys.FindAsync(b => b.Id == dto.SpecialtyId);
-                    if (specialty == null)
-                    {
-                        return new Response<TeacherDto>
-                        {
-                            Message = "التخصص غير موجود",
-                            Code = 400
-                        };
-                    }
-
-                    else
-                    {
-                        Teacher addTeacher = new Teacher
-                        {
-                            UserId = UserNew.Id == 0 ? user.Id : UserNew.Id ,
-                            SpecialtyId = dto.SpecialtyId,
-                            Salary = dto.Salary,
-                        };
-                        var teacherNew = await _unitOfWork.Teachers.AddAsync(addTeacher);
-                        _unitOfWork.Save();
-                        return new Response<TeacherDto>
-                        {
-                            Message = "تمت الاصافة",
-                            Data = teacherNew,
-                            Code = 200
-                        };
-                    }
-
+                    // إذا كان موجوداً، استخدمه لإضافة المعلم.
+                    userToAddOrUpdate = existingUser;
                 }
 
+                // 5. تحقق من وجود التخصص.
+                var specialty = await _unitOfWork.Specialtys.FindAsync(b => b.Id == dto.SpecialtyId);
+                if (specialty == null)
+                {
+                    return new Response<TeacherDto>
+                    {
+                        Message = "التخصص غير موجود.",
+                        Code = 400
+                    };
+                }
 
+                // 6. أضف المعلم واربطه بالمستخدم.
+                Teacher addTeacher = new Teacher
+                {
+                    User = userToAddOrUpdate, // 👈 اربط الكائن مباشرة
+                    SpecialtyId = dto.SpecialtyId,
+                    Salary = dto.Salary,
+                };
+                var teacherNew = await _unitOfWork.Teachers.AddAsync(addTeacher);
 
+                // 7. احفظ جميع التغييرات مرة واحدة في نهاية العملية.
+                _unitOfWork.Save();
 
+                return new Response<TeacherDto>
+                {
+                    Message = "تمت الإضافة",
+                    Data = teacherNew,
+                    Code = 200
+                };
             });
 
         }

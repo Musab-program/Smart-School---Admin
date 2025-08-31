@@ -24,7 +24,7 @@ namespace SmartSchool.Main.InterFaces
         // End Point To Add Element In This Domin Class
         public async Task<Response<GroupDto>> AddGroup(GroupDto dto)
         {
-            var group = await _unitOfWork.Groups.FindAsync(r => r.Id == dto.Id);
+            var group = await _unitOfWork.Groups.FindAsync(r => r.Name == dto.Name && r.AcademicYear == dto.AcademicYear && r.GradeId == dto.GradeId);
             if (group != null)
             {
                 return new Response<GroupDto>
@@ -34,7 +34,7 @@ namespace SmartSchool.Main.InterFaces
                 };
             }
 
-            var grade = await _unitOfWork.Grades.FindAsync(a => a.Id == dto.Id);
+            var grade = await _unitOfWork.Grades.FindAsync(a => a.Id == dto.GradeId);
             if (grade == null)
                 return new Response<GroupDto>
                 {
@@ -88,13 +88,16 @@ namespace SmartSchool.Main.InterFaces
         // End Point For Get All Elements In This Domin Class
         public async Task<Response<GroupDto>> GetAllGroups()
         {
-            var Group = await _unitOfWork.Groups.GetAllAsync();
+            //var Group = await _unitOfWork.Groups.GetAllAsync();
+            var Group = await _unitOfWork.Groups.FindAllAsync(g => true, new[] { "Grade" });
             // Select What Data Will Shows In Respons
             var dataDisplay = Group.Select(s => new GroupDto
             {
                 Id = s.Id,
                 Name = s.Name,
-                GradeId=s.GradeId,
+                GradeId = s.GradeId,
+                GradeName = s.Grade.Name,
+                Stage = s.Grade.Stage,
                 AcademicYear = s.AcademicYear,
             });
             return new Response<GroupDto>
@@ -108,7 +111,8 @@ namespace SmartSchool.Main.InterFaces
         // End Point For Get Element By Id In This Domin Class
         public async Task<Response<GroupDto>> GetGroupById(int id)
         {
-            var group = await _unitOfWork.Groups.GetByIdAsync(id);
+            //var group = await _unitOfWork.Groups.GetByIdAsync(id);
+            var group = await _unitOfWork.Groups.FindAsync(g => g.Id == id, new[] { "Grade" });
             if (group == null)
                 return new Response<GroupDto>
                 {
@@ -121,7 +125,9 @@ namespace SmartSchool.Main.InterFaces
                 {
                     Id = group.Id,
                     Name = group.Name,
-                    AcademicYear=group.AcademicYear,
+                    AcademicYear= group.AcademicYear,
+                    GradeName = group.Grade.Name,
+                    Stage = group.Grade.Stage,
                     GradeId = group.GradeId,
                 },
                 Code = 200,
@@ -160,6 +166,18 @@ namespace SmartSchool.Main.InterFaces
                 Code = 200,
             };
         }
+
+        public async Task<Response<int>> CountGroup()
+        {
+            var countGroup = await _unitOfWork.Groups.CountAsync();
+
+            return new Response<int>
+            {
+                Message = "Success",
+                Code = 200,
+                Data = countGroup
+            };
+        }
     }
 
     public interface IGroupService
@@ -169,5 +187,6 @@ namespace SmartSchool.Main.InterFaces
         Task<Response<GroupDto>> AddGroup(GroupDto dto);
         Task<Response<GroupDto>> UpdateGroup(GroupDto dto);
         Task<Response<GroupDto>> DeleteGroup(int id);
+        Task<Response<int>> CountGroup();
     }
 }
