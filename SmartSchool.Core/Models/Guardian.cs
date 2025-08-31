@@ -17,6 +17,7 @@ namespace SmartSchool.Core.Models
         public RelationType RelationType { get; set; }
         public int RelationTypeId { get; set; } //Forign Key 1 to 1 With RelationType Table
         public string SecondryPhone { get; set; }
+        [JsonIgnore]
         public ICollection<Student> Students { get; set; } //Navigation Properity From Student(n) To Guardian(1) 
     }
 }
