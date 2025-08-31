@@ -132,6 +132,18 @@ namespace SmartSchool.Main.InterFaces
 
             };
         }
+
+        public async Task<Response<int>> CountRole()
+        {
+            var countRole = await _unitOfWork.Roles.CountAsync(null);
+
+            return new Response<int>
+            {
+                Message = "Success",
+                Code = 200,
+                Data = countRole
+            };
+        }
     }
 
     public interface IRoleService
@@ -141,5 +153,6 @@ namespace SmartSchool.Main.InterFaces
         Task<Response<RoleDto>> AddRole(RoleDto dto);
         Task<Response<RoleDto>> UpdateRole(RoleDto dto);
         Task<Response<RoleDto>> DeleteRole(int id);
+        Task<Response<int>> CountRole();
     }
 }

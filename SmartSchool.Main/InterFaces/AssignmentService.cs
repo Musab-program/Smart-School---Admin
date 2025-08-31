@@ -74,7 +74,7 @@ namespace SmartSchool.Main.InterFaces
         // End Point For Get All Elements In This Domin Class
         public async Task<Response<AssignmentDto>> GetAllAssignments()
         {
-            var assignment = await _unitOfWork.Assignments.FindAllAsync(s => s.Id > 1, ["SubjectDetail"]);
+            var assignment = await _unitOfWork.Assignments.FindAllAsync(s => s.Id > 1,new[] {"SubjectDetail"});
             // Select What Data Will Shows In Respons
             var dataDisplay = assignment.Select(s => new AssignmentDto
             {
@@ -114,13 +114,24 @@ namespace SmartSchool.Main.InterFaces
                 Message = "تم استدعاء النوع برقم التعريف",
             };
         }
+
+        public async Task<Response<int>> CountAssignment()
+        {
+            var assignmentCount = await _unitOfWork.Assignments.CountAsync();
+
+            return new Response<int>
+            {
+                Message = "Success",
+                Code = 200,
+                Data = assignmentCount
+            };
+        }
     }
 
     public interface IAssignmentService
     {
         Task<Response<AssignmentDto>> GetAllAssignments();
         Task<Response<AssignmentDto>> GetAssignmentById(int id);
-
-
+        Task<Response<int>> CountAssignment();
     }
 }

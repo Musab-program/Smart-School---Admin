@@ -12,5 +12,9 @@ namespace SmartSchool.Main.Dtos
         public string Name { get; set; }
         public int GradeId { get; set; } //Forign Key n to 1 With Grade Table
         public DateTime AcademicYear { get; set; }
+
+        // Grade Properties
+        public string GradeName { get; set; }
+        public string Stage { get; set; }
     }
 }

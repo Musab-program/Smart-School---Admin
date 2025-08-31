@@ -166,7 +166,19 @@ namespace SmartSchool.Main.InterFaces
                 Message = "تم التعديل بنجاح",
                 Code = 200,
             };
-        }   
+        }
+
+        public async Task<Response<int>> CountContent()
+        {
+            var contentCount = await _unitOfWork.Contents.CountAsync();
+
+            return new Response<int>
+            {
+                Message = "Success",
+                Code = 200,
+                Data = contentCount
+            };
+        }
     }
 
     public interface IContentService
@@ -176,5 +188,6 @@ namespace SmartSchool.Main.InterFaces
         Task<Response<ContentDto>> AddContent(ContentDto dto);
         Task<Response<ContentDto>> UpdateContent(ContentDto dto);
         Task<Response<ContentDto>> DeleteContent(int id);
+        Task<Response<int>> CountContent();
     }
 }

@@ -204,6 +204,18 @@ namespace SmartSchool.Main.InterFaces
                 Code = 200,
             };
         }
+
+        public async Task<Response<int>> CountExam()
+        {
+            var countExam = await _unitOfWork.Exams.CountAsync();
+
+            return new Response<int>
+            {
+                Message = "Success",
+                Code = 200,
+                Data = countExam
+            };
+        }
     }
 
     public interface IExamService
@@ -213,5 +225,6 @@ namespace SmartSchool.Main.InterFaces
         Task<Response<ExamDto>> AddExam(ExamDto dto);
         Task<Response<ExamDto>> UpdateExam(ExamDto dto);
         Task<Response<ExamDto>> DeleteExam(int id);
+        Task<Response<int>> CountExam();
     }
 }
