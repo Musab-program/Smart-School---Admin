@@ -34,7 +34,7 @@ builder.Services.AddSwaggerGen(options =>
     });
 
     //////
-    ///JWT =>json word token. it allow just for authrized users to access to the api 
+    ///JWT =>json web token. it allow just for authrized users to access to the api 
     options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
         Name = "Authorization",

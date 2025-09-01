@@ -313,6 +313,18 @@ namespace SmartSchool.Main.InterFaces
             });
         }
 
+        public async Task<Response<int>> CountTeachers()
+        {
+            var TeacherCount = await _unitOfWork.Teachers.CountAsync();
+
+            return new Response<int>
+            {
+                Message = "Success",
+                Code = 200,
+                Data = TeacherCount
+            };
+        }
+
     }
     public interface ITeacherService
     {
@@ -321,6 +333,7 @@ namespace SmartSchool.Main.InterFaces
         Task<Response<TeacherDto>> GetByIdTeacher(int id);
         Task<Response<TeacherDto>> UpdateTeacher(TeacherDto dto);
         Task<Response<TeacherDto>> DeleteTeacher(int id);
+        Task<Response<int>> CountTeachers();
     }
 
 }
