@@ -11,6 +11,7 @@ namespace SmartSchool.Main.Dtos
         // Guardian Properties
         public int? Id { get; set; }
         public int RelationTypeId { get; set; } //Forign Key 1 to 1 With RelationType Table
+        public RelationTypeDto RelationType { get; set; }
         public string SecondryPhone { get; set; }
 
         // User Properties

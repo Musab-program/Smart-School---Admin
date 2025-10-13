@@ -1,12 +1,13 @@
-﻿using Microsoft.EntityFrameworkCore;
-using SmartSchool.Core.Consts;
-using SmartSchool.Core.Interfaces;
-using SmartSchool.Core.Interfaces;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using SmartSchool.Core.Consts;
+using SmartSchool.Core.Interfaces;
+using SmartSchool.Core.Interfaces;
+using SmartSchool.Core.Models;
 
 namespace SmartSchool.EF.ImplementedClasses
 {
@@ -18,8 +19,6 @@ namespace SmartSchool.EF.ImplementedClasses
         {
             _context = context;
         }
-
-        
 
         // Read Operations (Queries)
         public async Task<T> GetByIdAsync(int id)

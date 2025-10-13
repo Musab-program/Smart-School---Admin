@@ -5,6 +5,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using SmartSchool.Core.Consts;
+using SmartSchool.Core.Models;
 
 namespace SmartSchool.Core.Interfaces
 {
