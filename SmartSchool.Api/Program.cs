@@ -1,4 +1,4 @@
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using RepositoryPatternWithUOW.EF;
 using SmartSchool.Core;
@@ -114,8 +114,20 @@ builder.Services.AddTransient<IGuardianService, GuardianService>();
 builder.Services.AddTransient<IResulteService, ResulteService>();
 builder.Services.AddTransient<ITeacherHolidayService, TeacherHolidayService>();
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowNextJs", policy =>
+    {
+        policy.WithOrigins("http://localhost:3000") // رابط مشروع Next.js
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
+
 
 var app = builder.Build();
+
+app.UseCors("AllowNextJs");
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

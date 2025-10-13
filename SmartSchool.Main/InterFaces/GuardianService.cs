@@ -153,7 +153,7 @@ namespace SmartSchool.Main.InterFaces
         // End Point For Get All Elements In This Domin Class
         public async Task<Response<GuardianDto>> GetAllGuardians()
         {
-            var guardian = await _unitOfWork.Guardians.FindAllAsync(s => s.Id >= 1, ["User"]);
+            var guardian = await _unitOfWork.Guardians.FindAllAsync(s => s.Id >= 1,new[] { "User" , "RelationType" });
             // Select What Data Will Shows In Respons
             var dataDisplay = guardian.Select(s => new GuardianDto
             {
@@ -169,6 +169,11 @@ namespace SmartSchool.Main.InterFaces
                 IsActive = s.User.IsActive,
                 Phone = s.User.Phone,
                 RoleID = s.User.RoleId,
+                RelationType = s.RelationType == null ? null : new RelationTypeDto
+                {
+                    Id = s.RelationType.Id,
+                    Name = s.RelationType.Name
+                }
             });
 
             return new Response<GuardianDto>
@@ -222,18 +227,22 @@ namespace SmartSchool.Main.InterFaces
             {
                 var guardian = await _unitOfWork.Guardians.FindAsync(r => r.Id == dto.Id);
                 if (guardian == null)
+                {
                     return new Response<GuardianDto>
                     {
                         Message = "ولي الأمر الذي تبحث عنه غير موجود",
                         Code = 400,
                     };
-                var user = await _unitOfWork.Users.FindAsync(a => a.Id == dto.UserId);
+                }
+                var user = await _unitOfWork.Users.FindAsync(a => a.Id == guardian.UserId);
                 if(user == null)
+                {
                     return new Response<GuardianDto>
                     {
                         Message = "المستخدم الذي تبحث عنه غير موجود",
                         Code = 400,
                     };
+                }
                 var role = await _unitOfWork.Roles.FindAsync(a => a.Id == user.RoleId);
                 //check dto.RoleId exist in role table but its type not Guardian
                 if (role.Name == "ولي أمر")
@@ -249,7 +258,7 @@ namespace SmartSchool.Main.InterFaces
                     {
                         // Update Guardian Property
                         guardian.SecondryPhone = dto.SecondryPhone;
-                        guardian.UserId = dto.UserId;
+                        //guardian.UserId = user.Id;
                         guardian.RelationTypeId = dto.RelationTypeId;
                         // Update User Property
                         user.Name = dto.UserName;
