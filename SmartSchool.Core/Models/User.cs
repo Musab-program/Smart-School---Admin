@@ -1,42 +1,46 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
 using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 
 namespace SmartSchool.Core.Models
 {
-    public class User
+    // User extends IdentityUser<int> to leverage ASP.NET Core Identity features:
+    // - Built-in password hashing (PasswordHash)
+    // - Security stamp, concurrency stamp
+    // - Email confirmation, lockout, two-factor auth
+    // - int key to match existing DB schema
+    public class User : IdentityUser<int>
     {
-        //These Attributes Are The Culomns for User Table In Database
-        public int Id { get; set; }
-        [Required,MaxLength(100)]
-        public string Name { get; set; }
-        [Required]
-        public byte[] Password { get; set; }
+        // Display name (different from UserName which is used for login)
         [Required, MaxLength(100)]
-        public string Email  { get; set; }
-        [Required, MaxLength(50)]
-        public string Phone { get; set; }
+        public string Name { get; set; }
+
         [Required]
         public DateTime DateOfBirth { get; set; }
-        
+
         public DateTime CreatedAt { get; set; }
 
         public bool IsActive { get; set; }
+
         [Required, MaxLength(150)]
         public string Address { get; set; }
+
         [Required, MaxLength(20)]
         public string gender { get; set; }
 
-        //Forign Key 1 to n With Role Table
-        public Role Role { get; set; } //Navigation Properity From User (1) To Role(n)
+        // Refresh Token fields for JWT refresh flow
+        public string? RefreshToken { get; set; }
+        public DateTime? RefreshTokenExpiry { get; set; }
+
+        // Custom business role (direct FK for easy querying - one role per user)
         public int RoleId { get; set; }
         [JsonIgnore]
-        public Guardian Guardian { get; set; } //Navigation Properity From User (1) To Guardian(1)
-        public Student Student { get; set; } //Navigation Properity From User (1) To Student(1)
-        public Teacher Teacher { get; set; } //Navigation Properity From User (1) To Teacher(1)
+        public Role Role { get; set; }
+
+        // Navigation properties
+        [JsonIgnore]
+        public Guardian Guardian { get; set; }
+        public Student Student { get; set; }
+        public Teacher Teacher { get; set; }
     }
 }

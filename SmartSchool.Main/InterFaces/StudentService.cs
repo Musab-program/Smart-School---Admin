@@ -60,12 +60,12 @@ namespace SmartSchool.Main.InterFaces
                     userToAddOrUpdate = new User
                     {
                         Name = dto.UserName,
+                        UserName = dto.UserEmail,
                         Email = dto.UserEmail,
+                        PhoneNumber = dto.UserPhone,
                         DateOfBirth = dto.UserDateOfBirth,
                         gender = dto.UserGender,
                         Address = dto.UserAddress,
-                        Password = Encoding.UTF8.GetBytes(dto.UserPassword),
-                        Phone = dto.UserPhone,
                         RoleId = dto.RoleId,
                         IsActive = dto.IsActiveUser
                     };
@@ -153,7 +153,7 @@ namespace SmartSchool.Main.InterFaces
                         UserAddress = user.Address,
                         UserGender = user.gender,
                         IsActiveUser = user.IsActive,
-                        UserPhone = user.Phone,
+                        UserPhone = user.PhoneNumber,
                         RoleId = user.RoleId,
                         GuardianId = student.GuardianId,
                         GroupId = student.GroupId,
@@ -177,7 +177,7 @@ namespace SmartSchool.Main.InterFaces
                 GroupId = s.GroupId,
                 UserName = s.User.Name,
                 UserEmail = s.User.Email,
-                UserPhone = s.User.Phone,
+                UserPhone = s.User.PhoneNumber,
                 UserAddress = s.User.Address,
                 UserDateOfBirth = s.User.DateOfBirth,
                 UserGender = s.User.gender,
@@ -225,7 +225,7 @@ namespace SmartSchool.Main.InterFaces
                     UserAddress = user.Address,
                     UserGender = user.gender,
                     IsActiveUser = user.IsActive,
-                    UserPhone = user.Phone,
+                    UserPhone = user.PhoneNumber,
                     RoleId = user.RoleId,
                 }
             };
@@ -289,14 +289,14 @@ namespace SmartSchool.Main.InterFaces
                 student.GroupId = dto.GroupId;
                 student.RegisterDate = dto.RegisterDate;
 
-                //update Student property
+                //update user property
                 user.Name = dto.UserName;
+                user.UserName = dto.UserEmail;
                 user.Email = dto.UserEmail;
+                user.PhoneNumber = dto.UserPhone;
                 user.DateOfBirth = dto.UserDateOfBirth;
                 user.gender = dto.UserGender;
                 user.Address = dto.UserAddress;
-                user.Password = Encoding.UTF8.GetBytes(dto.UserPassword);
-                user.Phone = dto.UserPhone;
                 user.IsActive = dto.IsActiveUser;
 
                 var StudentNew = _unitOfWork.Students.Update(student);
@@ -317,7 +317,7 @@ namespace SmartSchool.Main.InterFaces
                         UserAddress = user.Address,
                         UserGender = user.gender,
                         IsActiveUser = user.IsActive,
-                        UserPhone = user.Phone,
+                        UserPhone = user.PhoneNumber,
                         GuardianId = student.GuardianId,
                         RoleId = user.RoleId,
                         GroupId = student.GroupId,

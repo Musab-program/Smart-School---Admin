@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SmartSchool.Core;
 using SmartSchool.Main.Dtos;
@@ -8,6 +9,7 @@ namespace SmartSchool.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class ExamController : ControllerBase
     {
         // An object is declared to handle database operations as a single unit.
@@ -26,7 +28,7 @@ namespace SmartSchool.Api.Controllers
         public async Task<IActionResult> GetAllExams()
         {
             var result = await _examService.GetAllExams();
-            return Ok(result);
+            return result.Code != 200 ? BadRequest(result) : Ok(result);
         }
 
         // End Point For Get Element By Id In This Domin Class
@@ -34,7 +36,7 @@ namespace SmartSchool.Api.Controllers
         public async Task<IActionResult> GetExamById(int id)
         {
             var result = await _examService.GetExamById(id);
-            return Ok(result);
+            return result.Code != 200 ? BadRequest(result) : Ok(result);
         }
 
 
@@ -43,7 +45,7 @@ namespace SmartSchool.Api.Controllers
         public async Task<IActionResult> AddExam([FromBody] ExamDto dto)
         {
             var result = await _examService.AddExam(dto);
-            return Ok(result);
+            return result.Code != 200 ? BadRequest(result) : Ok(result);
         }
 
         // End Point To Update Element In This Domin Class
@@ -51,7 +53,7 @@ namespace SmartSchool.Api.Controllers
         public async Task<IActionResult> UpdateExam([FromBody] ExamDto dto)
         {
             var result = await _examService.UpdateExam(dto);
-            return Ok(result);
+            return result.Code != 200 ? BadRequest(result) : Ok(result);
         }
 
         // End Point To Delete Element In This Domin Class
@@ -59,7 +61,7 @@ namespace SmartSchool.Api.Controllers
         public async Task<IActionResult> DeleteExam(int id)
         {
             var result = await _examService.DeleteExam(id);
-            return Ok(result);
+            return result.Code != 200 ? BadRequest(result) : Ok(result);
         }
     }
 }

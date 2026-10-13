@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -37,7 +37,7 @@ namespace SmartSchool.Main.InterFaces
                 };
             }
 
-            var subjectDetail = await _unitOfWork.SubjectDetails.FindAsync(a => a.Id == dto.Id);
+            var subjectDetail = await _unitOfWork.SubjectDetails.FindAsync(a => a.Id == dto.SubjectDetailId);
             if (subjectDetail == null)
                 return new Response<ExamDto>
                 {
@@ -45,15 +45,15 @@ namespace SmartSchool.Main.InterFaces
                     Code = 400,
                 };
             
-            var group = await _unitOfWork.Groups.FindAsync(a => a.Id == dto.Id);
+            var group = await _unitOfWork.Groups.FindAsync(a => a.Id == dto.GroupId);
             if (group == null)
                 return new Response<ExamDto>
                 {
-                    Message = "الطالب غير موجود",
+                    Message = "الشعبة غير موجودة",
                     Code = 400,
                 };
 
-            var examType = await _unitOfWork.ExamTypes.FindAsync(a => a.Id == dto.Id);
+            var examType = await _unitOfWork.ExamTypes.FindAsync(a => a.Id == dto.ExamTypeId);
             if (examType == null)
                 return new Response<ExamDto>
                 {
@@ -166,7 +166,7 @@ namespace SmartSchool.Main.InterFaces
                     Code = 400,
                 };
 
-            var examType = await _unitOfWork.ExamTypes.FindAsync(a => a.Id == dto.Id);
+            var examType = await _unitOfWork.ExamTypes.FindAsync(a => a.Id == dto.ExamTypeId);
             if (examType == null)
                 return new Response<ExamDto>
                 {
@@ -174,15 +174,15 @@ namespace SmartSchool.Main.InterFaces
                     Code = 400,
                 };
 
-            var group = await _unitOfWork.Groups.FindAsync(a => a.Id == dto.Id);
+            var group = await _unitOfWork.Groups.FindAsync(a => a.Id == dto.GroupId);
             if (group == null)
                 return new Response<ExamDto>
                 {
-                    Message = "الطالب غير موجود",
+                    Message = "الشعبة غير موجودة",
                     Code = 400,
                 };
 
-            var subjectDetail = await _unitOfWork.SubjectDetails.FindAsync(a => a.Id == dto.Id);
+            var subjectDetail = await _unitOfWork.SubjectDetails.FindAsync(a => a.Id == dto.SubjectDetailId);
             if (subjectDetail == null)
                 return new Response<ExamDto>
                 {

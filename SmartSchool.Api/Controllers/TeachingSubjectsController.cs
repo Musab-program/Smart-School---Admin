@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SmartSchool.Core;
 using SmartSchool.Core.Models;
@@ -10,6 +11,7 @@ namespace SmartSchool.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class TeachingSubjectsController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -27,7 +29,7 @@ namespace SmartSchool.Api.Controllers
         public async Task<IActionResult> AddTeachingSubject([FromBody] TeachingSubjectDto dto)
         {
             var result = await _teachingSubjectService.AddTeachingSubject(dto);
-            return Ok(result);
+            return result.Code != 200 ? BadRequest(result) : Ok(result);
         }
 
 
@@ -36,7 +38,7 @@ namespace SmartSchool.Api.Controllers
         public async Task<IActionResult> GetAllTeachingSubject()
         {
             var result = await _teachingSubjectService.GetAllTeachingSubjects();
-            return Ok(result);
+            return result.Code != 200 ? BadRequest(result) : Ok(result);
         }
 
 
@@ -45,7 +47,7 @@ namespace SmartSchool.Api.Controllers
         public async Task<IActionResult> GetTeachingSubjectById(int id)
         {
             var result = await _teachingSubjectService.GetByIdTeachingSubject(id);
-            return Ok(result);
+            return result.Code != 200 ? BadRequest(result) : Ok(result);
         }
 
 
@@ -54,7 +56,7 @@ namespace SmartSchool.Api.Controllers
         public async Task<IActionResult> UpdateTeachingSubjects([FromBody] TeachingSubjectDto dto)
         {
             var result = await _teachingSubjectService.UpdateTeachingSubject(dto);
-            return Ok(result);
+            return result.Code != 200 ? BadRequest(result) : Ok(result);
         }
 
 
@@ -63,7 +65,7 @@ namespace SmartSchool.Api.Controllers
         public async Task<IActionResult> DeleteTeachingSubject(int id)
         {
             var result = await _teachingSubjectService.DeleteTeachingSubject(id);
-            return Ok(result);
+            return result.Code != 200 ? BadRequest(result) : Ok(result);
         }
     }
 }

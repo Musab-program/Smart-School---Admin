@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SmartSchool.Core;
 using SmartSchool.Core.Models;
@@ -9,6 +10,7 @@ namespace SmartSchool.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class TimeTablesController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -26,7 +28,7 @@ namespace SmartSchool.Api.Controllers
         public async Task<IActionResult> AddTimeTable([FromBody] TimeTableDto dto)
         {
             var result = await _timeTableService.AddTimeTable(dto);
-            return Ok(result);
+            return result.Code != 200 ? BadRequest(result) : Ok(result);
         }
 
 
@@ -35,7 +37,7 @@ namespace SmartSchool.Api.Controllers
         public async Task<IActionResult> GetAllTimeTable()
         {
             var result = await _timeTableService.GetAllTimeTables();
-            return Ok(result);
+            return result.Code != 200 ? BadRequest(result) : Ok(result);
         }
 
 
@@ -44,7 +46,7 @@ namespace SmartSchool.Api.Controllers
         public async Task<IActionResult> GetTimeTableById(int id)
         {
             var result = await _timeTableService.GetByIdTimeTable(id);
-            return Ok(result);
+            return result.Code != 200 ? BadRequest(result) : Ok(result);
         }
 
 
@@ -53,7 +55,7 @@ namespace SmartSchool.Api.Controllers
         public async Task<IActionResult> UpdateTimeTables([FromBody] TimeTableDto dto)
         {
             var result = await _timeTableService.UpdateTimeTable(dto);
-            return Ok(result);
+            return result.Code != 200 ? BadRequest(result) : Ok(result);
         }
 
 
@@ -62,7 +64,7 @@ namespace SmartSchool.Api.Controllers
         public async Task<IActionResult> DeleteTimeTable(int id)
         {
             var result = await _timeTableService.DeleteTimeTable(id);
-            return Ok(result);
+            return result.Code != 200 ? BadRequest(result) : Ok(result);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SmartSchool.Core;
 using SmartSchool.Main.Dtos;
@@ -8,6 +9,7 @@ namespace SmartSchool.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class ResulteController : ControllerBase
     {
         // An object is declared to handle database operations as a single unit.
@@ -26,7 +28,7 @@ namespace SmartSchool.Api.Controllers
         public async Task<IActionResult> GetAllResultes()
         {
             var result = await _resulteService.GetAllResultes();
-            return Ok(result);
+            return result.Code != 200 ? BadRequest(result) : Ok(result);
         }
 
         // End Point For Get Element By Id In This Domin Class
@@ -34,7 +36,7 @@ namespace SmartSchool.Api.Controllers
         public async Task<IActionResult> GetResulteById(int id)
         {
             var result = await _resulteService.GetResulteById(id);
-            return Ok(result);
+            return result.Code != 200 ? BadRequest(result) : Ok(result);
         }
 
 
@@ -43,7 +45,7 @@ namespace SmartSchool.Api.Controllers
         public async Task<IActionResult> AddResulte([FromBody] ResulteDto dto)
         {
             var result = await _resulteService.AddResulte(dto);
-            return Ok(result);
+            return result.Code != 200 ? BadRequest(result) : Ok(result);
         }
 
         // End Point To Update Element In This Domin Class
@@ -51,7 +53,7 @@ namespace SmartSchool.Api.Controllers
         public async Task<IActionResult> UpdateResulte([FromBody] ResulteDto dto)
         {
             var result = await _resulteService.UpdateResulte(dto);
-            return Ok(result);
+            return result.Code != 200 ? BadRequest(result) : Ok(result);
         }
 
         // End Point To Delete Element In This Domin Class
@@ -59,7 +61,7 @@ namespace SmartSchool.Api.Controllers
         public async Task<IActionResult> DeleteResulte(int id)
         {
             var result = await _resulteService.DeleteResulte(id);
-            return Ok(result);
+            return result.Code != 200 ? BadRequest(result) : Ok(result);
         }
     }
 }

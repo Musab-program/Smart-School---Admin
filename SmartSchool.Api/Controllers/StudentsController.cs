@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SmartSchool.Core;
 using SmartSchool.Core.Models;
@@ -9,6 +10,7 @@ namespace SmartSchool.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class StudentsController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -26,7 +28,7 @@ namespace SmartSchool.Api.Controllers
         public async Task<IActionResult> AddStudent([FromBody] StudentDto dto)
         {
             var result = await _studentService.AddStudent(dto);
-            return Ok(result);
+            return result.Code != 200 ? BadRequest(result) : Ok(result);
         }
 
 
@@ -35,7 +37,7 @@ namespace SmartSchool.Api.Controllers
         public async Task<IActionResult> GetAllStudent()
         {
             var result = await _studentService.GetAllStudents();
-            return Ok(result);
+            return result.Code != 200 ? BadRequest(result) : Ok(result);
         }
 
 
@@ -44,7 +46,7 @@ namespace SmartSchool.Api.Controllers
         public async Task<IActionResult> GetStudentById(int id)
         {
             var result = await _studentService.GetByIdStudent(id);
-            return Ok(result);
+            return result.Code != 200 ? BadRequest(result) : Ok(result);
         }
 
 
@@ -53,7 +55,7 @@ namespace SmartSchool.Api.Controllers
         public async Task<IActionResult> UpdateStudents([FromBody] StudentDto dto)
         {
             var result = await _studentService.UpdateStudent(dto);
-            return Ok(result);
+            return result.Code != 200 ? BadRequest(result) : Ok(result);
         }
 
 
@@ -62,7 +64,7 @@ namespace SmartSchool.Api.Controllers
         public async Task<IActionResult> DeleteStudent(int id)
         {
             var result = await _studentService.DeleteStudent(id);
-            return Ok(result);
+            return result.Code != 200 ? BadRequest(result) : Ok(result);
         }
     }
 }

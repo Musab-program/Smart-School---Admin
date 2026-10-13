@@ -1,4 +1,5 @@
-﻿using SmartSchool.Main.Dtos;
+using SmartSchool.Main.Dtos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SmartSchool.Core;
 using SmartSchool.Core.Models;
@@ -11,6 +12,7 @@ namespace SmartSchool.Main.Controllers
     [Route("api/[controller]")]
     [ApiController]
 
+    [Authorize]
     public class UsersController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -28,7 +30,7 @@ namespace SmartSchool.Main.Controllers
         public async Task<IActionResult> AddUsers([FromBody] UserDto dto)
         {
             var result = await _userService.AddUser(dto);
-            return Ok(result);
+            return result.Code != 200 ? BadRequest(result) : Ok(result);
         }
 
 
@@ -37,7 +39,7 @@ namespace SmartSchool.Main.Controllers
         public async Task<IActionResult> GetAllUsers()
         {
             var result = await _userService.GetAllUsers();
-            return Ok(result);
+            return result.Code != 200 ? BadRequest(result) : Ok(result);
         }
 
 
@@ -46,7 +48,7 @@ namespace SmartSchool.Main.Controllers
         public async Task<IActionResult> GetUserById(int id)
         {
             var result = await _userService.GetByIdUser(id);
-            return Ok(result);
+            return result.Code != 200 ? BadRequest(result) : Ok(result);
         }
 
 
@@ -55,7 +57,7 @@ namespace SmartSchool.Main.Controllers
         public async Task<IActionResult> UpdateUserss([FromBody] UserDto dto)
         {
             var result = await _userService.UpdateUser(dto);
-            return Ok(result);
+            return result.Code != 200 ? BadRequest(result) : Ok(result);
         }
 
 
@@ -64,7 +66,7 @@ namespace SmartSchool.Main.Controllers
         public async Task<IActionResult> DeleteUseru(int id)
         {
             var result = await _userService.DeleteUser(id);
-            return Ok(result);
+            return result.Code != 200 ? BadRequest(result) : Ok(result);
         }
     }
 }

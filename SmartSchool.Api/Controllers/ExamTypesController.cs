@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SmartSchool.Core;
 using SmartSchool.Main.Dtos;
@@ -8,6 +9,7 @@ namespace SmartSchool.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class ExamTypeController : ControllerBase
     {
         // An object is declared to handle database operations as a single unit.
@@ -26,7 +28,7 @@ namespace SmartSchool.Api.Controllers
         public async Task<IActionResult> GetAllExamTypes()
         {
             var result = await _examTypeService.GetAllExamTypes();
-            return Ok(result);
+            return result.Code != 200 ? BadRequest(result) : Ok(result);
         }
 
         // End Point For Get Element By Id In This Domin Class
@@ -34,7 +36,7 @@ namespace SmartSchool.Api.Controllers
         public async Task<IActionResult> GetExamTypeById(int id)
         {
             var result = await _examTypeService.GetExamTypeById(id);
-            return Ok(result);
+            return result.Code != 200 ? BadRequest(result) : Ok(result);
         }
 
 
@@ -43,7 +45,7 @@ namespace SmartSchool.Api.Controllers
         public async Task<IActionResult> AddExamType([FromBody] ExamTypeDto dto)
         {
             var result = await _examTypeService.AddExamType(dto);
-            return Ok(result);
+            return result.Code != 200 ? BadRequest(result) : Ok(result);
         }
 
         // End Point To Update Element In This Domin Class
@@ -51,7 +53,7 @@ namespace SmartSchool.Api.Controllers
         public async Task<IActionResult> UpdateExamType([FromBody] ExamTypeDto dto)
         {
             var result = await _examTypeService.UpdateExamType(dto);
-            return Ok(result);
+            return result.Code != 200 ? BadRequest(result) : Ok(result);
         }
 
         // End Point To Delete Element In This Domin Class
@@ -59,7 +61,7 @@ namespace SmartSchool.Api.Controllers
         public async Task<IActionResult> DeleteExamType(int id)
         {
             var result = await _examTypeService.DeleteExamType(id);
-            return Ok(result);
+            return result.Code != 200 ? BadRequest(result) : Ok(result);
         }
     }
 }

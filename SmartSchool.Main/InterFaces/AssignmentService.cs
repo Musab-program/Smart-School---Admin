@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,55 +21,112 @@ namespace SmartSchool.Main.InterFaces
             _unitOfWork = unitOfWork;
         }
 
-        // End Point To Add Element In This Domin Class
-        //public async Task<Response<AssignmentDto>> AddAssignment(AssignmentDto dto)
-        //{
-        //    var assignment = await _unitOfWork.Assignments.FindAsync(r => r.Id == dto.Id);
-        //    if (assignment != null)
-        //    {
-        //        return new Response<AssignmentDto>
-        //        {
-        //            Message = "الواجب موجود مسبقا",
-        //            Code = 400,
-        //        };
-        //    }
+        public async Task<Response<AssignmentDto>> AddAssignment(AssignmentDto dto)
+        {
+            var subjectDetail = await _unitOfWork.SubjectDetails.FindAsync(r => r.Id == dto.SubjectDetailId);
+            if (subjectDetail == null)
+            {
+                return new Response<AssignmentDto>
+                {
+                    Message = "تفاصيل المادة الدراسية غير موجودة",
+                    Code = 400,
+                };
+            }
 
-        //    /// **************************
-        //    /// هل لازم نربط الواجب بالشعبة؟
-        //    /// اذا ما ربطناه لما نظيف واجب لمن ينشر؟
-        //    Assignment addAssignment = new Assignment
-        //    {
-        //        Title = dto.Title,
+            Assignment addAssignment = new Assignment
+            {
+                Title = dto.Title,
+                SubjectDetailId = dto.SubjectDetailId,
+                LastDate = dto.LastDate,
+                UploadDate = DateTime.UtcNow,
+            };
 
-        //    };
-        //    var roleNew = await _unitOfWork.Assignments.AddAsync(addRole);
-        //    _unitOfWork.Save();
-        //    return new Response<RoleDto>
-        //    {
-        //        Message = "تمت الإضافة بنجاح",
-        //        Code = 200,
-        //        Data = roleNew,
-        //    };
-        //}
+            var assignmentNew = await _unitOfWork.Assignments.AddAsync(addAssignment);
+            _unitOfWork.Save();
+            return new Response<AssignmentDto>
+            {
+                Message = "تمت إضافة الواجب بنجاح",
+                Code = 200,
+                Data = new AssignmentDto
+                {
+                    Id = assignmentNew.Id,
+                    Title = assignmentNew.Title,
+                    SubjectDetailId = assignmentNew.SubjectDetailId,
+                    LastDate = assignmentNew.LastDate,
+                },
+            };
+        }
 
-        //// End Point To Delete Element In This Domin Class
-        //public async Task<Response<RoleDto>> DeleteAssignment(int id)
-        //{
-        //    var role = await _unitOfWork.Assignments.GetByIdAsync(id);
-        //    if (role == null)
-        //        return new Response<RoleDto>
-        //        {
-        //            Message = "النوع غير موجود",
-        //            Code = 400,
-        //        };
-        //    _unitOfWork.Assignments.Delete(role);
-        //    _unitOfWork.Save();
-        //    return new Response<RoleDto>
-        //    {
-        //        Message = "تم المسح بنجاح",
-        //        Code = 200,
-        //    };
-        //}
+        public async Task<Response<AssignmentDto>> UpdateAssignment(AssignmentDto dto)
+        {
+            var assignment = await _unitOfWork.Assignments.FindAsync(r => r.Id == dto.Id);
+            if (assignment == null)
+            {
+                return new Response<AssignmentDto>
+                {
+                    Message = "الواجب غير موجود",
+                    Code = 400,
+                };
+            }
+
+            var subjectDetail = await _unitOfWork.SubjectDetails.FindAsync(r => r.Id == dto.SubjectDetailId);
+            if (subjectDetail == null)
+            {
+                return new Response<AssignmentDto>
+                {
+                    Message = "تفاصيل المادة الدراسية غير موجودة",
+                    Code = 400,
+                };
+            }
+
+            assignment.Title = dto.Title;
+            assignment.SubjectDetailId = dto.SubjectDetailId;
+            assignment.LastDate = dto.LastDate;
+
+            _unitOfWork.Assignments.Update(assignment);
+            _unitOfWork.Save();
+
+            return new Response<AssignmentDto>
+            {
+                Message = "تم تعديل الواجب بنجاح",
+                Code = 200,
+                Data = new AssignmentDto
+                {
+                    Id = assignment.Id,
+                    Title = assignment.Title,
+                    SubjectDetailId = assignment.SubjectDetailId,
+                    LastDate = assignment.LastDate,
+                },
+            };
+        }
+
+        public async Task<Response<AssignmentDto>> DeleteAssignment(int id)
+        {
+            var assignment = await _unitOfWork.Assignments.GetByIdAsync(id);
+            if (assignment == null)
+            {
+                return new Response<AssignmentDto>
+                {
+                    Message = "الواجب غير موجود",
+                    Code = 400,
+                };
+            }
+
+            try
+            {
+                _unitOfWork.Assignments.Delete(assignment);
+                _unitOfWork.Save();
+                return new Response<AssignmentDto>
+                {
+                    Message = "تم حذف الواجب بنجاح",
+                    Code = 200,
+                };
+            }
+            catch
+            {
+                throw new Exception("السجل مرتبط ببيانات تسليمات واجبات أخرى");
+            }
+        }
 
         // End Point For Get All Elements In This Domin Class
         public async Task<Response<AssignmentDto>> GetAllAssignments()
@@ -132,6 +189,9 @@ namespace SmartSchool.Main.InterFaces
     {
         Task<Response<AssignmentDto>> GetAllAssignments();
         Task<Response<AssignmentDto>> GetAssignmentById(int id);
+        Task<Response<AssignmentDto>> AddAssignment(AssignmentDto dto);
+        Task<Response<AssignmentDto>> UpdateAssignment(AssignmentDto dto);
+        Task<Response<AssignmentDto>> DeleteAssignment(int id);
         Task<Response<int>> CountAssignment();
     }
 }

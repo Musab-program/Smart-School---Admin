@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SmartSchool.Core;
 using SmartSchool.Core.Models;
@@ -9,6 +10,7 @@ namespace SmartSchool.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class TeachersController : ControllerBase
     {
             private readonly IUnitOfWork _unitOfWork;
@@ -26,7 +28,7 @@ namespace SmartSchool.Api.Controllers
             public async Task<IActionResult> AddTeacher([FromBody] TeacherDto dto)
             {
                 var result = await _teacherService.AddTeacher(dto);
-                return Ok(result);
+                return result.Code != 200 ? BadRequest(result) : Ok(result);
             }
 
 
@@ -35,7 +37,7 @@ namespace SmartSchool.Api.Controllers
             public async Task<IActionResult> GetAllTeacher()
             {
                 var result = await _teacherService.GetAllTeachers();
-                return Ok(result);
+                return result.Code != 200 ? BadRequest(result) : Ok(result);
             }
 
 
@@ -44,7 +46,7 @@ namespace SmartSchool.Api.Controllers
             public async Task<IActionResult> GetTeacherById(int id)
             {
                 var result = await _teacherService.GetByIdTeacher(id);
-                return Ok(result);
+                return result.Code != 200 ? BadRequest(result) : Ok(result);
             }
 
 
@@ -53,7 +55,7 @@ namespace SmartSchool.Api.Controllers
             public async Task<IActionResult> UpdateTeachers([FromBody] TeacherDto dto)
             {
                 var result = await _teacherService.UpdateTeacher(dto);
-                return Ok(result);
+                return result.Code != 200 ? BadRequest(result) : Ok(result);
             }
 
 
@@ -62,7 +64,7 @@ namespace SmartSchool.Api.Controllers
             public async Task<IActionResult> DeleteTeacher(int id)
             {
                 var result = await _teacherService.DeleteTeacher(id);
-                return Ok(result);
+                return result.Code != 200 ? BadRequest(result) : Ok(result);
             }
         }
 }
