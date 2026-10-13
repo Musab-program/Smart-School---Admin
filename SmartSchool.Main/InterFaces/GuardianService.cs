@@ -1,4 +1,4 @@
-﻿using System.Text;
+﻿
 using SmartSchool.Core;
 using SmartSchool.Core.Models;
 using SmartSchool.Core.Shared;
@@ -59,12 +59,12 @@ namespace SmartSchool.Main.InterFaces
                     userToAddOrUpdate = new User
                     {
                         Name = dto.UserName,
+                        UserName = dto.Email,
                         Email = dto.Email,
+                        PhoneNumber = dto.Phone,
                         DateOfBirth = dto.DateOfBirth,
                         gender = dto.gender,
                         Address = dto.Address,
-                        Password = Encoding.UTF8.GetBytes(dto.Password),
-                        Phone = dto.Phone,
                         RoleId = dto.RoleID,
                         IsActive = dto.IsActive
                     };
@@ -138,7 +138,7 @@ namespace SmartSchool.Main.InterFaces
                         DateOfBirth = user.DateOfBirth,
                         IsActive = user.IsActive,
                         gender = user.gender,
-                        Phone = user.Phone,
+                        Phone = user.PhoneNumber,
                         RelationTypeId = guardian.RelationTypeId,
                         RoleID = user.RoleId,
                         SecondryPhone = guardian.SecondryPhone,
@@ -167,7 +167,7 @@ namespace SmartSchool.Main.InterFaces
                 Email = s.User.Email,
                 gender = s.User.gender,
                 IsActive = s.User.IsActive,
-                Phone = s.User.Phone,
+                Phone = s.User.PhoneNumber,
                 RoleID = s.User.RoleId,
                 RelationType = s.RelationType == null ? null : new RelationTypeDto
                 {
@@ -209,7 +209,7 @@ namespace SmartSchool.Main.InterFaces
                     DateOfBirth = user.DateOfBirth,
                     IsActive = user.IsActive,
                     gender = user.gender,
-                    Phone = user.Phone,
+                    Phone = user.PhoneNumber,
                     RelationTypeId = guardian.RelationTypeId,
                     RoleID = user.RoleId,
                     SecondryPhone = guardian.SecondryPhone,
@@ -262,12 +262,12 @@ namespace SmartSchool.Main.InterFaces
                         guardian.RelationTypeId = dto.RelationTypeId;
                         // Update User Property
                         user.Name = dto.UserName;
+                        user.UserName = dto.Email;
                         user.Email = dto.Email;
+                        user.PhoneNumber = dto.Phone;
                         user.DateOfBirth = dto.DateOfBirth;
                         user.gender = dto.gender;
                         user.Address = dto.Address;
-                        user.Password = Encoding.UTF8.GetBytes(dto.Password);
-                        user.Phone = dto.Phone;
                         user.IsActive = dto.IsActive;
 
                         var guardianNew = _unitOfWork.Guardians.Update(guardian);
@@ -284,7 +284,7 @@ namespace SmartSchool.Main.InterFaces
                                 DateOfBirth = user.DateOfBirth,
                                 IsActive = user.IsActive,
                                 gender = user.gender,
-                                Phone = user.Phone,
+                                Phone = user.PhoneNumber,
                                 RelationTypeId = guardian.RelationTypeId,
                                 RoleID = user.RoleId,
                                 SecondryPhone = guardian.SecondryPhone,

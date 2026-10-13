@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -34,7 +34,7 @@ namespace SmartSchool.Main.InterFaces
                 };
             }
 
-            var subjectDetail = await _unitOfWork.SubjectDetails.FindAsync(a => a.Id == dto.Id);
+            var subjectDetail = await _unitOfWork.SubjectDetails.FindAsync(a => a.Id == dto.SubjectDetailId);
             if (subjectDetail == null)
                 return new Response<ContentDto>
                 {
@@ -145,7 +145,7 @@ namespace SmartSchool.Main.InterFaces
                     Code = 400,
                 };
 
-            var subjectDetail = await _unitOfWork.SubjectDetails.FindAsync(a => a.Id == dto.Id);
+            var subjectDetail = await _unitOfWork.SubjectDetails.FindAsync(a => a.Id == dto.SubjectDetailId);
             if (subjectDetail == null)
                 return new Response<ContentDto>
                 {

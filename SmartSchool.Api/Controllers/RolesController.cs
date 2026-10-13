@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SmartSchool.Core;
 using SmartSchool.Main.Dtos;
@@ -9,6 +10,7 @@ namespace SmartSchool.Main.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class RolesController : ControllerBase
     {
         // An object is declared to handle database operations as a single unit.
@@ -27,7 +29,7 @@ namespace SmartSchool.Main.Controllers
         public async Task<IActionResult> GetAllRoles()
         {
             var result = await _roleService.GetAllRoles();
-            return Ok(result);
+            return result.Code != 200 ? BadRequest(result) : Ok(result);
         }
 
         // End Point For Get Element By Id In This Domin Class
@@ -35,7 +37,7 @@ namespace SmartSchool.Main.Controllers
         public async Task<IActionResult> GetByIdRole(int id)
         {
             var result = await _roleService.GetByIdRole(id);
-            return Ok(result);
+            return result.Code != 200 ? BadRequest(result) : Ok(result);
         }
 
 
@@ -44,7 +46,7 @@ namespace SmartSchool.Main.Controllers
         public async Task<IActionResult> AddRole([FromBody] RoleDto dto)
         {
             var result = await _roleService.AddRole(dto);
-            return Ok(result);
+            return result.Code != 200 ? BadRequest(result) : Ok(result);
         }
 
         // End Point To Update Element In This Domin Class
@@ -52,7 +54,7 @@ namespace SmartSchool.Main.Controllers
         public async Task<IActionResult> UpdateRole([FromBody] RoleDto dto)
         {
             var result = await _roleService.UpdateRole(dto);
-            return Ok(result);
+            return result.Code != 200 ? BadRequest(result) : Ok(result);
         }
 
         // End Point To Delete Element In This Domin Class
@@ -60,7 +62,7 @@ namespace SmartSchool.Main.Controllers
         public async Task<IActionResult> DeleteRole(int id)
         {
             var result = await _roleService.DeleteRole(id);
-            return Ok(result);        
+            return result.Code != 200 ? BadRequest(result) : Ok(result);        
         }
     }
 }

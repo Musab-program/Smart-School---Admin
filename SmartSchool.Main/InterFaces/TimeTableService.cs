@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -44,7 +44,7 @@ namespace SmartSchool.Main.InterFaces
             if (group == null)
                 return new Response<TimeTableDto>
                 {
-                    Message = "المستخدم غير موجود ",
+                    Message = "المجموعة / الشعبة غير موجودة",
                     Code = 400
                 };
 
@@ -52,7 +52,7 @@ namespace SmartSchool.Main.InterFaces
             if (subjectDetail == null)
                 return new Response<TimeTableDto>
                 {
-                    Message = "المستخدم غير موجود ",
+                    Message = "المادة الدراسية غير موجودة",
                     Code = 400
                 };
 
@@ -60,7 +60,7 @@ namespace SmartSchool.Main.InterFaces
             if (teacher == null)
                 return new Response<TimeTableDto>
                 {
-                    Message = "المستخدم غير موجود ",
+                    Message = "المعلم غير موجود",
                     Code = 400
                 };
 
@@ -69,7 +69,7 @@ namespace SmartSchool.Main.InterFaces
             if (timeTable != null)
                 return new Response<TimeTableDto>
                 {
-                    Message = "المعلم موجود ",
+                    Message = "يوجد حصة دراسية مجدولة لهذه الشعبة في نفس اليوم والوقت",
                     Code = 400
                 };
 
@@ -109,7 +109,7 @@ namespace SmartSchool.Main.InterFaces
             if (timeTable == null)
                 return new Response<TimeTableDto>
                 {
-                    Message = " المعلم غير موجود ",
+                    Message = "الحصة الدراسية غير موجودة في الجدول",
                     Code = 400,
                 };
 
@@ -155,7 +155,7 @@ namespace SmartSchool.Main.InterFaces
 
             return new Response<TimeTableDto>
             {
-                Message = "تم جلب المعلمين بنجاح ",
+                Message = "تم جلب الجدول المدرسي بنجاح",
                 Data = dataDisplay,
                 Code = 200
             };
@@ -180,14 +180,14 @@ namespace SmartSchool.Main.InterFaces
             {
                 return new Response<TimeTableDto>
                 {
-                    Message = "المعلم غير موجود ",
+                    Message = "الحصة الدراسية غير موجودة",
                     Code = 400,
                 };
             }
 
             return new Response<TimeTableDto>
             {
-                Message = "تم العثور على المعلم",
+                Message = "تم العثور على الحصة الدراسية",
                 Code = 200,
                 Data = new TimeTableDto
                 {
@@ -218,7 +218,7 @@ namespace SmartSchool.Main.InterFaces
             if (timeTable == null)
                 return new Response<TimeTableDto>
                 {
-                    Message = "المعلم غير موجود ",
+                    Message = "الحصة الدراسية غير موجودة",
                     Code = 400,
 
                 };
@@ -227,7 +227,7 @@ namespace SmartSchool.Main.InterFaces
             if (group == null)
                 return new Response<TimeTableDto>
                 {
-                    Message = "المستخدم غير موجود ",
+                    Message = "المجموعة / الشعبة غير موجودة",
                     Code = 400
                 };
 
@@ -235,7 +235,7 @@ namespace SmartSchool.Main.InterFaces
             if (subjectDetail == null)
                 return new Response<TimeTableDto>
                 {
-                    Message = "المستخدم غير موجود ",
+                    Message = "المادة الدراسية غير موجودة",
                     Code = 400
                 };
 
@@ -243,7 +243,7 @@ namespace SmartSchool.Main.InterFaces
             if (teacher == null)
                 return new Response<TimeTableDto>
                 {
-                    Message = "المستخدم غير موجود ",
+                    Message = "المعلم غير موجود",
                     Code = 400
                 };
 

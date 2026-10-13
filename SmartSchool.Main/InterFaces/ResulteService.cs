@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -35,7 +35,7 @@ namespace SmartSchool.Main.InterFaces
                 };
             }
 
-            var subjectDetail = await _unitOfWork.SubjectDetails.FindAsync(a => a.Id == dto.Id);
+            var subjectDetail = await _unitOfWork.SubjectDetails.FindAsync(a => a.Id == dto.SubjectDetailId);
             if (subjectDetail == null)
                 return new Response<ResulteDto>
                 {
@@ -43,7 +43,7 @@ namespace SmartSchool.Main.InterFaces
                     Code = 400,
                 };
 
-            var student = await _unitOfWork.Students.FindAsync(a => a.Id == dto.Id);
+            var student = await _unitOfWork.Students.FindAsync(a => a.Id == dto.StudentId);
             if (student == null)
                 return new Response<ResulteDto>
                 {
@@ -152,7 +152,7 @@ namespace SmartSchool.Main.InterFaces
                     Code = 400,
                 };
 
-            var subjectDetail = await _unitOfWork.SubjectDetails.FindAsync(a => a.Id == dto.Id);
+            var subjectDetail = await _unitOfWork.SubjectDetails.FindAsync(a => a.Id == dto.SubjectDetailId);
             if (subjectDetail == null)
                 return new Response<ResulteDto>
                 {
@@ -160,7 +160,7 @@ namespace SmartSchool.Main.InterFaces
                     Code = 400,
                 };
 
-            var student = await _unitOfWork.Students.FindAsync(a => a.Id == dto.Id);
+            var student = await _unitOfWork.Students.FindAsync(a => a.Id == dto.StudentId);
             if (student == null)
                 return new Response<ResulteDto>
                 {

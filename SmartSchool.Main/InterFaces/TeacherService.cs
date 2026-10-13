@@ -1,18 +1,9 @@
-﻿
+
 using Microsoft.EntityFrameworkCore;
 using SmartSchool.Core;
 using SmartSchool.Core.Models;
 using SmartSchool.Core.Shared;
 using SmartSchool.Main.Dtos;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Numerics;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using System.Transactions;
 
 namespace SmartSchool.Main.InterFaces
 {
@@ -30,11 +21,22 @@ namespace SmartSchool.Main.InterFaces
             //Response<TeacherDto> response;
             return await _unitOfWork.ExecuteInTransactionAsync<Response<TeacherDto>>(async () =>
             {
-                // 1. ابحث عن المستخدم الحالي باستخدام اسمه والدور المطلوب.
-                // هذا يضمن أنك تتعامل مع المستخدم الصحيح لكل دور.
-                var existingUser = await _unitOfWork.Users.FindAsync(b => b.Name == dto.UserName && b.RoleId == dto.RoleID);
+                // 1. تأكد من جلب دور المعلم
+                var role = await _unitOfWork.Roles.FindAsync(b => b.Name == "معلم")
+                           ?? await _unitOfWork.Roles.FindAsync(b => b.Id == dto.RoleID);
+                if (role == null)
+                {
+                    return new Response<TeacherDto>
+                    {
+                        Message = "دور 'معلم' غير موجود في النظام.",
+                        Code = 400
+                    };
+                }
 
-                // 2. إذا كان المستخدم موجوداً، تأكد من أنه لم يُضاف كمعلم من قبل.
+                // 2. ابحث عن المستخدم الحالي بالبريد الإلكتروني أو الاسم
+                var existingUser = await _unitOfWork.Users.FindAsync(b => b.Email == dto.Email)
+                                   ?? await _unitOfWork.Users.FindAsync(b => b.Name == dto.UserName && b.RoleId == role.Id);
+
                 if (existingUser != null)
                 {
                     var existingTeacher = await _unitOfWork.Teachers.FindAsync(b => b.UserId == existingUser.Id);
@@ -48,43 +50,7 @@ namespace SmartSchool.Main.InterFaces
                     }
                 }
 
-                // 3. تأكد أن الدور المرسل موجود ونوعه "معلم".
-                var role = await _unitOfWork.Roles.FindAsync(b => b.Id == dto.RoleID);
-                if (role == null || role.Name != "معلم")
-                {
-                    return new Response<TeacherDto>
-                    {
-                        Message = "النوع غير موجود أو يجب أن يكون معلم.",
-                        Code = 400
-                    };
-                }
-
-                // 4. إذا لم يكن المستخدم موجودًا، قم بإنشاء واحد جديد.
-                User userToAddOrUpdate;
-                if (existingUser == null)
-                {
-                    userToAddOrUpdate = new User
-                    {
-                        Name = dto.UserName,
-                        Email = dto.Email,
-                        DateOfBirth = dto.DateOfBirth,
-                        gender = dto.gender,
-                        Address = dto.Address,
-                        Password = Encoding.UTF8.GetBytes(dto.Password),
-                        Phone = dto.Phone,
-                        RoleId = dto.RoleID,
-                        IsActive = dto.IsActive
-                    };
-                    // لا نحفظ هنا، بل نترك Entity Framework يقوم بتتبع الكائن.
-                    await _unitOfWork.Users.AddAsync(userToAddOrUpdate);
-                }
-                else
-                {
-                    // إذا كان موجوداً، استخدمه لإضافة المعلم.
-                    userToAddOrUpdate = existingUser;
-                }
-
-                // 5. تحقق من وجود التخصص.
+                // 3. تحقق من وجود التخصص
                 var specialty = await _unitOfWork.Specialtys.FindAsync(b => b.Id == dto.SpecialtyId);
                 if (specialty == null)
                 {
@@ -95,22 +61,62 @@ namespace SmartSchool.Main.InterFaces
                     };
                 }
 
-                // 6. أضف المعلم واربطه بالمستخدم.
+                // 4. إذا لم يكن المستخدم موجوداً، قم بإنشاء مستخدم جديد
+                User userToAddOrUpdate;
+                if (existingUser == null)
+                {
+                    userToAddOrUpdate = new User
+                    {
+                        Name = dto.UserName,
+                        UserName = dto.Email,
+                        Email = dto.Email,
+                        PhoneNumber = dto.Phone,
+                        DateOfBirth = dto.DateOfBirth,
+                        gender = dto.gender,
+                        Address = dto.Address,
+                        RoleId = role.Id,
+                        IsActive = dto.IsActive,
+                        CreatedAt = DateTime.UtcNow
+                    };
+                    await _unitOfWork.Users.AddAsync(userToAddOrUpdate);
+                }
+                else
+                {
+                    userToAddOrUpdate = existingUser;
+                    userToAddOrUpdate.RoleId = role.Id;
+                }
+
+                // 5. إنشاء المعلم
                 Teacher addTeacher = new Teacher
                 {
-                    User = userToAddOrUpdate, // 👈 اربط الكائن مباشرة
+                    User = userToAddOrUpdate,
                     SpecialtyId = dto.SpecialtyId,
                     Salary = dto.Salary,
+                    HireDate = DateTime.UtcNow
                 };
                 var teacherNew = await _unitOfWork.Teachers.AddAsync(addTeacher);
 
-                // 7. احفظ جميع التغييرات مرة واحدة في نهاية العملية.
+                // 6. الحفظ
                 _unitOfWork.Save();
 
                 return new Response<TeacherDto>
                 {
-                    Message = "تمت الإضافة",
-                    Data = teacherNew,
+                    Message = "تمت الإضافة بنجاح",
+                    Data = new TeacherDto
+                    {
+                        Id = teacherNew.Id,
+                        UserId = userToAddOrUpdate.Id,
+                        UserName = userToAddOrUpdate.Name,
+                        Email = userToAddOrUpdate.Email,
+                        Phone = userToAddOrUpdate.PhoneNumber,
+                        Address = userToAddOrUpdate.Address,
+                        DateOfBirth = userToAddOrUpdate.DateOfBirth,
+                        gender = userToAddOrUpdate.gender,
+                        IsActive = userToAddOrUpdate.IsActive,
+                        Salary = teacherNew.Salary,
+                        RoleID = role.Id,
+                        SpecialtyId = teacherNew.SpecialtyId
+                    },
                     Code = 200
                 };
             });
@@ -148,7 +154,7 @@ namespace SmartSchool.Main.InterFaces
                         Address = user.Address,
                         gender = user.gender,
                         IsActive = user.IsActive,
-                        Phone = user.Phone,
+                        Phone = user.PhoneNumber,
                         Salary = teacher.Salary,
                         RoleID = user.RoleId,
                         SpecialtyId = teacher.SpecialtyId,
@@ -172,7 +178,7 @@ namespace SmartSchool.Main.InterFaces
                 SpecialtyId = s.SpecialtyId,
                 UserName = s.User.Name,
                 Email = s.User.Email,
-                Phone = s.User.Phone,
+                Phone = s.User.PhoneNumber,
                 Address = s.User.Address,
                 DateOfBirth = s.User.DateOfBirth,
                 gender = s.User.gender,
@@ -218,7 +224,7 @@ namespace SmartSchool.Main.InterFaces
                     Address = user.Address,
                     gender = user.gender,
                     IsActive = user.IsActive,
-                    Phone = user.Phone,
+                    Phone = user.PhoneNumber,
                     Salary = teacher.Salary,
                     RoleID = user.RoleId,
                     SpecialtyId = teacher.SpecialtyId,
@@ -241,7 +247,7 @@ namespace SmartSchool.Main.InterFaces
 
                     };
 
-                var user = await _unitOfWork.Users.FindAsync(b => b.Id == dto.UserId);
+                var user = await _unitOfWork.Users.FindAsync(b => b.Id == teacher.UserId);
                 if (user == null)
                     return new Response<TeacherDto>
                     {
@@ -251,12 +257,12 @@ namespace SmartSchool.Main.InterFaces
                     };
 
 
-                var role = await _unitOfWork.Roles.FindAsync(b => b.Id == user.RoleId);
-                //check dto.RoleId is not existed in role table or dto.RoleId exist in role table but its type not teacher
-                if (role.Name != "معلم" || role == null)
+                var role = await _unitOfWork.Roles.FindAsync(b => b.Name == "معلم")
+                           ?? await _unitOfWork.Roles.FindAsync(b => b.Id == user.RoleId);
+                if (role == null)
                     return new Response<TeacherDto>
                     {
-                        Message = "النوع غير موجود أو نوعه ليس معلما",
+                        Message = "دور 'معلم' غير موجود في النظام",
                         Code = 400
                     };
 
@@ -272,18 +278,18 @@ namespace SmartSchool.Main.InterFaces
 
 
                 //update teacher property
-                teacher.UserId = dto.UserId;
+                teacher.UserId = teacher.UserId;
                 teacher.Salary = dto.Salary;
                 teacher.SpecialtyId = dto.SpecialtyId;
 
-                //update teacher property
+                //update user property
                 user.Name = dto.UserName;
+                user.UserName = dto.Email;
                 user.Email = dto.Email;
+                user.PhoneNumber = dto.Phone;
                 user.DateOfBirth = dto.DateOfBirth;
                 user.gender = dto.gender;
                 user.Address = dto.Address;
-                user.Password = Encoding.UTF8.GetBytes(dto.Password);
-                user.Phone = dto.Phone;
                 user.IsActive = dto.IsActive;
 
                 var TeacherNew = _unitOfWork.Teachers.Update(teacher);
@@ -303,7 +309,7 @@ namespace SmartSchool.Main.InterFaces
                         Address = user.Address,
                         gender = user.gender,
                         IsActive = user.IsActive,
-                        Phone = user.Phone,
+                        Phone = user.PhoneNumber,
                         Salary = teacher.Salary,
                         RoleID = user.RoleId,
                         SpecialtyId = teacher.SpecialtyId,

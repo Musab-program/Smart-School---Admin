@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,6 +10,7 @@ namespace SmartSchool.Main.Dtos
     {
         public int? Id { get; set; }
         public int StudentId { get; set; } 
+        public DateTime AttendanceDate { get; set; } = DateTime.Now;
         public string Status { get; set; }
         public int TeacherId { get; set; }
     }

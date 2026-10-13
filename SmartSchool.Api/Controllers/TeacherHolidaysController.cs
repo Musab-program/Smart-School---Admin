@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SmartSchool.Core;
 using SmartSchool.Main.Dtos;
@@ -8,6 +9,7 @@ namespace SmartSchool.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class TeacherHolidayController : ControllerBase
     {
         // An object is declared to handle database operations as a single unit.
@@ -26,7 +28,7 @@ namespace SmartSchool.Api.Controllers
         public async Task<IActionResult> GetAllTeacherHolidays()
         {
             var result = await _teacherHolidayService.GetAllTeacherHolidays();
-            return Ok(result);
+            return result.Code != 200 ? BadRequest(result) : Ok(result);
         }
 
         // End Point For Get Element By Id In This Domin Class
@@ -34,7 +36,7 @@ namespace SmartSchool.Api.Controllers
         public async Task<IActionResult> GetTeacherHolidayById(int id)
         {
             var result = await _teacherHolidayService.GetTeacherHolidayById(id);
-            return Ok(result);
+            return result.Code != 200 ? BadRequest(result) : Ok(result);
         }
 
 
@@ -43,7 +45,7 @@ namespace SmartSchool.Api.Controllers
         public async Task<IActionResult> AddTeacherHoliday([FromBody] TeacherHolidayDto dto)
         {
             var result = await _teacherHolidayService.AddTeacherHoliday(dto);
-            return Ok(result);
+            return result.Code != 200 ? BadRequest(result) : Ok(result);
         }
 
         // End Point To Update Element In This Domin Class
@@ -51,7 +53,7 @@ namespace SmartSchool.Api.Controllers
         public async Task<IActionResult> UpdateTeacherHoliday([FromBody] TeacherHolidayDto dto)
         {
             var result = await _teacherHolidayService.UpdateTeacherHoliday(dto);
-            return Ok(result);
+            return result.Code != 200 ? BadRequest(result) : Ok(result);
         }
 
         // End Point To Delete Element In This Domin Class
@@ -59,7 +61,7 @@ namespace SmartSchool.Api.Controllers
         public async Task<IActionResult> DeleteTeacherHoliday(int id)
         {
             var result = await _teacherHolidayService.DeleteTeacherHoliday(id);
-            return Ok(result);
+            return result.Code != 200 ? BadRequest(result) : Ok(result);
         }
     }
 }

@@ -1,21 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
+﻿using Microsoft.AspNetCore.Identity;
 using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 
 namespace SmartSchool.Core.Models
 {
-    public class Role
+    // Role extends IdentityRole<int> to be recognized by ASP.NET Core Identity.
+    // IdentityRole already provides: Id (int), Name, NormalizedName, ConcurrencyStamp.
+    // We keep our custom navigation property for querying users with their role.
+    public class Role : IdentityRole<int>
     {
-        //These Attributes Are The Culomns for Role Table In Database
-        public int Id { get; set; }
-        [Required, MaxLength(50)]
-        public string Name { get; set; }
         [JsonIgnore]
-        public ICollection<User> Users { get; set; } //Navigation Properity From Role(n) To User (1)
-
+        public ICollection<User> Users { get; set; } // Navigation: Role(1) → User(n)
     }
 }

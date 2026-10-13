@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SmartSchool.Core;
 using SmartSchool.Main.Dtos;
@@ -9,6 +10,7 @@ namespace SmartSchool.Api.Controllers
     [Route("api/[controller]")]
     [ApiController]
     
+    [Authorize]
         public class ContentsController : ControllerBase
         {
             // An object is declared to handle database operations as a single unit.
@@ -27,7 +29,7 @@ namespace SmartSchool.Api.Controllers
             public async Task<IActionResult> GetAllContents()
             {
                 var result = await _contentService.GetAllContents();
-                return Ok(result);
+                return result.Code != 200 ? BadRequest(result) : Ok(result);
             }
 
             // End Point For Get Element By Id In This Domin Class
@@ -35,7 +37,7 @@ namespace SmartSchool.Api.Controllers
             public async Task<IActionResult> GetContentById(int id)
             {
                 var result = await _contentService.GetContentById(id);
-                return Ok(result);
+                return result.Code != 200 ? BadRequest(result) : Ok(result);
             }
 
 
@@ -44,7 +46,7 @@ namespace SmartSchool.Api.Controllers
             public async Task<IActionResult> AddContent([FromBody] ContentDto dto)
             {
                 var result = await _contentService.AddContent(dto);
-                return Ok(result);
+                return result.Code != 200 ? BadRequest(result) : Ok(result);
             }
 
             // End Point To Update Element In This Domin Class
@@ -52,7 +54,7 @@ namespace SmartSchool.Api.Controllers
             public async Task<IActionResult> UpdateContent([FromBody] ContentDto dto)
             {
                 var result = await _contentService.UpdateContent(dto);
-                return Ok(result);
+                return result.Code != 200 ? BadRequest(result) : Ok(result);
             }
 
             // End Point To Delete Element In This Domin Class
@@ -60,7 +62,7 @@ namespace SmartSchool.Api.Controllers
             public async Task<IActionResult> DeleteContent(int id)
             {
                 var result = await _contentService.DeleteContent(id);
-                return Ok(result);
+                return result.Code != 200 ? BadRequest(result) : Ok(result);
             }
         }
 }

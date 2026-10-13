@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SmartSchool.Core;
 using SmartSchool.Core.Models;
@@ -9,6 +10,7 @@ namespace SmartSchool.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class SubmittedAssignmentsController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -26,7 +28,7 @@ namespace SmartSchool.Api.Controllers
         public async Task<IActionResult> AddSubmittedAssignment([FromBody] SubmittedAssignmentDto dto)
         {
             var result = await _submittedAssignmentService.AddSubmittedAssignment(dto);
-            return Ok(result);
+            return result.Code != 200 ? BadRequest(result) : Ok(result);
         }
 
 
@@ -35,7 +37,7 @@ namespace SmartSchool.Api.Controllers
         public async Task<IActionResult> GetAllSubmittedAssignment()
         {
             var result = await _submittedAssignmentService.GetAllSubmittedAssignments();
-            return Ok(result);
+            return result.Code != 200 ? BadRequest(result) : Ok(result);
         }
 
 
@@ -44,7 +46,7 @@ namespace SmartSchool.Api.Controllers
         public async Task<IActionResult> GetSubmittedAssignmentById(int id)
         {
             var result = await _submittedAssignmentService.GetByIdSubmittedAssignment(id);
-            return Ok(result);
+            return result.Code != 200 ? BadRequest(result) : Ok(result);
         }
 
 
@@ -53,7 +55,7 @@ namespace SmartSchool.Api.Controllers
         public async Task<IActionResult> UpdateSubmittedAssignments([FromBody] SubmittedAssignmentDto dto)
         {
             var result = await _submittedAssignmentService.UpdateSubmittedAssignment(dto);
-            return Ok(result);
+            return result.Code != 200 ? BadRequest(result) : Ok(result);
         }
 
 
@@ -62,7 +64,7 @@ namespace SmartSchool.Api.Controllers
         public async Task<IActionResult> DeleteSubmittedAssignment(int id)
         {
             var result = await _submittedAssignmentService.DeleteSubmittedAssignment(id);
-            return Ok(result);
+            return result.Code != 200 ? BadRequest(result) : Ok(result);
         }
     }
 }

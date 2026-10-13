@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SmartSchool.Core;
 using SmartSchool.Core.Models;
@@ -10,6 +11,7 @@ namespace SmartSchool.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class SubjectDetailsController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -27,7 +29,7 @@ namespace SmartSchool.Api.Controllers
         public async Task<IActionResult> AddSubjectDetail([FromBody] SubjectDetailDto dto)
         {
             var result = await _subjectDetailService.AddSubjectDetail(dto);
-            return Ok(result);
+            return result.Code != 200 ? BadRequest(result) : Ok(result);
         }
 
 
@@ -36,7 +38,7 @@ namespace SmartSchool.Api.Controllers
         public async Task<IActionResult> GetAllSubjectDetail()
         {
             var result = await _subjectDetailService.GetAllSubjectDetails();
-            return Ok(result);
+            return result.Code != 200 ? BadRequest(result) : Ok(result);
         }
 
 
@@ -45,7 +47,7 @@ namespace SmartSchool.Api.Controllers
         public async Task<IActionResult> GetSubjectDetailById(int id)
         {
             var result = await _subjectDetailService.GetByIdSubjectDetail(id);
-            return Ok(result);
+            return result.Code != 200 ? BadRequest(result) : Ok(result);
         }
 
 
@@ -54,7 +56,7 @@ namespace SmartSchool.Api.Controllers
         public async Task<IActionResult> UpdateSubjectDetails([FromBody] SubjectDetailDto dto)
         {
             var result = await _subjectDetailService.UpdateSubjectDetail(dto);
-            return Ok(result);
+            return result.Code != 200 ? BadRequest(result) : Ok(result);
         }
 
 
@@ -63,7 +65,7 @@ namespace SmartSchool.Api.Controllers
         public async Task<IActionResult> DeleteSubjectDetail(int id)
         {
             var result = await _subjectDetailService.DeleteSubjectDetail(id);
-            return Ok(result);
+            return result.Code != 200 ? BadRequest(result) : Ok(result);
         }
     }
 }

@@ -1,0 +1,28 @@
+erDiagram
+    User ||--|| Student : "is a"
+    User ||--|| Teacher : "is a"
+    
+    Student }|--|| Group : "belongs to"
+    Student }|--|| Guardian : "has"
+    Student ||--|{ Resulte : "has"
+    Student ||--|{ SubmittedAssignment : "submits"
+    Student ||--|{ StudentAttendance : "attends"
+    
+    Teacher ||--|{ TeachingSubject : "teaches"
+    Teacher ||--|{ StudentAttendance : "records"
+    Teacher ||--|{ TeacherHoliday : "takes"
+    Teacher ||--|{ TimeTable : "has"
+    Teacher }|--|| Specialty : "has"
+
+    Group ||--|| Grade : "belongs to"
+    Group ||--|{ Exam : "has"
+    Group ||--|{ TimeTable : "has"
+
+    Exam }|--|| SubjectDetail : "covers"
+    Exam }|--|| ExamType : "is of"
+    Exam }|--|| Group : "taken by"
+
+    Subject ||--|{ SubjectDetail : "has details"
+    
+    Assignment }|--|| SubjectDetail : "belongs to"
+    SubmittedAssignment }|--|| Assignment : "for"

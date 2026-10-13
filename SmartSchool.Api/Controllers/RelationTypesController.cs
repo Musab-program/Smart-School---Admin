@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 using SmartSchool.Core;
@@ -10,6 +11,7 @@ namespace SmartSchool.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     // An object is declared to handle database operations as a single unit.
     public class RelationTypesController : ControllerBase
     {
@@ -28,7 +30,7 @@ namespace SmartSchool.Api.Controllers
         public async  Task<IActionResult> AddRelationType([FromBody]RelationTypeDto dto)
         {
             var result = await _relationTypeService.AddRelationType(dto);            
-            return Ok(result);
+            return result.Code != 200 ? BadRequest(result) : Ok(result);
         }
 
 
@@ -37,7 +39,7 @@ namespace SmartSchool.Api.Controllers
         public async Task<IActionResult> GetAllRelation()
         {
             var result = await _relationTypeService.GetAllRelationType();
-            return Ok(result);
+            return result.Code != 200 ? BadRequest(result) : Ok(result);
         }
 
         // End Point For Get  Element by id In This Domin Class
@@ -45,7 +47,7 @@ namespace SmartSchool.Api.Controllers
         public async Task<IActionResult> GetRelationById(int id)
         {
             var result= await _relationTypeService.GetByIdRelationType(id);
-            return Ok(result);
+            return result.Code != 200 ? BadRequest(result) : Ok(result);
         }
 
         // End Point For update Elements In This Domin Class
@@ -53,7 +55,7 @@ namespace SmartSchool.Api.Controllers
         public async Task<IActionResult> UpdateRelationTypes([FromBody]RelationTypeDto dto)
         {
             var result = await _relationTypeService.UpdateRelationType(dto);
-            return Ok(result);
+            return result.Code != 200 ? BadRequest(result) : Ok(result);
         }
 
 
@@ -62,7 +64,7 @@ namespace SmartSchool.Api.Controllers
         public async Task<IActionResult> DeleteRelationTypes(int id)
         {
             var result = await _relationTypeService.DeleteRelationType(id);
-            return Ok(result);
+            return result.Code != 200 ? BadRequest(result) : Ok(result);
         }
 
     }

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SmartSchool.Main.Dtos;
 using SmartSchool.Core;
@@ -9,6 +10,7 @@ namespace SmartSchool.Main.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class AssignmentsController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -24,49 +26,35 @@ namespace SmartSchool.Main.Controllers
         public async Task<IActionResult> GetAllAssignments()
         {
             var result = await _assignmentService.GetAllAssignments();
-            return Ok(result);
+            return result.Code != 200 ? BadRequest(result) : Ok(result);
         }
 
         [HttpGet("GetAssignmentById/{id}")]
         public async Task<IActionResult> GetAssignmentById (int id)
         {
             var result = await _assignmentService.GetAssignmentById(id);
-            return Ok(result);
+            return result.Code != 200 ? BadRequest(result) : Ok(result);
         }
 
+        [HttpPost("AddAssignment")]
+        public async Task<IActionResult> AddAssignment([FromBody] AssignmentDto dto)
+        {
+            var result = await _assignmentService.AddAssignment(dto);
+            return result.Code != 200 ? BadRequest(result) : Ok(result);
+        }
 
-        // *************************
-        // From Here depend on Teacher
-        //[HttpPost("AddAssignment")]
-        //public async Task<IActionResult> AddAssignment([FromBody] AssignmentDto dto)
-        //{
-        //    var assignment = await _unitOfWork.Assignments.FindAsync(r => r.Id == dto.Id);
-        //    if (assignment != null)
-        //        return BadRequest("الواجب موجود من قبل");
-            
-        //    var subjectDetail = await _unitOfWork.SubjectDetails.FindAsync(r => r.Id == dto.Id);
-        //        if (subjectDetail == null)
-        //            return BadRequest("المادة الدراسية المدخلة غير صحيحة");
-            
-        //    var student = await _unitOfWork.Students.FindAsync(r => r.Id == dto.Id);
-        //    if (subjectDetail == null)
-        //        return BadRequest("الطالب المختار غير موجود");
+        [HttpPut("UpdateAssignment")]
+        public async Task<IActionResult> UpdateAssignment([FromBody] AssignmentDto dto)
+        {
+            var result = await _assignmentService.UpdateAssignment(dto);
+            return result.Code != 200 ? BadRequest(result) : Ok(result);
+        }
 
-        //    var addassignment = new Assignment
-        //    {
-        //        SubjectDetailId = dto.SubjectDetailId,
-        //        StudentId = dto.StudentId,
-        //        Title = dto.Title,
-        //        LastDate = dto.LastDate,
-        //        ChekeState = "Not Submitted",
-        //        Mark = 0,
-        //        SubmitedDate = DateTime.MinValue
-        //    };
-
-        //    var assignmentNew = await _unitOfWork.Assignments.AddAsync(addassignment);
-
-        //    _unitOfWork.Save();
-        //    return Ok("تم الإضافة بنجاح");
-        //}
+        [HttpDelete("DeleteAssignment/{id}")]
+        public async Task<IActionResult> DeleteAssignment(int id)
+        {
+            var result = await _assignmentService.DeleteAssignment(id);
+            return result.Code != 200 ? BadRequest(result) : Ok(result);
+        }
     }
 }

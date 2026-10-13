@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SmartSchool.Core;
 using SmartSchool.Core.Models;
@@ -9,6 +10,7 @@ namespace SmartSchool.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class SpecialtiesController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -26,7 +28,7 @@ namespace SmartSchool.Api.Controllers
         public async Task<IActionResult> AddSpecialty([FromBody] SpecialtyDto dto)
         {
             var result = await _specialtyService.AddSpecialty(dto);
-            return Ok(result);
+            return result.Code != 200 ? BadRequest(result) : Ok(result);
         }
 
 
@@ -35,7 +37,7 @@ namespace SmartSchool.Api.Controllers
         public async Task<IActionResult> GetAllSpecialties()
         {
             var result = await _specialtyService.GetAllSpecialties();
-            return Ok(result);
+            return result.Code != 200 ? BadRequest(result) : Ok(result);
         }
 
 
@@ -44,16 +46,17 @@ namespace SmartSchool.Api.Controllers
         public async Task<IActionResult> GetSpecialtyById(int id)
         {
             var result = await _specialtyService.GetByIdSpecialty(id);
-            return Ok(result);
+            return result.Code != 200 ? BadRequest(result) : Ok(result);
         }
 
 
         // End Point For update Elements In This Domin Class
+        [HttpPut("UpdateSpecialty")]
         [HttpPut("UpdateSpecialtys")]
         public async Task<IActionResult> UpdateSpecialtys([FromBody] SpecialtyDto dto)
         {
             var result = await _specialtyService.UpdateSpecialty(dto);
-            return Ok(result);
+            return result.Code != 200 ? BadRequest(result) : Ok(result);
         }
 
 
@@ -62,7 +65,7 @@ namespace SmartSchool.Api.Controllers
         public async Task<IActionResult> DeleteSpecialty(int id)
         {
             var result = await _specialtyService.DeleteSpecialty(id);
-            return Ok(result);
+            return result.Code != 200 ? BadRequest(result) : Ok(result);
         }
     }
 }
